@@ -160,7 +160,9 @@ export default function App() {
       {/* Lightbox Modal */}
       {selectedMedia && (
         <LightboxModal 
-          item={selectedMedia} 
+          item={selectedMedia}
+          allMedia={allMedia}
+          onNavigate={(item) => setSelectedMedia(item)}
           onClose={() => setSelectedMedia(null)} 
         />
       )}
