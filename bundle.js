@@ -21920,7 +21920,6 @@
       if (hasNext) onNavigate(allMedia[currentIndex + 1]);
     };
     (0, import_react8.useEffect)(() => {
-      setIframeLoaded(false);
       const handleKeyDown = (e) => {
         if (e.key === "Escape") onClose();
         if (e.key === "ArrowLeft") goPrev();
@@ -21939,83 +21938,53 @@
     const isVideo = item.type === "video";
     const isGDriveVideo = isVideo && item.source === "gdrive";
     const isLocalVideo = isVideo && item.source === "local";
-    const isMov = (item?.ext || "").toLowerCase() === ".mov";
-    const isHevc = isMov;
-    const mediaUrl = item.source === "local" ? isHevc ? `/transcode-video?path=${encodeURIComponent(item.id)}` : `/media-file?path=${encodeURIComponent(item.id)}` : `/gdrive-media?id=${item.id}`;
+    const isMov = (item?.ext || item?.title || "").toLowerCase().endsWith(".mov");
+    const mediaUrl = item.source === "local" ? isMov ? `/transcode-video?path=${encodeURIComponent(item.id)}` : `/media-file?path=${encodeURIComponent(item.id)}` : `/gdrive-media?id=${item.id}`;
     const viewUrl = item.source === "gdrive" ? `https://drive.google.com/file/d/${item.id}/view` : mediaUrl;
-    const thumbnailUrl = item.source === "gdrive" ? `/gdrive-media?id=${item.id}` : null;
     return /* @__PURE__ */ import_react8.default.createElement(
       "div",
       {
-        className: "fixed inset-0 z-50 flex items-center justify-center",
-        style: { background: "rgba(2,6,23,0.75)", backdropFilter: "blur(24px) saturate(160%)" },
-        onClick: (e) => {
-          if (e.target === e.currentTarget) onClose();
-        }
+        className: "fixed inset-0 z-50 flex flex-col",
+        style: { background: "rgba(2,6,23,0.92)", backdropFilter: "blur(20px) saturate(160%)" }
       },
-      /* @__PURE__ */ import_react8.default.createElement(
-        "button",
-        {
-          onClick: onClose,
-          title: "Tutup (Esc)",
-          className: "absolute top-4 right-4 z-20 w-10 h-10 rounded-2xl bg-white/10 hover:bg-rose-600 text-white flex items-center justify-center transition-all border border-white/15 hover:border-rose-500 cursor-pointer backdrop-blur-sm shadow-xl"
-        },
-        /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-xmark text-lg" })
-      ),
-      /* @__PURE__ */ import_react8.default.createElement(
+      /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex items-center justify-between px-3 py-2 flex-shrink-0" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "px-3 py-1.5 rounded-xl bg-black/50 border border-white/10 text-white text-xs font-bold backdrop-blur-sm" }, currentIndex + 1, " / ", allMedia.length), /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react8.default.createElement(
         "a",
         {
           href: viewUrl,
           target: "_blank",
           rel: "noreferrer",
           title: "Buka Tab Baru",
-          className: "absolute top-4 right-16 z-20 w-10 h-10 rounded-2xl bg-white/10 hover:bg-blue-600 text-white flex items-center justify-center transition-all border border-white/15 hover:border-blue-500 cursor-pointer backdrop-blur-sm shadow-xl"
+          className: "w-9 h-9 rounded-xl bg-white/10 hover:bg-blue-600 text-white flex items-center justify-center transition-all border border-white/10 cursor-pointer"
         },
-        /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-up-right-from-square text-sm" })
-      ),
-      allMedia.length > 0 && /* @__PURE__ */ import_react8.default.createElement("div", { className: "absolute top-4 left-4 z-20 px-3 py-2 rounded-xl bg-black/60 border border-white/10 text-white text-xs font-bold backdrop-blur-sm" }, currentIndex + 1, " / ", allMedia.length),
-      hasPrev && /* @__PURE__ */ import_react8.default.createElement(
+        /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-up-right-from-square text-xs" })
+      ), /* @__PURE__ */ import_react8.default.createElement(
         "button",
         {
-          onClick: goPrev,
-          title: "Sebelumnya (\u2190)",
-          className: "absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-2xl bg-black/60 hover:bg-blue-600/90 text-white flex items-center justify-center transition-all border border-white/10 hover:border-blue-400 cursor-pointer backdrop-blur-sm shadow-xl"
+          onClick: onClose,
+          title: "Tutup (Esc)",
+          className: "w-9 h-9 rounded-xl bg-white/10 hover:bg-rose-600 text-white flex items-center justify-center transition-all border border-white/10 cursor-pointer"
         },
-        /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-chevron-left text-lg" })
-      ),
-      hasNext && /* @__PURE__ */ import_react8.default.createElement(
-        "button",
-        {
-          onClick: goNext,
-          title: "Berikutnya (\u2192)",
-          className: "absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-2xl bg-black/60 hover:bg-blue-600/90 text-white flex items-center justify-center transition-all border border-white/10 hover:border-blue-400 cursor-pointer backdrop-blur-sm shadow-xl"
-        },
-        /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-chevron-right text-lg" })
-      ),
-      /* @__PURE__ */ import_react8.default.createElement("div", { className: "relative flex items-center justify-center w-full h-full px-16 py-12" }, !isVideo && /* @__PURE__ */ import_react8.default.createElement(
+        /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-xmark" })
+      ))),
+      /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex-1 flex items-center justify-center overflow-hidden relative min-h-0" }, !isVideo && /* @__PURE__ */ import_react8.default.createElement(
         "img",
         {
           src: item.source === "gdrive" ? `/gdrive-media?id=${item.id}` : mediaUrl,
           alt: item.title,
           referrerPolicy: "no-referrer",
-          className: "max-w-full max-h-full object-contain rounded-2xl shadow-2xl",
-          style: { maxHeight: "calc(100vh - 100px)", maxWidth: "calc(100vw - 140px)" }
+          className: "w-full h-full object-contain"
         }
       ), isGDriveVideo && /* @__PURE__ */ import_react8.default.createElement(
         "iframe",
         {
           src: `https://drive.google.com/file/d/${item.id}/preview?autoplay=1`,
-          className: "rounded-2xl shadow-2xl",
-          style: {
-            width: "min(900px, calc(100vw - 140px))",
-            height: "calc(100vh - 100px)",
-            border: "none"
-          },
+          className: "w-full h-full",
+          style: { border: "none" },
           allow: "autoplay; encrypted-media; fullscreen",
           allowFullScreen: true,
           title: item.title
         }
-      ), isLocalVideo && !isHevc && /* @__PURE__ */ import_react8.default.createElement(
+      ), isLocalVideo && /* @__PURE__ */ import_react8.default.createElement(
         "video",
         {
           ref: videoRef,
@@ -22024,11 +21993,41 @@
           autoPlay: true,
           playsInline: true,
           preload: "auto",
-          className: "rounded-2xl shadow-2xl",
-          style: { maxWidth: "calc(100vw - 140px)", maxHeight: "calc(100vh - 100px)" }
+          className: "w-full h-full",
+          style: { objectFit: "contain" }
         }
+      ), hasPrev && /* @__PURE__ */ import_react8.default.createElement(
+        "button",
+        {
+          onClick: goPrev,
+          className: "hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-2xl bg-black/60 hover:bg-blue-600/90 text-white items-center justify-center transition-all border border-white/10 cursor-pointer"
+        },
+        /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-chevron-left" })
+      ), hasNext && /* @__PURE__ */ import_react8.default.createElement(
+        "button",
+        {
+          onClick: goNext,
+          className: "hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-2xl bg-black/60 hover:bg-blue-600/90 text-white items-center justify-center transition-all border border-white/10 cursor-pointer"
+        },
+        /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-chevron-right" })
       )),
-      /* @__PURE__ */ import_react8.default.createElement("div", { className: "absolute bottom-4 left-0 right-0 text-center px-20 pointer-events-none" }, /* @__PURE__ */ import_react8.default.createElement("p", { className: "text-white font-bold text-sm drop-shadow-md truncate" }, item.title, /* @__PURE__ */ import_react8.default.createElement("span", { className: "text-slate-400 font-normal text-xs ml-2" }, "(", item.accountName || "Storage Gateway", ")")))
+      /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex items-center justify-between px-3 py-2 flex-shrink-0 gap-2" }, /* @__PURE__ */ import_react8.default.createElement(
+        "button",
+        {
+          onClick: goPrev,
+          disabled: !hasPrev,
+          className: `md:hidden w-10 h-10 rounded-xl flex items-center justify-center text-white border transition-all cursor-pointer flex-shrink-0 ${hasPrev ? "bg-white/10 border-white/10 hover:bg-blue-600" : "opacity-20 border-transparent bg-transparent cursor-default"}`
+        },
+        /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-chevron-left text-sm" })
+      ), /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex-1 text-center min-w-0" }, /* @__PURE__ */ import_react8.default.createElement("p", { className: "text-white font-bold text-xs truncate" }, item.title), /* @__PURE__ */ import_react8.default.createElement("p", { className: "text-slate-400 text-[10px] truncate" }, item.accountName || "Storage Gateway")), /* @__PURE__ */ import_react8.default.createElement(
+        "button",
+        {
+          onClick: goNext,
+          disabled: !hasNext,
+          className: `md:hidden w-10 h-10 rounded-xl flex items-center justify-center text-white border transition-all cursor-pointer flex-shrink-0 ${hasNext ? "bg-white/10 border-white/10 hover:bg-blue-600" : "opacity-20 border-transparent bg-transparent cursor-default"}`
+        },
+        /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-chevron-right text-sm" })
+      ))
     );
   }
 
