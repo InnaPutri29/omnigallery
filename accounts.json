@@ -1,0 +1,46 @@
+[
+  {
+    "id": "acc-local",
+    "name": "Local Storage (D:\\FOTO & D:\\HP)",
+    "email": "local@laptop.storage",
+    "type": "local",
+    "path": "D:\\FOTO, D:\\HP",
+    "usedBytes": 142794277671,
+    "totalBytes": 268435456000,
+    "status": "active",
+    "color": "from-blue-600 to-indigo-600"
+  },
+  {
+    "id": "acc-gdrive-1785997578039",
+    "name": "I & N",
+    "email": "innaputrimeidaa@gmail.com",
+    "type": "gdrive",
+    "folderId": "1jPCqSW2naG_Ju8WJ1yyen3C-EsxN2cJd",
+    "usedBytes": 1288490188.8,
+    "totalBytes": 16106127360,
+    "status": "active",
+    "color": "from-cyan-500 to-blue-600"
+  },
+  {
+    "id": "acc-gdrive-1785998875137",
+    "name": "MALAH TURU",
+    "email": "innaputrimeida1234@gmail.com",
+    "type": "gdrive",
+    "folderId": "1-DRLeok-ls5F5_q70NOWMIdvgjTHKzcF",
+    "usedBytes": 1288490188.8,
+    "totalBytes": 16106127360,
+    "status": "active",
+    "color": "from-cyan-500 to-blue-600"
+  },
+  {
+    "id": "acc-gdrive-1785999288117",
+    "name": "MALAH TURU",
+    "email": "innaputrimeida@gmail.com",
+    "type": "gdrive",
+    "folderId": "1MHI_3pZLMewn3wcpgQAXrzIuJpE9_GMe",
+    "usedBytes": 1288490188.8,
+    "totalBytes": 16106127360,
+    "status": "active",
+    "color": "from-cyan-500 to-blue-600"
+  }
+]

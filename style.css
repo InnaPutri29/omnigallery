@@ -1,0 +1,71 @@
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #020617;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #334155;
+}
+
+/* Lightbox Modal Transitions */
+#lightbox {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+#lightbox.active {
+    display: flex !important;
+    opacity: 1 !important;
+}
+
+/* Reset Focus & Border Putar Tombol */
+*:focus, button:focus, input:focus, a:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.nav-tab {
+    outline: none !important;
+    border: 1px solid transparent !important;
+    color: #94a3b8;
+    background-color: transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-tab:hover {
+    color: #f1f5f9;
+    background-color: rgba(30, 41, 59, 0.6);
+}
+
+.nav-tab.active {
+    background-color: rgba(37, 99, 235, 0.15) !important;
+    border-color: rgba(59, 130, 246, 0.3) !important;
+    color: #60a5fa !important;
+    outline: none !important;
+}
+
+/* Layar Login Glassmorphism */
+#login-screen {
+    background: radial-gradient(circle at 50% 30%, rgba(37, 99, 235, 0.15), transparent 70%), #020617;
+}
+
+#login-screen > div {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 40px -10px rgba(59, 130, 246, 0.2);
+}
+
+

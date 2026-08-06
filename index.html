@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniGallery - Multi-Account Cloud & Local Media Gateway</title>
+    <meta name="description" content="OmniGallery Dashboard untuk mengelola foto & video dari Google Drive & Penyimpanan Lokal dalam satu galeri terpadu.">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome 6 CDN for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- React & ReactDOM CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
+    <!-- React Root Target -->
+    <div id="root"></div>
+
+    <!-- React Application Standard Architecture Scripts -->
+    <script type="text/babel" data-presets="react" src="/src/utils/formatters.js"></script>
+    <script type="text/babel" data-presets="react" src="/src/services/api.js"></script>
+    
+    <!-- Layout Components -->
+    <script type="text/babel" data-presets="react" src="/src/components/layout/Navbar.jsx"></script>
+    <script type="text/babel" data-presets="react" src="/src/components/layout/Sidebar.jsx"></script>
+
+    <!-- Common UI Components -->
+    <script type="text/babel" data-presets="react" src="/src/components/common/MediaCard.jsx"></script>
+    <script type="text/babel" data-presets="react" src="/src/components/common/LightboxModal.jsx"></script>
+    <script type="text/babel" data-presets="react" src="/src/components/common/AddAccountModal.jsx"></script>
+    <script type="text/babel" data-presets="react" src="/src/components/common/LoginModal.jsx"></script>
+
+    <!-- Feature Components -->
+    <script type="text/babel" data-presets="react" src="/src/components/features/DashboardOverview.jsx"></script>
+    <script type="text/babel" data-presets="react" src="/src/components/features/FileExplorer.jsx"></script>
+    <script type="text/babel" data-presets="react" src="/src/components/features/AccountsManagement.jsx"></script>
+
+    <!-- App Entry Points -->
+    <script type="text/babel" data-presets="react" src="/src/App.jsx"></script>
+    <script type="text/babel" data-presets="react" src="/src/main.jsx"></script>
+</body>
+</html>
