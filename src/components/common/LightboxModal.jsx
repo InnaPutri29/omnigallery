@@ -50,7 +50,7 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center"
-      style={{ background: 'rgba(0,0,0,0.95)', backdropFilter: 'blur(10px)' }}
+      style={{ background: 'rgba(2,6,23,0.75)', backdropFilter: 'blur(24px) saturate(160%)' }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       {/* Close button */}
