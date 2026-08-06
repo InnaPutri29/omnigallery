@@ -21658,7 +21658,11 @@
       if (activeCategory === "image" && item.type !== "image") return false;
       if (activeCategory === "video" && item.type !== "video") return false;
       if (activeCategory === "doc" && item.type !== "doc") return false;
-      if (activeStorageFilter !== "all" && item.accountName !== activeStorageFilter) return false;
+      if (activeStorageFilter !== "all") {
+        const matchExact = item.accountName === activeStorageFilter;
+        const matchPartial = item.accountName && activeStorageFilter && (item.accountName.toLowerCase().includes(activeStorageFilter.toLowerCase()) || activeStorageFilter.toLowerCase().includes(item.accountName.toLowerCase()));
+        if (!matchExact && !matchPartial) return false;
+      }
       if (activeSubfolderFilter !== "all" && item.subfolder !== activeSubfolderFilter) return false;
       if (searchQuery.trim() !== "") {
         const q = searchQuery.toLowerCase();
@@ -21669,9 +21673,9 @@
       }
       return true;
     });
-    const itemsInActiveStorage = activeStorageFilter === "all" ? [] : allMedia.filter((m) => m.accountName === activeStorageFilter);
+    const itemsInActiveStorage = activeStorageFilter === "all" ? [] : allMedia.filter((m) => m.accountName === activeStorageFilter || m.accountName && activeStorageFilter && (m.accountName.toLowerCase().includes(activeStorageFilter.toLowerCase()) || activeStorageFilter.toLowerCase().includes(m.accountName.toLowerCase())));
     const availableSubfolders = [...new Set(itemsInActiveStorage.map((m) => m.subfolder).filter(Boolean))];
-    const showSubfolders = activeStorageFilter !== "all" && availableSubfolders.length > 0 && !(availableSubfolders.length === 1 && availableSubfolders[0] === "Utama");
+    const showSubfolders = activeStorageFilter !== "all" && availableSubfolders.length > 0;
     let categoryLabel = "File";
     if (activeCategory === "image") categoryLabel = "Foto";
     else if (activeCategory === "video") categoryLabel = "Video";

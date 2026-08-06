@@ -264,7 +264,7 @@ async function refreshCache() {
                     source: 'local',
                     url: `/media-file?path=${encodeURIComponent(filePath)}`,
                     accountId: 'acc-local',
-                    accountName: `Lokal (${rootDirName})`,
+                    accountName: accounts[0] ? accounts[0].name : 'Local Storage',
                     subfolder: subfolder
                 });
             }
@@ -275,7 +275,7 @@ async function refreshCache() {
     for (const acc of accounts) {
         if (acc.type === 'gdrive' && acc.folderId) {
             try {
-                const driveFiles = await fetchGDriveFolderFiles(acc.folderId, `GDrive (${acc.name})`);
+                const driveFiles = await fetchGDriveFolderFiles(acc.folderId, acc.name);
                 driveFiles.forEach(df => {
                     if (df.type === 'image') imageCount++;
                     else if (df.type === 'video') videoCount++;
