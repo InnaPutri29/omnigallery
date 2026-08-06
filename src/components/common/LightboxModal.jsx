@@ -121,41 +121,20 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
           />
         )}
 
-        {/* Google Drive Video — iframe with thumbnail shown while loading */}
+        {/* Google Drive Video — iframe direct */}
         {isGDriveVideo && (
-          <div
-            className="relative rounded-2xl overflow-hidden shadow-2xl"
-            style={{ width: 'min(900px, calc(100vw - 140px))', height: 'calc(100vh - 100px)' }}
-          >
-            {/* Thumbnail shown before iframe loads */}
-            {!iframeLoaded && (
-              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80 gap-4">
-                {thumbnailUrl && (
-                  <img
-                    src={thumbnailUrl}
-                    alt={item.title}
-                    referrerPolicy="no-referrer"
-                    className="absolute inset-0 w-full h-full object-cover opacity-40"
-                  />
-                )}
-                <div className="relative z-10 flex flex-col items-center gap-3">
-                  <div className="w-14 h-14 rounded-2xl bg-rose-600/90 flex items-center justify-center animate-pulse shadow-xl">
-                    <i className="fa-solid fa-film text-white text-xl"></i>
-                  </div>
-                  <p className="text-white text-xs font-bold animate-pulse">Memuat video dari Google Drive...</p>
-                </div>
-              </div>
-            )}
-            <iframe
-              src={`https://drive.google.com/file/d/${item.id}/preview?autoplay=1`}
-              className="w-full h-full"
-              style={{ border: 'none' }}
-              allow="autoplay; encrypted-media; fullscreen"
-              allowFullScreen
-              title={item.title}
-              onLoad={() => setIframeLoaded(true)}
-            ></iframe>
-          </div>
+          <iframe
+            src={`https://drive.google.com/file/d/${item.id}/preview?autoplay=1`}
+            className="rounded-2xl shadow-2xl"
+            style={{
+              width: 'min(900px, calc(100vw - 140px))',
+              height: 'calc(100vh - 100px)',
+              border: 'none'
+            }}
+            allow="autoplay; encrypted-media; fullscreen"
+            allowFullScreen
+            title={item.title}
+          ></iframe>
         )}
 
         {/* Local Video */}

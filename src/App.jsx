@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Navbar from './components/layout/Navbar.jsx';
 import Sidebar from './components/layout/Sidebar.jsx';
+import BottomNav from './components/layout/BottomNav.jsx';
 import DashboardOverview from './components/features/DashboardOverview.jsx';
 import FileExplorer from './components/features/FileExplorer.jsx';
 import AccountsManagement from './components/features/AccountsManagement.jsx';
 import LightboxModal from './components/common/LightboxModal.jsx';
 import AddAccountModal from './components/common/AddAccountModal.jsx';
 import LoginModal from './components/common/LoginModal.jsx';
+import { useState, useEffect } from 'react';
 import { fetchPhotos, fetchAccounts, fetchStats, addAccount } from './services/api.js';
 
 export default function App() {
@@ -31,22 +33,16 @@ export default function App() {
   useEffect(() => {
     const savedUser = localStorage.getItem('gdgate_user');
     if (savedUser) {
-      try {
-        setUser(JSON.parse(savedUser));
-      } catch (e) {}
+      try { setUser(JSON.parse(savedUser)); } catch (e) {}
     }
   }, []);
 
-  // Fetch API Data
   const fetchData = async () => {
     setLoading(true);
     try {
       const [photosRes, accountsRes, statsRes] = await Promise.all([
-        fetchPhotos(),
-        fetchAccounts(),
-        fetchStats()
+        fetchPhotos(), fetchAccounts(), fetchStats()
       ]);
-
       setAllMedia(photosRes || []);
       setAccounts(accountsRes || []);
       setStats(statsRes);
@@ -57,11 +53,7 @@ export default function App() {
     }
   };
 
-  useEffect(() => {
-    if (user) {
-      fetchData();
-    }
-  }, [user]);
+  useEffect(() => { if (user) fetchData(); }, [user]);
 
   const handleLogout = () => {
     if (window.confirm("Apakah Anda yakin ingin keluar dari OmniGallery Dashboard?")) {
@@ -73,9 +65,7 @@ export default function App() {
   const handleAddAccount = async (newAccountData) => {
     try {
       const data = await addAccount(newAccountData);
-      if (data && data.accounts) {
-        setAccounts(data.accounts);
-      }
+      if (data && data.accounts) setAccounts(data.accounts);
       setTimeout(fetchData, 1000);
     } catch (e) {
       console.log("Add Account Error:", e);
@@ -89,7 +79,7 @@ export default function App() {
   return (
     <div className="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
       {/* Top Navbar */}
-      <Navbar 
+      <Navbar
         searchQuery={searchQuery}
         onSearchChange={(q) => {
           setSearchQuery(q);
@@ -102,23 +92,23 @@ export default function App() {
 
       {/* Main Layout */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Sidebar */}
-        <Sidebar 
-          activeTab={activeTab} 
-          onSwitchTab={(t) => setActiveTab(t)} 
-          stats={stats} 
+        {/* Desktop Sidebar — hidden on mobile */}
+        <Sidebar
+          activeTab={activeTab}
+          onSwitchTab={(t) => setActiveTab(t)}
+          stats={stats}
         />
 
-        {/* Content Area */}
-        <main className="flex-1 overflow-y-auto bg-slate-950/60 pb-16">
+        {/* Content Area — add bottom padding on mobile for bottom nav */}
+        <main className="flex-1 overflow-y-auto bg-slate-950/60 pb-20 md:pb-8">
           {loading && (
-            <div className="flex items-center justify-center py-12 text-slate-400 text-xs font-bold gap-2">
+            <div className="flex items-center justify-center py-16 text-slate-400 text-xs font-bold gap-2">
               <i className="fa-solid fa-spinner animate-spin text-blue-400 text-lg"></i> Memuat data galeri...
             </div>
           )}
 
           {!loading && activeTab === 'dashboard' && (
-            <DashboardOverview 
+            <DashboardOverview
               accounts={accounts}
               allMedia={allMedia}
               stats={stats}
@@ -128,7 +118,7 @@ export default function App() {
           )}
 
           {!loading && activeTab === 'explorer' && (
-            <FileExplorer 
+            <FileExplorer
               allMedia={allMedia}
               accounts={accounts}
               activeCategory={activeCategory}
@@ -149,7 +139,7 @@ export default function App() {
           )}
 
           {!loading && activeTab === 'accounts' && (
-            <AccountsManagement 
+            <AccountsManagement
               accounts={accounts}
               onOpenAddModal={() => setIsAddModalOpen(true)}
             />
@@ -157,19 +147,22 @@ export default function App() {
         </main>
       </div>
 
+      {/* Mobile Bottom Navigation Bar */}
+      <BottomNav activeTab={activeTab} onSwitchTab={(t) => setActiveTab(t)} />
+
       {/* Lightbox Modal */}
       {selectedMedia && (
-        <LightboxModal 
+        <LightboxModal
           item={selectedMedia}
           allMedia={allMedia}
           onNavigate={(item) => setSelectedMedia(item)}
-          onClose={() => setSelectedMedia(null)} 
+          onClose={() => setSelectedMedia(null)}
         />
       )}
 
       {/* Add Account Modal */}
       {isAddModalOpen && (
-        <AddAccountModal 
+        <AddAccountModal
           onClose={() => setIsAddModalOpen(false)}
           onAddAccount={handleAddAccount}
         />

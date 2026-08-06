@@ -1333,7 +1333,7 @@
           return dispatcher;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React12 = require_react(), Internals = {
+        var React13 = require_react(), Internals = {
           d: {
             f: noop,
             r: function() {
@@ -1351,7 +1351,7 @@
           },
           p: 0,
           findDOMNode: null
-        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React12.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React13.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
         "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
           "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
         );
@@ -2886,7 +2886,7 @@
           "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
         }
         function validateOptionProps(element, props) {
-          null == props.value && ("object" === typeof props.children && null !== props.children ? React12.Children.forEach(props.children, function(child) {
+          null == props.value && ("object" === typeof props.children && null !== props.children ? React13.Children.forEach(props.children, function(child) {
             null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
               "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
             ));
@@ -18518,14 +18518,14 @@
           ));
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var Scheduler = require_scheduler(), React12 = require_react(), ReactDOM2 = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+        var Scheduler = require_scheduler(), React13 = require_react(), ReactDOM2 = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
         /* @__PURE__ */ Symbol.for("react.scope");
         var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
         /* @__PURE__ */ Symbol.for("react.legacy_hidden");
         /* @__PURE__ */ Symbol.for("react.tracing_marker");
         var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
         /* @__PURE__ */ Symbol.for("react.view_transition");
-        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React12.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM2.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React13.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM2.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
           pending: false,
           data: null,
           method: null,
@@ -21313,7 +21313,7 @@
           }
         };
         (function() {
-          var isomorphicReactPackageVersion = React12.version;
+          var isomorphicReactPackageVersion = React13.version;
           if ("19.2.8" !== isomorphicReactPackageVersion)
             throw Error(
               'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.8\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -21454,40 +21454,50 @@
   });
 
   // src/main.jsx
-  var import_react11 = __toESM(require_react());
+  var import_react13 = __toESM(require_react());
   var import_client = __toESM(require_client());
 
   // src/App.jsx
-  var import_react10 = __toESM(require_react());
+  var import_react11 = __toESM(require_react());
 
   // src/components/layout/Navbar.jsx
   var import_react = __toESM(require_react());
   function Navbar({ searchQuery, onSearchChange, onOpenAddModal, user, onLogout }) {
-    return /* @__PURE__ */ import_react.default.createElement("header", { className: "h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-40 px-4 md:px-6 flex items-center justify-between" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/30" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "fa-solid fa-photo-film text-xl" })), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "font-extrabold text-lg tracking-tight text-white" }, "Omni", /* @__PURE__ */ import_react.default.createElement("span", { className: "text-blue-500" }, "Gallery")), /* @__PURE__ */ import_react.default.createElement("span", { className: "px-2 py-0.5 text-[10px] font-bold rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 uppercase tracking-wide" }, "Media Gateway")), /* @__PURE__ */ import_react.default.createElement("p", { className: "text-xs text-slate-400 hidden sm:block" }, "Multi-Account Cloud & Local Photos Hub"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "hidden md:flex items-center flex-1 max-w-md mx-8" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "relative w-full" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm" }), /* @__PURE__ */ import_react.default.createElement(
+    return /* @__PURE__ */ import_react.default.createElement("header", { className: "h-14 md:h-16 border-b border-slate-800 bg-slate-900/90 backdrop-blur-md sticky top-0 z-40 px-3 md:px-6 flex items-center justify-between gap-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "flex items-center gap-2 md:gap-3 flex-shrink-0" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/30" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "fa-solid fa-photo-film text-base md:text-xl" })), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("span", { className: "font-extrabold text-base md:text-lg tracking-tight text-white" }, "Omni", /* @__PURE__ */ import_react.default.createElement("span", { className: "text-blue-500" }, "Gallery")), /* @__PURE__ */ import_react.default.createElement("p", { className: "text-[10px] text-slate-400 hidden lg:block" }, "Multi-Account Cloud & Local Photos Hub"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "hidden md:flex items-center flex-1 max-w-md mx-6" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "relative w-full" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm" }), /* @__PURE__ */ import_react.default.createElement(
       "input",
       {
         type: "text",
         value: searchQuery,
         onChange: (e) => onSearchChange(e.target.value),
-        placeholder: "Cari file, foto, video, atau dokumen di seluruh akun...",
-        className: "w-full pl-10 pr-4 py-2 rounded-xl bg-slate-800/80 border border-slate-700/80 text-sm text-slate-200 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+        placeholder: "Cari file, foto, video...",
+        className: "w-full pl-10 pr-4 py-2 rounded-xl bg-slate-800/80 border border-slate-700/80 text-sm text-slate-200 placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-all"
       }
-    ))), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ import_react.default.createElement(
+    ))), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react.default.createElement(
+      "button",
+      {
+        className: "md:hidden w-8 h-8 rounded-xl bg-slate-800/80 border border-slate-700/80 text-slate-300 flex items-center justify-center cursor-pointer",
+        onClick: () => {
+          const q = window.prompt("Cari file...");
+          if (q !== null) onSearchChange(q);
+        }
+      },
+      /* @__PURE__ */ import_react.default.createElement("i", { className: "fa-solid fa-magnifying-glass text-sm" })
+    ), /* @__PURE__ */ import_react.default.createElement(
       "button",
       {
         onClick: onOpenAddModal,
-        className: "px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs md:text-sm shadow-md shadow-blue-600/20 flex items-center gap-2 transition-all cursor-pointer"
+        className: "px-2.5 md:px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs shadow-md shadow-blue-600/20 flex items-center gap-1.5 transition-all cursor-pointer"
       },
       /* @__PURE__ */ import_react.default.createElement("i", { className: "fa-solid fa-user-plus" }),
-      /* @__PURE__ */ import_react.default.createElement("span", { className: "hidden sm:inline" }, "Hubungkan Akun")
-    ), /* @__PURE__ */ import_react.default.createElement("div", { className: "w-px h-6 bg-slate-800" }), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-800/80 border border-slate-700/80 text-xs font-semibold text-slate-200" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "fa-solid fa-circle-user text-blue-400 text-sm" }), /* @__PURE__ */ import_react.default.createElement("span", { className: "truncate max-w-[140px]" }, user ? user.email : "Pengguna OmniGallery"), /* @__PURE__ */ import_react.default.createElement(
+      /* @__PURE__ */ import_react.default.createElement("span", { className: "hidden sm:inline" }, "Hubungkan")
+    ), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex items-center gap-1.5 px-2 md:px-3 py-1.5 rounded-xl bg-slate-800/80 border border-slate-700/80 text-xs font-semibold text-slate-200" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "fa-solid fa-circle-user text-blue-400 text-sm flex-shrink-0" }), /* @__PURE__ */ import_react.default.createElement("span", { className: "truncate max-w-[60px] md:max-w-[120px] hidden xs:block" }, user ? (user.email || "").split("@")[0] : "User"), /* @__PURE__ */ import_react.default.createElement(
       "button",
       {
         onClick: onLogout,
-        title: "Keluar / Logout",
-        className: "ml-1 text-slate-400 hover:text-rose-400 transition-colors p-1 cursor-pointer"
+        title: "Keluar",
+        className: "text-slate-400 hover:text-rose-400 transition-colors p-0.5 cursor-pointer flex-shrink-0"
       },
-      /* @__PURE__ */ import_react.default.createElement("i", { className: "fa-solid fa-right-from-bracket" })
+      /* @__PURE__ */ import_react.default.createElement("i", { className: "fa-solid fa-right-from-bracket text-xs" })
     ))));
   }
 
@@ -21542,11 +21552,35 @@
     )), /* @__PURE__ */ import_react2.default.createElement("div", { className: "flex justify-between text-[11px] text-slate-400 font-medium" }, /* @__PURE__ */ import_react2.default.createElement("span", null, formatBytes(totalUsed), " Terpakai"), /* @__PURE__ */ import_react2.default.createElement("span", null, formatBytes(totalCapacity), " Total")))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "p-4 border-t border-slate-800/80" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "p-3 rounded-xl bg-slate-950/60 border border-slate-800 flex items-center gap-3" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fa-solid fa-server" })), /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "text-xs font-bold text-white" }, "OmniGateway v2.0"), /* @__PURE__ */ import_react2.default.createElement("p", { className: "text-[10px] text-emerald-400 font-medium flex items-center gap-1" }, /* @__PURE__ */ import_react2.default.createElement("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse" }), " Connected")))));
   }
 
+  // src/components/layout/BottomNav.jsx
+  var import_react3 = __toESM(require_react());
+  function BottomNav({ activeTab, onSwitchTab }) {
+    const tabs = [
+      { id: "dashboard", icon: "fa-chart-pie", label: "Dashboard" },
+      { id: "explorer", icon: "fa-folder-tree", label: "Explorer" },
+      { id: "accounts", icon: "fa-users-gear", label: "Akun" }
+    ];
+    return /* @__PURE__ */ import_react3.default.createElement("nav", { className: "md:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 border-t border-slate-800 backdrop-blur-xl" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "flex items-center justify-around py-2 px-2" }, tabs.map((tab) => {
+      const isActive = activeTab === tab.id;
+      return /* @__PURE__ */ import_react3.default.createElement(
+        "button",
+        {
+          key: tab.id,
+          onClick: () => onSwitchTab(tab.id),
+          className: `flex flex-col items-center gap-1 px-6 py-2 rounded-2xl transition-all cursor-pointer ${isActive ? "bg-blue-600/20 text-blue-400" : "text-slate-500 hover:text-slate-300"}`
+        },
+        /* @__PURE__ */ import_react3.default.createElement("i", { className: `fa-solid ${tab.icon} text-lg ${isActive ? "text-blue-400" : ""}` }),
+        /* @__PURE__ */ import_react3.default.createElement("span", { className: "text-[10px] font-bold" }, tab.label),
+        isActive && /* @__PURE__ */ import_react3.default.createElement("span", { className: "w-1 h-1 rounded-full bg-blue-400" })
+      );
+    })));
+  }
+
   // src/components/features/DashboardOverview.jsx
-  var import_react4 = __toESM(require_react());
+  var import_react5 = __toESM(require_react());
 
   // src/components/common/MediaCard.jsx
-  var import_react3 = __toESM(require_react());
+  var import_react4 = __toESM(require_react());
   function MediaCard({ item, onOpenLightbox }) {
     const mediaUrl = item.url || (item.source === "local" ? `/photos/${item.id}` : `https://drive.google.com/thumbnail?id=${item.id}&sz=w800`);
     const viewUrl = item.viewUrl || (item.source === "gdrive" ? `https://drive.google.com/file/d/${item.id}/view` : `/media-file?path=${encodeURIComponent(item.id)}`);
@@ -21557,13 +21591,13 @@
     };
     if (isVideo) {
       const videoThumbnailSource = item.source === "gdrive" ? `/gdrive-media?id=${item.id}` : `${mediaUrl}#t=0.5`;
-      return /* @__PURE__ */ import_react3.default.createElement(
+      return /* @__PURE__ */ import_react4.default.createElement(
         "div",
         {
           onClick: handleClick,
           className: "group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-md hover:shadow-2xl hover:border-rose-500/40 transition-all duration-300 cursor-pointer"
         },
-        /* @__PURE__ */ import_react3.default.createElement("div", { className: "aspect-video bg-slate-950 overflow-hidden relative flex items-center justify-center" }, item.source === "gdrive" ? /* @__PURE__ */ import_react3.default.createElement(
+        /* @__PURE__ */ import_react4.default.createElement("div", { className: "aspect-video bg-slate-950 overflow-hidden relative flex items-center justify-center" }, item.source === "gdrive" ? /* @__PURE__ */ import_react4.default.createElement(
           "img",
           {
             src: videoThumbnailSource,
@@ -21575,7 +21609,7 @@
               e.target.style.display = "none";
             }
           }
-        ) : /* @__PURE__ */ import_react3.default.createElement(
+        ) : /* @__PURE__ */ import_react4.default.createElement(
           "video",
           {
             src: videoThumbnailSource,
@@ -21584,18 +21618,18 @@
             playsInline: true,
             className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 pointer-events-none"
           }
-        ), /* @__PURE__ */ import_react3.default.createElement("div", { className: "absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-300 flex items-center justify-center" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-rose-600/90 text-white flex items-center justify-center shadow-xl group-hover:scale-110 transition-all border border-rose-400/40 backdrop-blur-sm" }, /* @__PURE__ */ import_react3.default.createElement("i", { className: "fa-solid fa-play text-lg ml-0.5" }))), /* @__PURE__ */ import_react3.default.createElement("div", { className: "absolute top-3 right-3 bg-black/70 backdrop-blur-sm text-rose-400 px-2.5 py-1 rounded-full text-[10px] font-extrabold flex items-center gap-1 border border-rose-500/30" }, /* @__PURE__ */ import_react3.default.createElement("i", { className: "fa-solid fa-film" }), " VIDEO"), /* @__PURE__ */ import_react3.default.createElement("div", { className: "absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white px-2 py-0.5 rounded-lg text-[10px] font-mono" }, (item.ext || "MP4").replace(".", "").toUpperCase())),
-        /* @__PURE__ */ import_react3.default.createElement("div", { className: "p-3.5 space-y-1" }, /* @__PURE__ */ import_react3.default.createElement("h4", { className: "font-bold text-xs text-white truncate", title: item.title }, item.title), /* @__PURE__ */ import_react3.default.createElement("p", { className: "text-[11px] text-slate-400 flex items-center justify-between" }, /* @__PURE__ */ import_react3.default.createElement("span", { className: "truncate max-w-[130px]" }, item.accountName || "Storage Gateway"), /* @__PURE__ */ import_react3.default.createElement("span", { className: "font-mono" }, item.sizeFormatted || "")))
+        ), /* @__PURE__ */ import_react4.default.createElement("div", { className: "absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-300 flex items-center justify-center" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-rose-600/90 text-white flex items-center justify-center shadow-xl group-hover:scale-110 transition-all border border-rose-400/40 backdrop-blur-sm" }, /* @__PURE__ */ import_react4.default.createElement("i", { className: "fa-solid fa-play text-lg ml-0.5" }))), /* @__PURE__ */ import_react4.default.createElement("div", { className: "absolute top-3 right-3 bg-black/70 backdrop-blur-sm text-rose-400 px-2.5 py-1 rounded-full text-[10px] font-extrabold flex items-center gap-1 border border-rose-500/30" }, /* @__PURE__ */ import_react4.default.createElement("i", { className: "fa-solid fa-film" }), " VIDEO"), /* @__PURE__ */ import_react4.default.createElement("div", { className: "absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white px-2 py-0.5 rounded-lg text-[10px] font-mono" }, (item.ext || "MP4").replace(".", "").toUpperCase())),
+        /* @__PURE__ */ import_react4.default.createElement("div", { className: "p-3.5 space-y-1" }, /* @__PURE__ */ import_react4.default.createElement("h4", { className: "font-bold text-xs text-white truncate", title: item.title }, item.title), /* @__PURE__ */ import_react4.default.createElement("p", { className: "text-[11px] text-slate-400 flex items-center justify-between" }, /* @__PURE__ */ import_react4.default.createElement("span", { className: "truncate max-w-[130px]" }, item.accountName || "Storage Gateway"), /* @__PURE__ */ import_react4.default.createElement("span", { className: "font-mono" }, item.sizeFormatted || "")))
       );
     } else {
       const fallbackUrl = item.source === "gdrive" ? `https://drive.google.com/uc?export=view&id=${item.id}` : "";
-      return /* @__PURE__ */ import_react3.default.createElement(
+      return /* @__PURE__ */ import_react4.default.createElement(
         "div",
         {
           onClick: handleClick,
           className: "group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-md hover:shadow-2xl hover:border-blue-500/50 transition-all duration-300 cursor-pointer"
         },
-        /* @__PURE__ */ import_react3.default.createElement("div", { className: "aspect-video bg-slate-950 overflow-hidden relative" }, /* @__PURE__ */ import_react3.default.createElement(
+        /* @__PURE__ */ import_react4.default.createElement("div", { className: "aspect-video bg-slate-950 overflow-hidden relative" }, /* @__PURE__ */ import_react4.default.createElement(
           "img",
           {
             src: mediaUrl,
@@ -21612,8 +21646,8 @@
               }
             }
           }
-        ), /* @__PURE__ */ import_react3.default.createElement("div", { className: "absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center" }, /* @__PURE__ */ import_react3.default.createElement("span", { className: "px-3 py-1.5 rounded-xl bg-blue-600 text-white text-xs font-bold opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all" }, "Pratinjau"))),
-        /* @__PURE__ */ import_react3.default.createElement("div", { className: "p-3.5 space-y-1" }, /* @__PURE__ */ import_react3.default.createElement("h4", { className: "font-bold text-xs text-white truncate", title: item.title }, item.title), /* @__PURE__ */ import_react3.default.createElement("p", { className: "text-[11px] text-slate-400 flex items-center justify-between" }, /* @__PURE__ */ import_react3.default.createElement("span", { className: "truncate max-w-[130px]" }, item.accountName || "Storage Gateway"), /* @__PURE__ */ import_react3.default.createElement("span", { className: "font-mono" }, item.sizeFormatted || "")))
+        ), /* @__PURE__ */ import_react4.default.createElement("div", { className: "absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center" }, /* @__PURE__ */ import_react4.default.createElement("span", { className: "px-3 py-1.5 rounded-xl bg-blue-600 text-white text-xs font-bold opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all" }, "Pratinjau"))),
+        /* @__PURE__ */ import_react4.default.createElement("div", { className: "p-3.5 space-y-1" }, /* @__PURE__ */ import_react4.default.createElement("h4", { className: "font-bold text-xs text-white truncate", title: item.title }, item.title), /* @__PURE__ */ import_react4.default.createElement("p", { className: "text-[11px] text-slate-400 flex items-center justify-between" }, /* @__PURE__ */ import_react4.default.createElement("span", { className: "truncate max-w-[130px]" }, item.accountName || "Storage Gateway"), /* @__PURE__ */ import_react4.default.createElement("span", { className: "font-mono" }, item.sizeFormatted || "")))
       );
     }
   }
@@ -21624,23 +21658,23 @@
     const imageCount = allMedia.filter((m) => m.type === "image").length;
     const videoCount = allMedia.filter((m) => m.type === "video").length;
     const docCount = allMedia.filter((m) => m.type === "doc").length;
-    return /* @__PURE__ */ import_react4.default.createElement("div", { className: "p-6 md:p-8 space-y-8 max-w-7xl mx-auto" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-900/40 via-indigo-900/40 to-slate-900 border border-slate-800 p-6 md:p-8 shadow-xl" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "absolute -right-10 -bottom-10 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" }), /* @__PURE__ */ import_react4.default.createElement("div", { className: "relative z-10 space-y-3 max-w-2xl" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold" }, /* @__PURE__ */ import_react4.default.createElement("i", { className: "fa-solid fa-cloud-bolt" }), " Multi-Cloud Storage Aggregator"), /* @__PURE__ */ import_react4.default.createElement("h2", { className: "text-2xl md:text-3xl font-extrabold text-white tracking-tight" }, "Kelola Seluruh File & Media Cloud Anda dalam Satu Dashboard"), /* @__PURE__ */ import_react4.default.createElement("p", { className: "text-sm text-slate-300" }, "OmniGallery menghubungkan ruang penyimpanan lokal komputer Anda dengan beberapa akun Google Drive secara aman & cepat."))), /* @__PURE__ */ import_react4.default.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ import_react4.default.createElement("h3", { className: "text-base font-extrabold text-white flex items-center gap-2" }, /* @__PURE__ */ import_react4.default.createElement("i", { className: "fa-solid fa-hard-drive text-blue-400" }), " Kapasitas Penyimpanan Akun Terhubung"), /* @__PURE__ */ import_react4.default.createElement("span", { className: "text-xs text-slate-400 font-medium" }, accounts.length, " Akun Aktif")), /* @__PURE__ */ import_react4.default.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" }, accounts.map((acc) => {
+    return /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-6 md:p-8 space-y-8 max-w-7xl mx-auto" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-900/40 via-indigo-900/40 to-slate-900 border border-slate-800 p-6 md:p-8 shadow-xl" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "absolute -right-10 -bottom-10 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" }), /* @__PURE__ */ import_react5.default.createElement("div", { className: "relative z-10 space-y-3 max-w-2xl" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-cloud-bolt" }), " Multi-Cloud Storage Aggregator"), /* @__PURE__ */ import_react5.default.createElement("h2", { className: "text-2xl md:text-3xl font-extrabold text-white tracking-tight" }, "Kelola Seluruh File & Media Cloud Anda dalam Satu Dashboard"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm text-slate-300" }, "OmniGallery menghubungkan ruang penyimpanan lokal komputer Anda dengan beberapa akun Google Drive secara aman & cepat."))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ import_react5.default.createElement("h3", { className: "text-base font-extrabold text-white flex items-center gap-2" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-hard-drive text-blue-400" }), " Kapasitas Penyimpanan Akun Terhubung"), /* @__PURE__ */ import_react5.default.createElement("span", { className: "text-xs text-slate-400 font-medium" }, accounts.length, " Akun Aktif")), /* @__PURE__ */ import_react5.default.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" }, accounts.map((acc) => {
       const percent = Math.min(100, Math.round(acc.usedBytes / (acc.totalBytes || 1) * 100));
       const isDrive = acc.type === "gdrive";
-      return /* @__PURE__ */ import_react4.default.createElement("div", { key: acc.id, className: "p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4 hover:border-blue-500/40 transition-all" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: `w-10 h-10 rounded-xl bg-gradient-to-br ${acc.color || "from-blue-600 to-indigo-600"} text-white flex items-center justify-center font-bold shadow-md` }, /* @__PURE__ */ import_react4.default.createElement("i", { className: isDrive ? "fa-brands fa-google-drive text-lg" : "fa-solid fa-laptop text-lg" })), /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("h4", { className: "font-extrabold text-sm text-white" }, acc.name), /* @__PURE__ */ import_react4.default.createElement("p", { className: "text-xs text-slate-400 font-mono" }, acc.email))), /* @__PURE__ */ import_react4.default.createElement("span", { className: "px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" }, "Aktif")), /* @__PURE__ */ import_react4.default.createElement("div", { className: "space-y-1.5" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "flex justify-between text-xs font-semibold" }, /* @__PURE__ */ import_react4.default.createElement("span", { className: "text-slate-400" }, "Terpakai"), /* @__PURE__ */ import_react4.default.createElement("span", { className: "text-white font-mono" }, percent, "%")), /* @__PURE__ */ import_react4.default.createElement("div", { className: "w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800 p-0.5" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full transition-all duration-500", style: { width: `${percent}%` } })), /* @__PURE__ */ import_react4.default.createElement("div", { className: "flex justify-between text-[11px] text-slate-400 font-mono" }, /* @__PURE__ */ import_react4.default.createElement("span", null, formatBytes(acc.usedBytes)), /* @__PURE__ */ import_react4.default.createElement("span", null, formatBytes(acc.totalBytes)))));
-    }))), /* @__PURE__ */ import_react4.default.createElement("div", { className: "grid grid-cols-2 md:grid-cols-4 gap-4" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex items-center gap-4" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-blue-600/15 border border-blue-500/30 text-blue-400 flex items-center justify-center text-xl font-bold" }, /* @__PURE__ */ import_react4.default.createElement("i", { className: "fa-solid fa-photo-film" })), /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("p", { className: "text-xs text-slate-400 font-semibold" }, "Total Media"), /* @__PURE__ */ import_react4.default.createElement("h4", { className: "text-xl font-extrabold text-white" }, allMedia.length))), /* @__PURE__ */ import_react4.default.createElement("div", { className: "p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex items-center gap-4" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-purple-600/15 border border-purple-500/30 text-purple-400 flex items-center justify-center text-xl font-bold" }, /* @__PURE__ */ import_react4.default.createElement("i", { className: "fa-solid fa-image" })), /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("p", { className: "text-xs text-slate-400 font-semibold" }, "Foto & Gambar"), /* @__PURE__ */ import_react4.default.createElement("h4", { className: "text-xl font-extrabold text-white" }, imageCount))), /* @__PURE__ */ import_react4.default.createElement("div", { className: "p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex items-center gap-4" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-rose-600/15 border border-rose-500/30 text-rose-400 flex items-center justify-center text-xl font-bold" }, /* @__PURE__ */ import_react4.default.createElement("i", { className: "fa-solid fa-film" })), /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("p", { className: "text-xs text-slate-400 font-semibold" }, "Video"), /* @__PURE__ */ import_react4.default.createElement("h4", { className: "text-xl font-extrabold text-white" }, videoCount))), /* @__PURE__ */ import_react4.default.createElement("div", { className: "p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex items-center gap-4" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-emerald-600/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-xl font-bold" }, /* @__PURE__ */ import_react4.default.createElement("i", { className: "fa-solid fa-file-lines" })), /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("p", { className: "text-xs text-slate-400 font-semibold" }, "Dokumen"), /* @__PURE__ */ import_react4.default.createElement("h4", { className: "text-xl font-extrabold text-white" }, docCount)))), /* @__PURE__ */ import_react4.default.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ import_react4.default.createElement("h3", { className: "text-base font-extrabold text-white flex items-center gap-2" }, /* @__PURE__ */ import_react4.default.createElement("i", { className: "fa-solid fa-clock-rotate-left text-blue-400" }), " Media Terbaru"), /* @__PURE__ */ import_react4.default.createElement(
+      return /* @__PURE__ */ import_react5.default.createElement("div", { key: acc.id, className: "p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4 hover:border-blue-500/40 transition-all" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: `w-10 h-10 rounded-xl bg-gradient-to-br ${acc.color || "from-blue-600 to-indigo-600"} text-white flex items-center justify-center font-bold shadow-md` }, /* @__PURE__ */ import_react5.default.createElement("i", { className: isDrive ? "fa-brands fa-google-drive text-lg" : "fa-solid fa-laptop text-lg" })), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h4", { className: "font-extrabold text-sm text-white" }, acc.name), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-xs text-slate-400 font-mono" }, acc.email))), /* @__PURE__ */ import_react5.default.createElement("span", { className: "px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" }, "Aktif")), /* @__PURE__ */ import_react5.default.createElement("div", { className: "space-y-1.5" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex justify-between text-xs font-semibold" }, /* @__PURE__ */ import_react5.default.createElement("span", { className: "text-slate-400" }, "Terpakai"), /* @__PURE__ */ import_react5.default.createElement("span", { className: "text-white font-mono" }, percent, "%")), /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800 p-0.5" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full transition-all duration-500", style: { width: `${percent}%` } })), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex justify-between text-[11px] text-slate-400 font-mono" }, /* @__PURE__ */ import_react5.default.createElement("span", null, formatBytes(acc.usedBytes)), /* @__PURE__ */ import_react5.default.createElement("span", null, formatBytes(acc.totalBytes)))));
+    }))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "grid grid-cols-2 md:grid-cols-4 gap-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-blue-600/15 border border-blue-500/30 text-blue-400 flex items-center justify-center text-xl font-bold" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-photo-film" })), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-xs text-slate-400 font-semibold" }, "Total Media"), /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-xl font-extrabold text-white" }, allMedia.length))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-purple-600/15 border border-purple-500/30 text-purple-400 flex items-center justify-center text-xl font-bold" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-image" })), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-xs text-slate-400 font-semibold" }, "Foto & Gambar"), /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-xl font-extrabold text-white" }, imageCount))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-rose-600/15 border border-rose-500/30 text-rose-400 flex items-center justify-center text-xl font-bold" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-film" })), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-xs text-slate-400 font-semibold" }, "Video"), /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-xl font-extrabold text-white" }, videoCount))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-emerald-600/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-xl font-bold" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-file-lines" })), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-xs text-slate-400 font-semibold" }, "Dokumen"), /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-xl font-extrabold text-white" }, docCount)))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ import_react5.default.createElement("h3", { className: "text-base font-extrabold text-white flex items-center gap-2" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-clock-rotate-left text-blue-400" }), " Media Terbaru"), /* @__PURE__ */ import_react5.default.createElement(
       "button",
       {
         onClick: onNavigateToExplorer,
         className: "text-xs text-blue-400 hover:text-blue-300 font-bold flex items-center gap-1 cursor-pointer"
       },
       "Lihat Semua di Explorer ",
-      /* @__PURE__ */ import_react4.default.createElement("i", { className: "fa-solid fa-arrow-right text-[10px]" })
-    )), /* @__PURE__ */ import_react4.default.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5" }, recentItems.map((item) => /* @__PURE__ */ import_react4.default.createElement(MediaCard, { key: item.id, item, onOpenLightbox })))));
+      /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-arrow-right text-[10px]" })
+    )), /* @__PURE__ */ import_react5.default.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5" }, recentItems.map((item) => /* @__PURE__ */ import_react5.default.createElement(MediaCard, { key: item.id, item, onOpenLightbox })))));
   }
 
   // src/components/features/FileExplorer.jsx
-  var import_react5 = __toESM(require_react());
+  var import_react6 = __toESM(require_react());
   function FileExplorer({
     allMedia,
     accounts,
@@ -21689,13 +21723,13 @@
     const videoCountInSubfolder = activeCategory === "image" ? allMedia.filter(
       (m) => (activeStorageFilter === "all" || m.accountName === activeStorageFilter) && (activeSubfolderFilter === "all" || m.subfolder === activeSubfolderFilter) && m.type === "video"
     ).length : 0;
-    return /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-6 md:p-8 space-y-6 max-w-7xl mx-auto" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-xs font-extrabold text-slate-300 uppercase tracking-wider flex items-center gap-2" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-layer-group text-blue-400" }), " Pilih Sumber Penyimpanan:"), /* @__PURE__ */ import_react5.default.createElement("span", { className: "text-[11px] text-slate-400 font-mono" }, accounts.length + 1, " Sumber Aktif")), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex flex-wrap items-center gap-2" }, /* @__PURE__ */ import_react5.default.createElement(
+    return /* @__PURE__ */ import_react6.default.createElement("div", { className: "p-3 md:p-6 lg:p-8 space-y-4 md:space-y-6 max-w-7xl mx-auto" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "p-3 md:p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2 md:space-y-3" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ import_react6.default.createElement("p", { className: "text-[11px] md:text-xs font-extrabold text-slate-300 uppercase tracking-wider flex items-center gap-2" }, /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-layer-group text-blue-400" }), " Sumber Penyimpanan:"), /* @__PURE__ */ import_react6.default.createElement("span", { className: "text-[10px] text-slate-400 font-mono" }, accounts.length + 1, " Aktif")), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center gap-2 overflow-x-auto pb-1", style: { scrollbarWidth: "none" } }, /* @__PURE__ */ import_react6.default.createElement(
       "button",
       {
         onClick: () => onSelectStorage("all"),
         className: `px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border ${activeStorageFilter === "all" ? "bg-blue-600 text-white border-blue-500 shadow-md" : "bg-slate-950 text-slate-400 border-slate-800 hover:text-white"}`
       },
-      /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-border-all mr-1.5" }),
+      /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-border-all mr-1.5" }),
       " Semua Storage (",
       allMedia.length,
       ")"
@@ -21703,67 +21737,67 @@
       const count = allMedia.filter((m) => m.accountName === acc.name).length;
       const isDrive = acc.type === "gdrive";
       const isSelected = activeStorageFilter === acc.name;
-      return /* @__PURE__ */ import_react5.default.createElement(
+      return /* @__PURE__ */ import_react6.default.createElement(
         "button",
         {
           key: acc.id,
           onClick: () => onSelectStorage(acc.name),
           className: `px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border ${isSelected ? "bg-blue-600 text-white border-blue-500 shadow-md" : "bg-slate-950 text-slate-400 border-slate-800 hover:text-white"}`
         },
-        /* @__PURE__ */ import_react5.default.createElement("i", { className: isDrive ? "fa-brands fa-google-drive mr-1.5 text-emerald-400" : "fa-solid fa-folder mr-1.5 text-amber-400" }),
+        /* @__PURE__ */ import_react6.default.createElement("i", { className: isDrive ? "fa-brands fa-google-drive mr-1.5 text-emerald-400" : "fa-solid fa-folder mr-1.5 text-amber-400" }),
         acc.name,
         " ",
-        /* @__PURE__ */ import_react5.default.createElement("span", { className: "ml-1 text-[10px] opacity-75 font-mono" }, "(", count, ")")
+        /* @__PURE__ */ import_react6.default.createElement("span", { className: "ml-1 text-[10px] opacity-75 font-mono" }, "(", count, ")")
       );
-    }))), showSubfolders && /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-blue-950/40 border border-blue-500/30 space-y-3 shadow-lg" }, /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-xs font-extrabold text-amber-400 uppercase tracking-wider flex items-center gap-2" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-folder-open text-amber-400" }), " Pilih Subfolder di dalam Storage ini:"), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex flex-wrap items-center gap-2" }, /* @__PURE__ */ import_react5.default.createElement(
+    }))), showSubfolders && /* @__PURE__ */ import_react6.default.createElement("div", { className: "p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-blue-950/40 border border-blue-500/30 space-y-3 shadow-lg" }, /* @__PURE__ */ import_react6.default.createElement("p", { className: "text-xs font-extrabold text-amber-400 uppercase tracking-wider flex items-center gap-2" }, /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-folder-open text-amber-400" }), " Pilih Subfolder di dalam Storage ini:"), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center gap-2 overflow-x-auto pb-1", style: { scrollbarWidth: "none" } }, /* @__PURE__ */ import_react6.default.createElement(
       "button",
       {
         onClick: () => onSelectSubfolder("all"),
         className: `px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${activeSubfolderFilter === "all" ? "bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md" : "bg-slate-950 text-slate-300 border-slate-800 hover:text-white"}`
       },
-      /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-folder mr-1.5" }),
+      /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-folder mr-1.5" }),
       " Semua Subfolder (",
       itemsInActiveStorage.length,
       ")"
     ), availableSubfolders.map((sf) => {
       const count = itemsInActiveStorage.filter((m) => m.subfolder === sf).length;
       const isSelected = activeSubfolderFilter === sf;
-      return /* @__PURE__ */ import_react5.default.createElement(
+      return /* @__PURE__ */ import_react6.default.createElement(
         "button",
         {
           key: sf,
           onClick: () => onSelectSubfolder(sf),
           className: `px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${isSelected ? "bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md" : "bg-slate-950 text-slate-300 border-slate-800 hover:text-white"}`
         },
-        /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-folder mr-1.5 text-amber-400" }),
+        /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-folder mr-1.5 text-amber-400" }),
         sf,
         " ",
-        /* @__PURE__ */ import_react5.default.createElement("span", { className: "ml-1 text-[10px] opacity-75 font-mono" }, "(", count, ")")
+        /* @__PURE__ */ import_react6.default.createElement("span", { className: "ml-1 text-[10px] opacity-75 font-mono" }, "(", count, ")")
       );
-    }))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center gap-2 w-full md:w-auto" }, /* @__PURE__ */ import_react5.default.createElement(
+    }))), /* @__PURE__ */ import_react6.default.createElement("div", { className: "p-4 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center gap-2 w-full md:w-auto" }, /* @__PURE__ */ import_react6.default.createElement(
       "button",
       {
         onClick: () => onSelectCategory("all"),
         className: `px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeCategory === "all" ? "bg-blue-600 text-white shadow-md" : "text-slate-400 hover:text-white"}`
       },
       "Semua File"
-    ), /* @__PURE__ */ import_react5.default.createElement(
+    ), /* @__PURE__ */ import_react6.default.createElement(
       "button",
       {
         onClick: () => onSelectCategory("image"),
         className: `px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeCategory === "image" ? "bg-blue-600 text-white shadow-md" : "text-slate-400 hover:text-white"}`
       },
-      /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-image mr-1" }),
+      /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-image mr-1" }),
       " Foto"
-    ), /* @__PURE__ */ import_react5.default.createElement(
+    ), /* @__PURE__ */ import_react6.default.createElement(
       "button",
       {
         onClick: () => onSelectCategory("video"),
         className: `px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeCategory === "video" ? "bg-blue-600 text-white shadow-md" : "text-slate-400 hover:text-white"}`
       },
-      /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-circle-play mr-1 text-rose-400" }),
+      /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-circle-play mr-1 text-rose-400" }),
       " Video"
-    )), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center gap-3 w-full md:w-auto" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "relative flex-1 md:w-64" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs" }), /* @__PURE__ */ import_react5.default.createElement(
+    )), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center gap-3 w-full md:w-auto" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "relative flex-1 md:w-64" }, /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs" }), /* @__PURE__ */ import_react6.default.createElement(
       "input",
       {
         type: "text",
@@ -21772,49 +21806,49 @@
         placeholder: "Cari file di sini...",
         className: "w-full pl-9 pr-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-all"
       }
-    )), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center bg-slate-950 rounded-xl p-1 border border-slate-800" }, /* @__PURE__ */ import_react5.default.createElement(
+    )), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center bg-slate-950 rounded-xl p-1 border border-slate-800" }, /* @__PURE__ */ import_react6.default.createElement(
       "button",
       {
         onClick: () => onSelectViewMode("grid"),
         title: "Tampilan Grid",
         className: `p-2 rounded-lg text-xs transition-all cursor-pointer ${viewMode === "grid" ? "bg-blue-600 text-white" : "text-slate-400 hover:text-white"}`
       },
-      /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-border-all" })
-    ), /* @__PURE__ */ import_react5.default.createElement(
+      /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-border-all" })
+    ), /* @__PURE__ */ import_react6.default.createElement(
       "button",
       {
         onClick: () => onSelectViewMode("list"),
         title: "Tampilan Daftar",
         className: `p-2 rounded-lg text-xs transition-all cursor-pointer ${viewMode === "list" ? "bg-blue-600 text-white" : "text-slate-400 hover:text-white"}`
       },
-      /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-list-ul" })
-    )))), filteredMedia.length === 0 ? /* @__PURE__ */ import_react5.default.createElement("div", { className: "text-center py-12 space-y-4" }, activeCategory === "image" && videoCountInSubfolder > 0 ? /* @__PURE__ */ import_react5.default.createElement("div", { className: "space-y-3 py-6 max-w-md mx-auto" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-rose-500/20 text-rose-400 mx-auto flex items-center justify-center text-xl font-bold" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-film" })), /* @__PURE__ */ import_react5.default.createElement("h4", { className: "font-extrabold text-sm text-white" }, "Subfolder ini Berisi Video!"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-xs text-slate-400" }, "Folder ini tidak memiliki file Foto, tetapi memiliki ", /* @__PURE__ */ import_react5.default.createElement("span", { className: "font-mono text-rose-400 font-bold" }, videoCountInSubfolder, " file Video"), "."), /* @__PURE__ */ import_react5.default.createElement(
+      /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-list-ul" })
+    )))), filteredMedia.length === 0 ? /* @__PURE__ */ import_react6.default.createElement("div", { className: "text-center py-12 space-y-4" }, activeCategory === "image" && videoCountInSubfolder > 0 ? /* @__PURE__ */ import_react6.default.createElement("div", { className: "space-y-3 py-6 max-w-md mx-auto" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-rose-500/20 text-rose-400 mx-auto flex items-center justify-center text-xl font-bold" }, /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-film" })), /* @__PURE__ */ import_react6.default.createElement("h4", { className: "font-extrabold text-sm text-white" }, "Subfolder ini Berisi Video!"), /* @__PURE__ */ import_react6.default.createElement("p", { className: "text-xs text-slate-400" }, "Folder ini tidak memiliki file Foto, tetapi memiliki ", /* @__PURE__ */ import_react6.default.createElement("span", { className: "font-mono text-rose-400 font-bold" }, videoCountInSubfolder, " file Video"), "."), /* @__PURE__ */ import_react6.default.createElement(
       "button",
       {
         onClick: () => onSelectCategory("video"),
         className: "px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-lg transition-all inline-flex items-center gap-2 cursor-pointer"
       },
-      /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-circle-play" }),
+      /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-circle-play" }),
       " Klik di Sini untuk Tampilkan ",
       videoCountInSubfolder,
       " Video"
-    )) : /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-slate-400 text-sm font-medium" }, "Tidak ada file yang cocok dengan pencarian.")) : viewMode === "grid" ? (
+    )) : /* @__PURE__ */ import_react6.default.createElement("p", { className: "text-slate-400 text-sm font-medium" }, "Tidak ada file yang cocok dengan pencarian.")) : viewMode === "grid" ? (
       /* Grid View */
-      /* @__PURE__ */ import_react5.default.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5" }, displayedItems.map((item) => /* @__PURE__ */ import_react5.default.createElement(MediaCard, { key: item.id, item, onOpenLightbox })), filteredMedia.length > displayLimit && /* @__PURE__ */ import_react5.default.createElement("div", { className: "col-span-full flex flex-col items-center justify-center pt-6 pb-4 space-y-3" }, /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-xs text-slate-400 font-medium" }, "Menampilkan ", displayedItems.length, " dari ", filteredMedia.length, " total ", categoryLabel.toLowerCase()), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex flex-wrap items-center justify-center gap-3" }, /* @__PURE__ */ import_react5.default.createElement(
+      /* @__PURE__ */ import_react6.default.createElement("div", { className: "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5" }, displayedItems.map((item) => /* @__PURE__ */ import_react6.default.createElement(MediaCard, { key: item.id, item, onOpenLightbox })), filteredMedia.length > displayLimit && /* @__PURE__ */ import_react6.default.createElement("div", { className: "col-span-full flex flex-col items-center justify-center pt-6 pb-4 space-y-3" }, /* @__PURE__ */ import_react6.default.createElement("p", { className: "text-xs text-slate-400 font-medium" }, "Menampilkan ", displayedItems.length, " dari ", filteredMedia.length, " total ", categoryLabel.toLowerCase()), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex flex-wrap items-center justify-center gap-3" }, /* @__PURE__ */ import_react6.default.createElement(
         "button",
         {
           onClick: onLoadMore,
           className: "px-5 py-2.5 rounded-xl bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white font-bold text-xs border border-blue-500/30 transition-all shadow-md flex items-center gap-2 cursor-pointer"
         },
-        /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-angles-down text-xs" }),
+        /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-angles-down text-xs" }),
         " Tampilkan Lebih Banyak (+36)"
-      ), /* @__PURE__ */ import_react5.default.createElement(
+      ), /* @__PURE__ */ import_react6.default.createElement(
         "button",
         {
           onClick: onShowAll,
           className: "px-5 py-2.5 rounded-xl bg-emerald-600/20 hover:bg-emerald-600 text-emerald-400 hover:text-white font-bold text-xs border border-emerald-500/30 transition-all shadow-md flex items-center gap-2 cursor-pointer"
         },
-        /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-border-all text-xs" }),
+        /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-border-all text-xs" }),
         " Tampilkan Semua (",
         filteredMedia.length,
         " ",
@@ -21823,11 +21857,11 @@
       ))))
     ) : (
       /* List View Table */
-      /* @__PURE__ */ import_react5.default.createElement("div", { className: "rounded-2xl border border-slate-800 overflow-hidden bg-slate-900/90 shadow-xl" }, /* @__PURE__ */ import_react5.default.createElement("table", { className: "w-full text-left text-xs" }, /* @__PURE__ */ import_react5.default.createElement("thead", { className: "bg-slate-950 text-slate-400 uppercase tracking-wider font-extrabold border-b border-slate-800" }, /* @__PURE__ */ import_react5.default.createElement("tr", null, /* @__PURE__ */ import_react5.default.createElement("th", { className: "py-3.5 px-4" }, "Nama File Media"), /* @__PURE__ */ import_react5.default.createElement("th", { className: "py-3.5 px-4" }, "Tipe"), /* @__PURE__ */ import_react5.default.createElement("th", { className: "py-3.5 px-4" }, "Sumber Storage"), /* @__PURE__ */ import_react5.default.createElement("th", { className: "py-3.5 px-4" }, "Ukuran"), /* @__PURE__ */ import_react5.default.createElement("th", { className: "py-3.5 px-4 text-right" }, "Aksi"))), /* @__PURE__ */ import_react5.default.createElement("tbody", { className: "divide-y divide-slate-800/80" }, displayedItems.map((item) => {
+      /* @__PURE__ */ import_react6.default.createElement("div", { className: "rounded-2xl border border-slate-800 overflow-hidden bg-slate-900/90 shadow-xl" }, /* @__PURE__ */ import_react6.default.createElement("table", { className: "w-full text-left text-xs" }, /* @__PURE__ */ import_react6.default.createElement("thead", { className: "bg-slate-950 text-slate-400 uppercase tracking-wider font-extrabold border-b border-slate-800" }, /* @__PURE__ */ import_react6.default.createElement("tr", null, /* @__PURE__ */ import_react6.default.createElement("th", { className: "py-3.5 px-4" }, "Nama File Media"), /* @__PURE__ */ import_react6.default.createElement("th", { className: "py-3.5 px-4" }, "Tipe"), /* @__PURE__ */ import_react6.default.createElement("th", { className: "py-3.5 px-4" }, "Sumber Storage"), /* @__PURE__ */ import_react6.default.createElement("th", { className: "py-3.5 px-4" }, "Ukuran"), /* @__PURE__ */ import_react6.default.createElement("th", { className: "py-3.5 px-4 text-right" }, "Aksi"))), /* @__PURE__ */ import_react6.default.createElement("tbody", { className: "divide-y divide-slate-800/80" }, displayedItems.map((item) => {
         const handleRowClick = () => {
           onOpenLightbox(item);
         };
-        return /* @__PURE__ */ import_react5.default.createElement("tr", { key: item.id, className: "hover:bg-slate-800/40 transition-colors cursor-pointer", onClick: handleRowClick }, /* @__PURE__ */ import_react5.default.createElement("td", { className: "py-3 px-4 font-bold text-slate-200 flex items-center gap-3" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: item.type === "video" ? "fa-solid fa-film text-rose-400" : "fa-solid fa-image text-purple-400" })), /* @__PURE__ */ import_react5.default.createElement("span", { className: "truncate max-w-xs" }, item.title)), /* @__PURE__ */ import_react5.default.createElement("td", { className: `py-3 px-4 uppercase text-[11px] font-extrabold ${item.type === "video" ? "text-rose-400" : "text-purple-400"}` }, item.type), /* @__PURE__ */ import_react5.default.createElement("td", { className: "py-3 px-4 text-slate-400 font-medium" }, item.accountName || (item.source === "local" ? "Local Storage" : "Google Drive")), /* @__PURE__ */ import_react5.default.createElement("td", { className: "py-3 px-4 text-slate-400 font-mono" }, item.sizeFormatted || "N/A"), /* @__PURE__ */ import_react5.default.createElement("td", { className: "py-3 px-4 text-right" }, /* @__PURE__ */ import_react5.default.createElement(
+        return /* @__PURE__ */ import_react6.default.createElement("tr", { key: item.id, className: "hover:bg-slate-800/40 transition-colors cursor-pointer", onClick: handleRowClick }, /* @__PURE__ */ import_react6.default.createElement("td", { className: "py-3 px-4 font-bold text-slate-200 flex items-center gap-3" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400" }, /* @__PURE__ */ import_react6.default.createElement("i", { className: item.type === "video" ? "fa-solid fa-film text-rose-400" : "fa-solid fa-image text-purple-400" })), /* @__PURE__ */ import_react6.default.createElement("span", { className: "truncate max-w-xs" }, item.title)), /* @__PURE__ */ import_react6.default.createElement("td", { className: `py-3 px-4 uppercase text-[11px] font-extrabold ${item.type === "video" ? "text-rose-400" : "text-purple-400"}` }, item.type), /* @__PURE__ */ import_react6.default.createElement("td", { className: "py-3 px-4 text-slate-400 font-medium" }, item.accountName || (item.source === "local" ? "Local Storage" : "Google Drive")), /* @__PURE__ */ import_react6.default.createElement("td", { className: "py-3 px-4 text-slate-400 font-mono" }, item.sizeFormatted || "N/A"), /* @__PURE__ */ import_react6.default.createElement("td", { className: "py-3 px-4 text-right" }, /* @__PURE__ */ import_react6.default.createElement(
           "button",
           {
             onClick: (e) => {
@@ -21843,22 +21877,22 @@
   }
 
   // src/components/features/AccountsManagement.jsx
-  var import_react6 = __toESM(require_react());
+  var import_react7 = __toESM(require_react());
   function AccountsManagement({ accounts, onOpenAddModal }) {
-    return /* @__PURE__ */ import_react6.default.createElement("div", { className: "p-6 md:p-8 space-y-6 max-w-7xl mx-auto" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-3xl bg-slate-900 border border-slate-800" }, /* @__PURE__ */ import_react6.default.createElement("div", null, /* @__PURE__ */ import_react6.default.createElement("h2", { className: "text-xl font-extrabold text-white" }, "Manajemen Akun Storage"), /* @__PURE__ */ import_react6.default.createElement("p", { className: "text-xs text-slate-400 mt-1" }, "Kelola koneksi akun Google Drive dan direktori penyimpanan lokal Anda.")), /* @__PURE__ */ import_react6.default.createElement(
+    return /* @__PURE__ */ import_react7.default.createElement("div", { className: "p-6 md:p-8 space-y-6 max-w-7xl mx-auto" }, /* @__PURE__ */ import_react7.default.createElement("div", { className: "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-3xl bg-slate-900 border border-slate-800" }, /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("h2", { className: "text-xl font-extrabold text-white" }, "Manajemen Akun Storage"), /* @__PURE__ */ import_react7.default.createElement("p", { className: "text-xs text-slate-400 mt-1" }, "Kelola koneksi akun Google Drive dan direktori penyimpanan lokal Anda.")), /* @__PURE__ */ import_react7.default.createElement(
       "button",
       {
         onClick: onOpenAddModal,
         className: "px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-lg shadow-blue-600/30 transition-all flex items-center gap-2 cursor-pointer"
       },
-      /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-plus" }),
+      /* @__PURE__ */ import_react7.default.createElement("i", { className: "fa-solid fa-plus" }),
       " Hubungkan Akun Baru"
-    )), /* @__PURE__ */ import_react6.default.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6" }, accounts.map((acc) => {
+    )), /* @__PURE__ */ import_react7.default.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6" }, accounts.map((acc) => {
       const percent = Math.min(100, Math.round(acc.usedBytes / (acc.totalBytes || 1) * 100));
       const isDrive = acc.type === "gdrive";
       const cleanFolderId = (acc.folderId || "").split("/")[0];
       const driveUrl = cleanFolderId ? `https://drive.google.com/drive/folders/${cleanFolderId}` : "#";
-      return /* @__PURE__ */ import_react6.default.createElement("div", { key: acc.id, className: "p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 hover:border-blue-500/40 transition-all shadow-md" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center gap-3.5" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: `w-12 h-12 rounded-2xl bg-gradient-to-br ${acc.color || "from-blue-600 to-indigo-600"} text-white flex items-center justify-center font-bold text-xl shadow-lg` }, /* @__PURE__ */ import_react6.default.createElement("i", { className: isDrive ? "fa-brands fa-google-drive" : "fa-solid fa-laptop" })), /* @__PURE__ */ import_react6.default.createElement("div", null, /* @__PURE__ */ import_react6.default.createElement("span", { className: "px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-800 text-slate-300 uppercase tracking-wider" }, isDrive ? "Google Drive Cloud" : "Local Disk"), /* @__PURE__ */ import_react6.default.createElement("h4", { className: "font-extrabold text-base text-white mt-0.5" }, acc.name))), /* @__PURE__ */ import_react6.default.createElement("span", { className: "px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" }, "Terhubung")), /* @__PURE__ */ import_react6.default.createElement("div", null, /* @__PURE__ */ import_react6.default.createElement("p", { className: "text-xs text-slate-400 font-mono" }, acc.email), cleanFolderId && /* @__PURE__ */ import_react6.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react6.default.createElement("p", { className: "text-[11px] text-slate-400 font-mono truncate", title: cleanFolderId }, "ID Folder: ", cleanFolderId), /* @__PURE__ */ import_react6.default.createElement(
+      return /* @__PURE__ */ import_react7.default.createElement("div", { key: acc.id, className: "p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 hover:border-blue-500/40 transition-all shadow-md" }, /* @__PURE__ */ import_react7.default.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ import_react7.default.createElement("div", { className: "flex items-center gap-3.5" }, /* @__PURE__ */ import_react7.default.createElement("div", { className: `w-12 h-12 rounded-2xl bg-gradient-to-br ${acc.color || "from-blue-600 to-indigo-600"} text-white flex items-center justify-center font-bold text-xl shadow-lg` }, /* @__PURE__ */ import_react7.default.createElement("i", { className: isDrive ? "fa-brands fa-google-drive" : "fa-solid fa-laptop" })), /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("span", { className: "px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-800 text-slate-300 uppercase tracking-wider" }, isDrive ? "Google Drive Cloud" : "Local Disk"), /* @__PURE__ */ import_react7.default.createElement("h4", { className: "font-extrabold text-base text-white mt-0.5" }, acc.name))), /* @__PURE__ */ import_react7.default.createElement("span", { className: "px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" }, "Terhubung")), /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("p", { className: "text-xs text-slate-400 font-mono" }, acc.email), cleanFolderId && /* @__PURE__ */ import_react7.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react7.default.createElement("p", { className: "text-[11px] text-slate-400 font-mono truncate", title: cleanFolderId }, "ID Folder: ", cleanFolderId), /* @__PURE__ */ import_react7.default.createElement(
         "a",
         {
           href: driveUrl,
@@ -21866,20 +21900,20 @@
           rel: "noreferrer",
           className: "inline-flex items-center gap-1.5 mt-2 px-3 py-1 rounded-lg bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white text-xs font-bold transition-all"
         },
-        /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-arrow-up-right-from-square text-[10px]" }),
+        /* @__PURE__ */ import_react7.default.createElement("i", { className: "fa-solid fa-arrow-up-right-from-square text-[10px]" }),
         " Buka Folder Drive"
-      ))), /* @__PURE__ */ import_react6.default.createElement("div", { className: "space-y-2 pt-2 border-t border-slate-800/80" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex justify-between text-xs" }, /* @__PURE__ */ import_react6.default.createElement("span", { className: "text-slate-400 font-medium" }, "Penggunaan Kapasitas"), /* @__PURE__ */ import_react6.default.createElement("span", { className: "font-bold text-blue-400 font-mono" }, percent, "%")), /* @__PURE__ */ import_react6.default.createElement("div", { className: "w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800 p-0.5" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full transition-all duration-500", style: { width: `${percent}%` } })), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex justify-between text-[11px] text-slate-400 font-mono" }, /* @__PURE__ */ import_react6.default.createElement("span", null, "Terpakai: ", formatBytes(acc.usedBytes)), /* @__PURE__ */ import_react6.default.createElement("span", null, "Total: ", formatBytes(acc.totalBytes)))));
+      ))), /* @__PURE__ */ import_react7.default.createElement("div", { className: "space-y-2 pt-2 border-t border-slate-800/80" }, /* @__PURE__ */ import_react7.default.createElement("div", { className: "flex justify-between text-xs" }, /* @__PURE__ */ import_react7.default.createElement("span", { className: "text-slate-400 font-medium" }, "Penggunaan Kapasitas"), /* @__PURE__ */ import_react7.default.createElement("span", { className: "font-bold text-blue-400 font-mono" }, percent, "%")), /* @__PURE__ */ import_react7.default.createElement("div", { className: "w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800 p-0.5" }, /* @__PURE__ */ import_react7.default.createElement("div", { className: "bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full transition-all duration-500", style: { width: `${percent}%` } })), /* @__PURE__ */ import_react7.default.createElement("div", { className: "flex justify-between text-[11px] text-slate-400 font-mono" }, /* @__PURE__ */ import_react7.default.createElement("span", null, "Terpakai: ", formatBytes(acc.usedBytes)), /* @__PURE__ */ import_react7.default.createElement("span", null, "Total: ", formatBytes(acc.totalBytes)))));
     })));
   }
 
   // src/components/common/LightboxModal.jsx
-  var import_react7 = __toESM(require_react());
+  var import_react8 = __toESM(require_react());
   function LightboxModal({ item, allMedia = [], onNavigate, onClose }) {
-    const videoRef = (0, import_react7.useRef)(null);
-    const [iframeLoaded, setIframeLoaded] = (0, import_react7.useState)(false);
+    const videoRef = (0, import_react8.useRef)(null);
+    const [iframeLoaded, setIframeLoaded] = (0, import_react8.useState)(false);
     const isMov = (item?.ext || "").toLowerCase() === ".mov";
     const isHevc = isMov;
-    const currentIndex = (0, import_react7.useMemo)(() => allMedia.findIndex((m) => m.id === item.id), [allMedia, item]);
+    const currentIndex = (0, import_react8.useMemo)(() => allMedia.findIndex((m) => m.id === item.id), [allMedia, item]);
     const hasPrev = currentIndex > 0;
     const hasNext = currentIndex < allMedia.length - 1;
     const goPrev = () => {
@@ -21888,7 +21922,7 @@
     const goNext = () => {
       if (hasNext) onNavigate(allMedia[currentIndex + 1]);
     };
-    (0, import_react7.useEffect)(() => {
+    (0, import_react8.useEffect)(() => {
       setIframeLoaded(false);
       const handleKeyDown = (e) => {
         if (e.key === "Escape") onClose();
@@ -21898,7 +21932,7 @@
       window.addEventListener("keydown", handleKeyDown);
       return () => window.removeEventListener("keydown", handleKeyDown);
     }, [currentIndex, allMedia]);
-    (0, import_react7.useEffect)(() => {
+    (0, import_react8.useEffect)(() => {
       if (videoRef.current && !isHevc) {
         videoRef.current.play().catch(() => {
         });
@@ -21911,7 +21945,7 @@
     const mediaUrl = item.source === "local" ? `/media-file?path=${encodeURIComponent(item.id)}` : `/gdrive-media?id=${item.id}`;
     const viewUrl = item.source === "gdrive" ? `https://drive.google.com/file/d/${item.id}/view` : mediaUrl;
     const thumbnailUrl = item.source === "gdrive" ? `/gdrive-media?id=${item.id}` : null;
-    return /* @__PURE__ */ import_react7.default.createElement(
+    return /* @__PURE__ */ import_react8.default.createElement(
       "div",
       {
         className: "fixed inset-0 z-50 flex items-center justify-center",
@@ -21920,16 +21954,16 @@
           if (e.target === e.currentTarget) onClose();
         }
       },
-      /* @__PURE__ */ import_react7.default.createElement(
+      /* @__PURE__ */ import_react8.default.createElement(
         "button",
         {
           onClick: onClose,
           title: "Tutup (Esc)",
           className: "absolute top-4 right-4 z-20 w-10 h-10 rounded-2xl bg-white/10 hover:bg-rose-600 text-white flex items-center justify-center transition-all border border-white/15 hover:border-rose-500 cursor-pointer backdrop-blur-sm shadow-xl"
         },
-        /* @__PURE__ */ import_react7.default.createElement("i", { className: "fa-solid fa-xmark text-lg" })
+        /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-xmark text-lg" })
       ),
-      /* @__PURE__ */ import_react7.default.createElement(
+      /* @__PURE__ */ import_react8.default.createElement(
         "a",
         {
           href: viewUrl,
@@ -21938,28 +21972,28 @@
           title: "Buka Tab Baru",
           className: "absolute top-4 right-16 z-20 w-10 h-10 rounded-2xl bg-white/10 hover:bg-blue-600 text-white flex items-center justify-center transition-all border border-white/15 hover:border-blue-500 cursor-pointer backdrop-blur-sm shadow-xl"
         },
-        /* @__PURE__ */ import_react7.default.createElement("i", { className: "fa-solid fa-up-right-from-square text-sm" })
+        /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-up-right-from-square text-sm" })
       ),
-      allMedia.length > 0 && /* @__PURE__ */ import_react7.default.createElement("div", { className: "absolute top-4 left-4 z-20 px-3 py-2 rounded-xl bg-black/60 border border-white/10 text-white text-xs font-bold backdrop-blur-sm" }, currentIndex + 1, " / ", allMedia.length),
-      hasPrev && /* @__PURE__ */ import_react7.default.createElement(
+      allMedia.length > 0 && /* @__PURE__ */ import_react8.default.createElement("div", { className: "absolute top-4 left-4 z-20 px-3 py-2 rounded-xl bg-black/60 border border-white/10 text-white text-xs font-bold backdrop-blur-sm" }, currentIndex + 1, " / ", allMedia.length),
+      hasPrev && /* @__PURE__ */ import_react8.default.createElement(
         "button",
         {
           onClick: goPrev,
           title: "Sebelumnya (\u2190)",
           className: "absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-2xl bg-black/60 hover:bg-blue-600/90 text-white flex items-center justify-center transition-all border border-white/10 hover:border-blue-400 cursor-pointer backdrop-blur-sm shadow-xl"
         },
-        /* @__PURE__ */ import_react7.default.createElement("i", { className: "fa-solid fa-chevron-left text-lg" })
+        /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-chevron-left text-lg" })
       ),
-      hasNext && /* @__PURE__ */ import_react7.default.createElement(
+      hasNext && /* @__PURE__ */ import_react8.default.createElement(
         "button",
         {
           onClick: goNext,
           title: "Berikutnya (\u2192)",
           className: "absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-2xl bg-black/60 hover:bg-blue-600/90 text-white flex items-center justify-center transition-all border border-white/10 hover:border-blue-400 cursor-pointer backdrop-blur-sm shadow-xl"
         },
-        /* @__PURE__ */ import_react7.default.createElement("i", { className: "fa-solid fa-chevron-right text-lg" })
+        /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-chevron-right text-lg" })
       ),
-      /* @__PURE__ */ import_react7.default.createElement("div", { className: "relative flex items-center justify-center w-full h-full px-16 py-12" }, !isVideo && /* @__PURE__ */ import_react7.default.createElement(
+      /* @__PURE__ */ import_react8.default.createElement("div", { className: "relative flex items-center justify-center w-full h-full px-16 py-12" }, !isVideo && /* @__PURE__ */ import_react8.default.createElement(
         "img",
         {
           src: item.source === "gdrive" ? `/gdrive-media?id=${item.id}` : mediaUrl,
@@ -21968,34 +22002,21 @@
           className: "max-w-full max-h-full object-contain rounded-2xl shadow-2xl",
           style: { maxHeight: "calc(100vh - 100px)", maxWidth: "calc(100vw - 140px)" }
         }
-      ), isGDriveVideo && /* @__PURE__ */ import_react7.default.createElement(
-        "div",
+      ), isGDriveVideo && /* @__PURE__ */ import_react8.default.createElement(
+        "iframe",
         {
-          className: "relative rounded-2xl overflow-hidden shadow-2xl",
-          style: { width: "min(900px, calc(100vw - 140px))", height: "calc(100vh - 100px)" }
-        },
-        !iframeLoaded && /* @__PURE__ */ import_react7.default.createElement("div", { className: "absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80 gap-4" }, thumbnailUrl && /* @__PURE__ */ import_react7.default.createElement(
-          "img",
-          {
-            src: thumbnailUrl,
-            alt: item.title,
-            referrerPolicy: "no-referrer",
-            className: "absolute inset-0 w-full h-full object-cover opacity-40"
-          }
-        ), /* @__PURE__ */ import_react7.default.createElement("div", { className: "relative z-10 flex flex-col items-center gap-3" }, /* @__PURE__ */ import_react7.default.createElement("div", { className: "w-14 h-14 rounded-2xl bg-rose-600/90 flex items-center justify-center animate-pulse shadow-xl" }, /* @__PURE__ */ import_react7.default.createElement("i", { className: "fa-solid fa-film text-white text-xl" })), /* @__PURE__ */ import_react7.default.createElement("p", { className: "text-white text-xs font-bold animate-pulse" }, "Memuat video dari Google Drive..."))),
-        /* @__PURE__ */ import_react7.default.createElement(
-          "iframe",
-          {
-            src: `https://drive.google.com/file/d/${item.id}/preview?autoplay=1`,
-            className: "w-full h-full",
-            style: { border: "none" },
-            allow: "autoplay; encrypted-media; fullscreen",
-            allowFullScreen: true,
-            title: item.title,
-            onLoad: () => setIframeLoaded(true)
-          }
-        )
-      ), isLocalVideo && !isHevc && /* @__PURE__ */ import_react7.default.createElement(
+          src: `https://drive.google.com/file/d/${item.id}/preview?autoplay=1`,
+          className: "rounded-2xl shadow-2xl",
+          style: {
+            width: "min(900px, calc(100vw - 140px))",
+            height: "calc(100vh - 100px)",
+            border: "none"
+          },
+          allow: "autoplay; encrypted-media; fullscreen",
+          allowFullScreen: true,
+          title: item.title
+        }
+      ), isLocalVideo && !isHevc && /* @__PURE__ */ import_react8.default.createElement(
         "video",
         {
           ref: videoRef,
@@ -22007,7 +22028,7 @@
           className: "rounded-2xl shadow-2xl",
           style: { maxWidth: "calc(100vw - 140px)", maxHeight: "calc(100vh - 100px)" }
         }
-      ), isLocalVideo && isHevc && /* @__PURE__ */ import_react7.default.createElement("div", { className: "flex flex-col items-center gap-5 text-center max-w-sm" }, /* @__PURE__ */ import_react7.default.createElement("div", { className: "w-16 h-16 rounded-2xl bg-amber-500/20 flex items-center justify-center text-3xl" }, /* @__PURE__ */ import_react7.default.createElement("i", { className: "fa-solid fa-film text-amber-400" })), /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("p", { className: "text-white font-extrabold text-sm mb-1" }, "Format iPhone MOV (HEVC/H.265)"), /* @__PURE__ */ import_react7.default.createElement("p", { className: "text-slate-400 text-xs" }, "Chrome belum mendukung codec ini. Buka dengan media player bawaan laptop untuk memutar video ini.")), /* @__PURE__ */ import_react7.default.createElement(
+      ), isLocalVideo && isHevc && /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex flex-col items-center gap-5 text-center max-w-sm" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "w-16 h-16 rounded-2xl bg-amber-500/20 flex items-center justify-center text-3xl" }, /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-film text-amber-400" })), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("p", { className: "text-white font-extrabold text-sm mb-1" }, "Format iPhone MOV (HEVC/H.265)"), /* @__PURE__ */ import_react8.default.createElement("p", { className: "text-slate-400 text-xs" }, "Chrome belum mendukung codec ini. Buka dengan media player bawaan laptop untuk memutar video ini.")), /* @__PURE__ */ import_react8.default.createElement(
         "a",
         {
           href: viewUrl,
@@ -22015,21 +22036,21 @@
           rel: "noreferrer",
           className: "px-6 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-sm flex items-center gap-2 transition-all shadow-lg"
         },
-        /* @__PURE__ */ import_react7.default.createElement("i", { className: "fa-solid fa-play" }),
+        /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-play" }),
         " Putar di Media Player Laptop"
       ))),
-      /* @__PURE__ */ import_react7.default.createElement("div", { className: "absolute bottom-4 left-0 right-0 text-center px-20 pointer-events-none" }, /* @__PURE__ */ import_react7.default.createElement("p", { className: "text-white font-bold text-sm drop-shadow-md truncate" }, item.title, /* @__PURE__ */ import_react7.default.createElement("span", { className: "text-slate-400 font-normal text-xs ml-2" }, "(", item.accountName || "Storage Gateway", ")")))
+      /* @__PURE__ */ import_react8.default.createElement("div", { className: "absolute bottom-4 left-0 right-0 text-center px-20 pointer-events-none" }, /* @__PURE__ */ import_react8.default.createElement("p", { className: "text-white font-bold text-sm drop-shadow-md truncate" }, item.title, /* @__PURE__ */ import_react8.default.createElement("span", { className: "text-slate-400 font-normal text-xs ml-2" }, "(", item.accountName || "Storage Gateway", ")")))
     );
   }
 
   // src/components/common/AddAccountModal.jsx
-  var import_react8 = __toESM(require_react());
+  var import_react9 = __toESM(require_react());
   function AddAccountModal({ onClose, onAddAccount }) {
-    const [name, setName] = (0, import_react8.useState)("");
-    const [email, setEmail] = (0, import_react8.useState)("");
-    const [folderId, setFolderId] = (0, import_react8.useState)("");
-    const [color, setColor] = (0, import_react8.useState)("from-blue-600 to-indigo-600");
-    const [submitting, setSubmitting] = (0, import_react8.useState)(false);
+    const [name, setName] = (0, import_react9.useState)("");
+    const [email, setEmail] = (0, import_react9.useState)("");
+    const [folderId, setFolderId] = (0, import_react9.useState)("");
+    const [color, setColor] = (0, import_react9.useState)("from-blue-600 to-indigo-600");
+    const [submitting, setSubmitting] = (0, import_react9.useState)(false);
     const handleSubmit = async (e) => {
       e.preventDefault();
       if (!name || !folderId) return;
@@ -22044,7 +22065,7 @@
       setSubmitting(false);
       onClose();
     };
-    return /* @__PURE__ */ import_react8.default.createElement("div", { className: "fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "relative w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-6" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex items-center justify-between border-b border-slate-800 pb-4" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-lg font-bold" }, /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-brands fa-google-drive" })), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("h3", { className: "font-extrabold text-base text-white" }, "Hubungkan Akun Google Drive Baru"), /* @__PURE__ */ import_react8.default.createElement("p", { className: "text-xs text-slate-400" }, "Masukkan tautan atau ID folder Google Drive yang ingin ditambahkan"))), /* @__PURE__ */ import_react8.default.createElement("button", { onClick: onClose, className: "text-slate-400 hover:text-white p-1 cursor-pointer" }, /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-xmark text-xl" }))), /* @__PURE__ */ import_react8.default.createElement("form", { onSubmit: handleSubmit, className: "space-y-4" }, /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Nama Label Akun"), /* @__PURE__ */ import_react8.default.createElement(
+    return /* @__PURE__ */ import_react9.default.createElement("div", { className: "fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "relative w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-6" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "flex items-center justify-between border-b border-slate-800 pb-4" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-lg font-bold" }, /* @__PURE__ */ import_react9.default.createElement("i", { className: "fa-brands fa-google-drive" })), /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("h3", { className: "font-extrabold text-base text-white" }, "Hubungkan Akun Google Drive Baru"), /* @__PURE__ */ import_react9.default.createElement("p", { className: "text-xs text-slate-400" }, "Masukkan tautan atau ID folder Google Drive yang ingin ditambahkan"))), /* @__PURE__ */ import_react9.default.createElement("button", { onClick: onClose, className: "text-slate-400 hover:text-white p-1 cursor-pointer" }, /* @__PURE__ */ import_react9.default.createElement("i", { className: "fa-solid fa-xmark text-xl" }))), /* @__PURE__ */ import_react9.default.createElement("form", { onSubmit: handleSubmit, className: "space-y-4" }, /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Nama Label Akun"), /* @__PURE__ */ import_react9.default.createElement(
       "input",
       {
         type: "text",
@@ -22054,7 +22075,7 @@
         placeholder: "Contoh: Drive Utama / Dokumentasi Acara",
         className: "w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all"
       }
-    )), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Alamat Email (Opsional)"), /* @__PURE__ */ import_react8.default.createElement(
+    )), /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Alamat Email (Opsional)"), /* @__PURE__ */ import_react9.default.createElement(
       "input",
       {
         type: "email",
@@ -22063,7 +22084,7 @@
         placeholder: "contoh@gmail.com",
         className: "w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all"
       }
-    )), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Tautan (URL) atau ID Folder Google Drive Publik"), /* @__PURE__ */ import_react8.default.createElement(
+    )), /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Tautan (URL) atau ID Folder Google Drive Publik"), /* @__PURE__ */ import_react9.default.createElement(
       "input",
       {
         type: "text",
@@ -22073,35 +22094,35 @@
         placeholder: "https://drive.google.com/drive/folders/1MHI_3pZLMewn3wcpgQAXrzIuJpE9_GMe",
         className: "w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all font-mono"
       }
-    ), /* @__PURE__ */ import_react8.default.createElement("p", { className: "text-[10px] text-slate-400 mt-1" }, "*Pastikan status akses folder di Google Drive disetel ke ", /* @__PURE__ */ import_react8.default.createElement("b", null, '"Siapa saja yang memiliki link" (Public View)'), ".")), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Warna Kartu Tema"), /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react8.default.createElement(
+    ), /* @__PURE__ */ import_react9.default.createElement("p", { className: "text-[10px] text-slate-400 mt-1" }, "*Pastikan status akses folder di Google Drive disetel ke ", /* @__PURE__ */ import_react9.default.createElement("b", null, '"Siapa saja yang memiliki link" (Public View)'), ".")), /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Warna Kartu Tema"), /* @__PURE__ */ import_react9.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react9.default.createElement(
       "button",
       {
         type: "button",
         onClick: () => setColor("from-blue-600 to-indigo-600"),
         className: `w-8 h-8 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 cursor-pointer ${color === "from-blue-600 to-indigo-600" ? "ring-2 ring-white" : ""}`
       }
-    ), /* @__PURE__ */ import_react8.default.createElement(
+    ), /* @__PURE__ */ import_react9.default.createElement(
       "button",
       {
         type: "button",
         onClick: () => setColor("from-emerald-600 to-teal-600"),
         className: `w-8 h-8 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 cursor-pointer ${color === "from-emerald-600 to-teal-600" ? "ring-2 ring-white" : ""}`
       }
-    ), /* @__PURE__ */ import_react8.default.createElement(
+    ), /* @__PURE__ */ import_react9.default.createElement(
       "button",
       {
         type: "button",
         onClick: () => setColor("from-purple-600 to-pink-600"),
         className: `w-8 h-8 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 cursor-pointer ${color === "from-purple-600 to-pink-600" ? "ring-2 ring-white" : ""}`
       }
-    ), /* @__PURE__ */ import_react8.default.createElement(
+    ), /* @__PURE__ */ import_react9.default.createElement(
       "button",
       {
         type: "button",
         onClick: () => setColor("from-amber-600 to-rose-600"),
         className: `w-8 h-8 rounded-xl bg-gradient-to-r from-amber-600 to-rose-600 cursor-pointer ${color === "from-amber-600 to-rose-600" ? "ring-2 ring-white" : ""}`
       }
-    ))), /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex items-center justify-end gap-3 pt-4 border-t border-slate-800" }, /* @__PURE__ */ import_react8.default.createElement(
+    ))), /* @__PURE__ */ import_react9.default.createElement("div", { className: "flex items-center justify-end gap-3 pt-4 border-t border-slate-800" }, /* @__PURE__ */ import_react9.default.createElement(
       "button",
       {
         type: "button",
@@ -22109,7 +22130,7 @@
         className: "px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition-all cursor-pointer"
       },
       "Batal"
-    ), /* @__PURE__ */ import_react8.default.createElement(
+    ), /* @__PURE__ */ import_react9.default.createElement(
       "button",
       {
         type: "submit",
@@ -22121,18 +22142,18 @@
   }
 
   // src/components/common/LoginModal.jsx
-  var import_react9 = __toESM(require_react());
+  var import_react10 = __toESM(require_react());
   function LoginModal({ onLoginSuccess }) {
-    const [authMode, setAuthMode] = (0, import_react9.useState)("login");
-    const [email, setEmail] = (0, import_react9.useState)("");
-    const [password, setPassword] = (0, import_react9.useState)("");
-    const [alert, setAlert] = (0, import_react9.useState)(null);
-    const [loading, setLoading] = (0, import_react9.useState)(false);
-    const [config, setConfig] = (0, import_react9.useState)({
+    const [authMode, setAuthMode] = (0, import_react10.useState)("login");
+    const [email, setEmail] = (0, import_react10.useState)("");
+    const [password, setPassword] = (0, import_react10.useState)("");
+    const [alert, setAlert] = (0, import_react10.useState)(null);
+    const [loading, setLoading] = (0, import_react10.useState)(false);
+    const [config, setConfig] = (0, import_react10.useState)({
       supabaseUrl: "https://emizyqcqjuzabgsk.supabase.co",
       supabaseKey: "sb_publishable_WxTXhArfmb-DxvqXNg_4OQ_6YR-QGNI"
     });
-    (0, import_react9.useEffect)(() => {
+    (0, import_react10.useEffect)(() => {
       fetch("/api/config").then((r) => r.json()).then((data) => {
         if (data.supabaseUrl && data.supabaseKey) {
           setConfig(data);
@@ -22173,25 +22194,25 @@
         setLoading(false);
       }
     };
-    return /* @__PURE__ */ import_react9.default.createElement("div", { id: "login-screen", className: "fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-4 overflow-y-auto" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "relative w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-8 shadow-2xl space-y-6" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "text-center space-y-2" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold" }, /* @__PURE__ */ import_react9.default.createElement("i", { className: "fa-solid fa-shield-halved" }), " Supabase Secure Auth"), /* @__PURE__ */ import_react9.default.createElement("h2", { className: "text-3xl font-extrabold text-white tracking-tight" }, "Omni", /* @__PURE__ */ import_react9.default.createElement("span", { className: "text-blue-500" }, "Gallery")), /* @__PURE__ */ import_react9.default.createElement("p", { className: "text-xs text-slate-400" }, "Masuk untuk mengelola galeri foto & video Anda")), /* @__PURE__ */ import_react9.default.createElement("div", { className: "flex p-1 bg-slate-950 rounded-2xl border border-slate-800/80" }, /* @__PURE__ */ import_react9.default.createElement(
+    return /* @__PURE__ */ import_react10.default.createElement("div", { id: "login-screen", className: "fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-4 overflow-y-auto" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "relative w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-8 shadow-2xl space-y-6" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "text-center space-y-2" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-shield-halved" }), " Supabase Secure Auth"), /* @__PURE__ */ import_react10.default.createElement("h2", { className: "text-3xl font-extrabold text-white tracking-tight" }, "Omni", /* @__PURE__ */ import_react10.default.createElement("span", { className: "text-blue-500" }, "Gallery")), /* @__PURE__ */ import_react10.default.createElement("p", { className: "text-xs text-slate-400" }, "Masuk untuk mengelola galeri foto & video Anda")), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex p-1 bg-slate-950 rounded-2xl border border-slate-800/80" }, /* @__PURE__ */ import_react10.default.createElement(
       "button",
       {
         type: "button",
         onClick: () => setAuthMode("login"),
         className: `flex-1 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${authMode === "login" ? "bg-blue-600 text-white shadow-md" : "text-slate-400 hover:text-white"}`
       },
-      /* @__PURE__ */ import_react9.default.createElement("i", { className: "fa-solid fa-right-to-bracket mr-1" }),
+      /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-right-to-bracket mr-1" }),
       " Masuk"
-    ), /* @__PURE__ */ import_react9.default.createElement(
+    ), /* @__PURE__ */ import_react10.default.createElement(
       "button",
       {
         type: "button",
         onClick: () => setAuthMode("register"),
         className: `flex-1 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${authMode === "register" ? "bg-blue-600 text-white shadow-md" : "text-slate-400 hover:text-white"}`
       },
-      /* @__PURE__ */ import_react9.default.createElement("i", { className: "fa-solid fa-user-plus mr-1" }),
+      /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-user-plus mr-1" }),
       " Daftar Akun"
-    )), alert && /* @__PURE__ */ import_react9.default.createElement("div", { className: `p-3 rounded-2xl text-xs font-semibold flex items-center gap-2 border ${alert.type === "error" ? "bg-rose-500/20 text-rose-400 border-rose-500/30" : "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"}` }, /* @__PURE__ */ import_react9.default.createElement("i", { className: alert.type === "error" ? "fa-solid fa-triangle-exclamation" : "fa-solid fa-circle-check" }), alert.text), /* @__PURE__ */ import_react9.default.createElement("form", { onSubmit: handleSubmit, className: "space-y-4" }, /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Alamat Email"), /* @__PURE__ */ import_react9.default.createElement("div", { className: "relative" }, /* @__PURE__ */ import_react9.default.createElement("i", { className: "fa-solid fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm" }), /* @__PURE__ */ import_react9.default.createElement(
+    )), alert && /* @__PURE__ */ import_react10.default.createElement("div", { className: `p-3 rounded-2xl text-xs font-semibold flex items-center gap-2 border ${alert.type === "error" ? "bg-rose-500/20 text-rose-400 border-rose-500/30" : "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"}` }, /* @__PURE__ */ import_react10.default.createElement("i", { className: alert.type === "error" ? "fa-solid fa-triangle-exclamation" : "fa-solid fa-circle-check" }), alert.text), /* @__PURE__ */ import_react10.default.createElement("form", { onSubmit: handleSubmit, className: "space-y-4" }, /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Alamat Email"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "relative" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm" }), /* @__PURE__ */ import_react10.default.createElement(
       "input",
       {
         type: "email",
@@ -22201,7 +22222,7 @@
         placeholder: "nama@email.com",
         className: "w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all"
       }
-    ))), /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Kata Sandi (Password)"), /* @__PURE__ */ import_react9.default.createElement("div", { className: "relative" }, /* @__PURE__ */ import_react9.default.createElement("i", { className: "fa-solid fa-key absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm" }), /* @__PURE__ */ import_react9.default.createElement(
+    ))), /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Kata Sandi (Password)"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "relative" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-key absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm" }), /* @__PURE__ */ import_react10.default.createElement(
       "input",
       {
         type: "password",
@@ -22212,16 +22233,19 @@
         placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",
         className: "w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all"
       }
-    ))), /* @__PURE__ */ import_react9.default.createElement(
+    ))), /* @__PURE__ */ import_react10.default.createElement(
       "button",
       {
         type: "submit",
         disabled: loading,
         className: "w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-xs shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
       },
-      loading ? /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("i", { className: "fa-solid fa-spinner animate-spin" }), " Memproses...") : /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("i", { className: "fa-solid fa-arrow-right-to-bracket" }), " ", authMode === "login" ? "Masuk ke Dashboard" : "Daftar Akun Baru")
+      loading ? /* @__PURE__ */ import_react10.default.createElement(import_react10.default.Fragment, null, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-spinner animate-spin" }), " Memproses...") : /* @__PURE__ */ import_react10.default.createElement(import_react10.default.Fragment, null, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-arrow-right-to-bracket" }), " ", authMode === "login" ? "Masuk ke Dashboard" : "Daftar Akun Baru")
     ))));
   }
+
+  // src/App.jsx
+  var import_react12 = __toESM(require_react());
 
   // src/services/api.js
   var fetchPhotos = async () => {
@@ -22271,21 +22295,21 @@
 
   // src/App.jsx
   function App() {
-    const [user, setUser] = (0, import_react10.useState)(null);
-    const [activeTab, setActiveTab] = (0, import_react10.useState)("dashboard");
-    const [viewMode, setViewMode] = (0, import_react10.useState)("grid");
-    const [activeCategory, setActiveCategory] = (0, import_react10.useState)("all");
-    const [activeStorageFilter, setActiveStorageFilter] = (0, import_react10.useState)("all");
-    const [activeSubfolderFilter, setActiveSubfolderFilter] = (0, import_react10.useState)("all");
-    const [searchQuery, setSearchQuery] = (0, import_react10.useState)("");
-    const [displayLimit, setDisplayLimit] = (0, import_react10.useState)(36);
-    const [allMedia, setAllMedia] = (0, import_react10.useState)([]);
-    const [accounts, setAccounts] = (0, import_react10.useState)([]);
-    const [stats, setStats] = (0, import_react10.useState)(null);
-    const [loading, setLoading] = (0, import_react10.useState)(true);
-    const [selectedMedia, setSelectedMedia] = (0, import_react10.useState)(null);
-    const [isAddModalOpen, setIsAddModalOpen] = (0, import_react10.useState)(false);
-    (0, import_react10.useEffect)(() => {
+    const [user, setUser] = (0, import_react12.useState)(null);
+    const [activeTab, setActiveTab] = (0, import_react12.useState)("dashboard");
+    const [viewMode, setViewMode] = (0, import_react12.useState)("grid");
+    const [activeCategory, setActiveCategory] = (0, import_react12.useState)("all");
+    const [activeStorageFilter, setActiveStorageFilter] = (0, import_react12.useState)("all");
+    const [activeSubfolderFilter, setActiveSubfolderFilter] = (0, import_react12.useState)("all");
+    const [searchQuery, setSearchQuery] = (0, import_react12.useState)("");
+    const [displayLimit, setDisplayLimit] = (0, import_react12.useState)(36);
+    const [allMedia, setAllMedia] = (0, import_react12.useState)([]);
+    const [accounts, setAccounts] = (0, import_react12.useState)([]);
+    const [stats, setStats] = (0, import_react12.useState)(null);
+    const [loading, setLoading] = (0, import_react12.useState)(true);
+    const [selectedMedia, setSelectedMedia] = (0, import_react12.useState)(null);
+    const [isAddModalOpen, setIsAddModalOpen] = (0, import_react12.useState)(false);
+    (0, import_react12.useEffect)(() => {
       const savedUser = localStorage.getItem("gdgate_user");
       if (savedUser) {
         try {
@@ -22311,10 +22335,8 @@
         setLoading(false);
       }
     };
-    (0, import_react10.useEffect)(() => {
-      if (user) {
-        fetchData();
-      }
+    (0, import_react12.useEffect)(() => {
+      if (user) fetchData();
     }, [user]);
     const handleLogout = () => {
       if (window.confirm("Apakah Anda yakin ingin keluar dari OmniGallery Dashboard?")) {
@@ -22325,18 +22347,16 @@
     const handleAddAccount = async (newAccountData) => {
       try {
         const data = await addAccount(newAccountData);
-        if (data && data.accounts) {
-          setAccounts(data.accounts);
-        }
+        if (data && data.accounts) setAccounts(data.accounts);
         setTimeout(fetchData, 1e3);
       } catch (e) {
         console.log("Add Account Error:", e);
       }
     };
     if (!user) {
-      return /* @__PURE__ */ import_react10.default.createElement(LoginModal, { onLoginSuccess: (u) => setUser(u) });
+      return /* @__PURE__ */ import_react11.default.createElement(LoginModal, { onLoginSuccess: (u) => setUser(u) });
     }
-    return /* @__PURE__ */ import_react10.default.createElement("div", { className: "bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white" }, /* @__PURE__ */ import_react10.default.createElement(
+    return /* @__PURE__ */ import_react11.default.createElement("div", { className: "bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white" }, /* @__PURE__ */ import_react11.default.createElement(
       Navbar,
       {
         searchQuery,
@@ -22348,14 +22368,14 @@
         user,
         onLogout: handleLogout
       }
-    ), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex-1 flex overflow-hidden" }, /* @__PURE__ */ import_react10.default.createElement(
+    ), /* @__PURE__ */ import_react11.default.createElement("div", { className: "flex-1 flex overflow-hidden" }, /* @__PURE__ */ import_react11.default.createElement(
       Sidebar,
       {
         activeTab,
         onSwitchTab: (t) => setActiveTab(t),
         stats
       }
-    ), /* @__PURE__ */ import_react10.default.createElement("main", { className: "flex-1 overflow-y-auto bg-slate-950/60 pb-16" }, loading && /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex items-center justify-center py-12 text-slate-400 text-xs font-bold gap-2" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-spinner animate-spin text-blue-400 text-lg" }), " Memuat data galeri..."), !loading && activeTab === "dashboard" && /* @__PURE__ */ import_react10.default.createElement(
+    ), /* @__PURE__ */ import_react11.default.createElement("main", { className: "flex-1 overflow-y-auto bg-slate-950/60 pb-20 md:pb-8" }, loading && /* @__PURE__ */ import_react11.default.createElement("div", { className: "flex items-center justify-center py-16 text-slate-400 text-xs font-bold gap-2" }, /* @__PURE__ */ import_react11.default.createElement("i", { className: "fa-solid fa-spinner animate-spin text-blue-400 text-lg" }), " Memuat data galeri..."), !loading && activeTab === "dashboard" && /* @__PURE__ */ import_react11.default.createElement(
       DashboardOverview,
       {
         accounts,
@@ -22364,7 +22384,7 @@
         onOpenLightbox: (item) => setSelectedMedia(item),
         onNavigateToExplorer: () => setActiveTab("explorer")
       }
-    ), !loading && activeTab === "explorer" && /* @__PURE__ */ import_react10.default.createElement(
+    ), !loading && activeTab === "explorer" && /* @__PURE__ */ import_react11.default.createElement(
       FileExplorer,
       {
         allMedia,
@@ -22394,13 +22414,13 @@
         onShowAll: () => setDisplayLimit(999999),
         onOpenLightbox: (item) => setSelectedMedia(item)
       }
-    ), !loading && activeTab === "accounts" && /* @__PURE__ */ import_react10.default.createElement(
+    ), !loading && activeTab === "accounts" && /* @__PURE__ */ import_react11.default.createElement(
       AccountsManagement,
       {
         accounts,
         onOpenAddModal: () => setIsAddModalOpen(true)
       }
-    ))), selectedMedia && /* @__PURE__ */ import_react10.default.createElement(
+    ))), /* @__PURE__ */ import_react11.default.createElement(BottomNav, { activeTab, onSwitchTab: (t) => setActiveTab(t) }), selectedMedia && /* @__PURE__ */ import_react11.default.createElement(
       LightboxModal,
       {
         item: selectedMedia,
@@ -22408,7 +22428,7 @@
         onNavigate: (item) => setSelectedMedia(item),
         onClose: () => setSelectedMedia(null)
       }
-    ), isAddModalOpen && /* @__PURE__ */ import_react10.default.createElement(
+    ), isAddModalOpen && /* @__PURE__ */ import_react11.default.createElement(
       AddAccountModal,
       {
         onClose: () => setIsAddModalOpen(false),
@@ -22421,7 +22441,7 @@
   var rootElement = document.getElementById("root");
   if (rootElement) {
     const root = import_client.default.createRoot(rootElement);
-    root.render(/* @__PURE__ */ import_react11.default.createElement(App, null));
+    root.render(/* @__PURE__ */ import_react13.default.createElement(App, null));
   }
 })();
 /*! Bundled license information:
