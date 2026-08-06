@@ -1,5 +1,7 @@
-function LightboxModal({ item, onClose }) {
-  React.useEffect(() => {
+import React, { useEffect } from 'react';
+
+export default function LightboxModal({ item, onClose }) {
+  useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
     };
@@ -90,5 +92,3 @@ function LightboxModal({ item, onClose }) {
     </div>
   );
 }
-
-window.LightboxModal = LightboxModal;

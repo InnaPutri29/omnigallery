@@ -1,12 +1,7 @@
-function AccountsManagement({ accounts, onOpenAddModal }) {
-  const formatBytes = window.formatBytes || ((bytes) => {
-    if (!bytes || bytes === 0) return '0 B';
-    const k = 1024;
-    const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-  });
+import React from 'react';
+import { formatBytes } from '../../utils/formatters.js';
 
+export default function AccountsManagement({ accounts, onOpenAddModal }) {
   return (
     <div className="p-6 md:p-8 space-y-6 max-w-7xl mx-auto">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-3xl bg-slate-900 border border-slate-800">
@@ -85,5 +80,3 @@ function AccountsManagement({ accounts, onOpenAddModal }) {
     </div>
   );
 }
-
-window.AccountsManagement = AccountsManagement;

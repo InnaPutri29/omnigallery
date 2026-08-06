@@ -1,23 +1,34 @@
-function App() {
-  const [user, setUser] = React.useState(null);
-  const [activeTab, setActiveTab] = React.useState('dashboard');
-  const [viewMode, setViewMode] = React.useState('grid');
-  const [activeCategory, setActiveCategory] = React.useState('all');
-  const [activeStorageFilter, setActiveStorageFilter] = React.useState('all');
-  const [activeSubfolderFilter, setActiveSubfolderFilter] = React.useState('all');
-  const [searchQuery, setSearchQuery] = React.useState('');
-  const [displayLimit, setDisplayLimit] = React.useState(36);
+import React, { useState, useEffect } from 'react';
+import Navbar from './components/layout/Navbar.jsx';
+import Sidebar from './components/layout/Sidebar.jsx';
+import DashboardOverview from './components/features/DashboardOverview.jsx';
+import FileExplorer from './components/features/FileExplorer.jsx';
+import AccountsManagement from './components/features/AccountsManagement.jsx';
+import LightboxModal from './components/common/LightboxModal.jsx';
+import AddAccountModal from './components/common/AddAccountModal.jsx';
+import LoginModal from './components/common/LoginModal.jsx';
+import { fetchPhotos, fetchAccounts, fetchStats, addAccount } from './services/api.js';
 
-  const [allMedia, setAllMedia] = React.useState([]);
-  const [accounts, setAccounts] = React.useState([]);
-  const [stats, setStats] = React.useState(null);
-  const [loading, setLoading] = React.useState(true);
+export default function App() {
+  const [user, setUser] = useState(null);
+  const [activeTab, setActiveTab] = useState('dashboard');
+  const [viewMode, setViewMode] = useState('grid');
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [activeStorageFilter, setActiveStorageFilter] = useState('all');
+  const [activeSubfolderFilter, setActiveSubfolderFilter] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [displayLimit, setDisplayLimit] = useState(36);
 
-  const [selectedMedia, setSelectedMedia] = React.useState(null);
-  const [isAddModalOpen, setIsAddModalOpen] = React.useState(false);
+  const [allMedia, setAllMedia] = useState([]);
+  const [accounts, setAccounts] = useState([]);
+  const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const [selectedMedia, setSelectedMedia] = useState(null);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   // Check Auth Session on Load
-  React.useEffect(() => {
+  useEffect(() => {
     const savedUser = localStorage.getItem('gdgate_user');
     if (savedUser) {
       try {
@@ -31,9 +42,9 @@ function App() {
     setLoading(true);
     try {
       const [photosRes, accountsRes, statsRes] = await Promise.all([
-        fetch('/api/photos').then(r => r.json()).catch(() => []),
-        fetch('/api/accounts').then(r => r.json()).catch(() => []),
-        fetch('/api/stats').then(r => r.json()).catch(() => null)
+        fetchPhotos(),
+        fetchAccounts(),
+        fetchStats()
       ]);
 
       setAllMedia(photosRes || []);
@@ -46,7 +57,7 @@ function App() {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (user) {
       fetchData();
     }
@@ -61,13 +72,8 @@ function App() {
 
   const handleAddAccount = async (newAccountData) => {
     try {
-      const res = await fetch('/api/accounts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newAccountData)
-      });
-      const data = await res.json();
-      if (data.accounts) {
+      const data = await addAccount(newAccountData);
+      if (data && data.accounts) {
         setAccounts(data.accounts);
       }
       setTimeout(fetchData, 1000);
@@ -77,13 +83,13 @@ function App() {
   };
 
   if (!user) {
-    return <window.LoginModal onLoginSuccess={(u) => setUser(u)} />;
+    return <LoginModal onLoginSuccess={(u) => setUser(u)} />;
   }
 
   return (
     <div className="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
       {/* Top Navbar */}
-      <window.Navbar 
+      <Navbar 
         searchQuery={searchQuery}
         onSearchChange={(q) => {
           setSearchQuery(q);
@@ -97,7 +103,7 @@ function App() {
       {/* Main Layout */}
       <div className="flex-1 flex overflow-hidden">
         {/* Sidebar */}
-        <window.Sidebar 
+        <Sidebar 
           activeTab={activeTab} 
           onSwitchTab={(t) => setActiveTab(t)} 
           stats={stats} 
@@ -112,7 +118,7 @@ function App() {
           )}
 
           {!loading && activeTab === 'dashboard' && (
-            <window.DashboardOverview 
+            <DashboardOverview 
               accounts={accounts}
               allMedia={allMedia}
               stats={stats}
@@ -122,7 +128,7 @@ function App() {
           )}
 
           {!loading && activeTab === 'explorer' && (
-            <window.FileExplorer 
+            <FileExplorer 
               allMedia={allMedia}
               accounts={accounts}
               activeCategory={activeCategory}
@@ -143,7 +149,7 @@ function App() {
           )}
 
           {!loading && activeTab === 'accounts' && (
-            <window.AccountsManagement 
+            <AccountsManagement 
               accounts={accounts}
               onOpenAddModal={() => setIsAddModalOpen(true)}
             />
@@ -153,7 +159,7 @@ function App() {
 
       {/* Lightbox Modal */}
       {selectedMedia && (
-        <window.LightboxModal 
+        <LightboxModal 
           item={selectedMedia} 
           onClose={() => setSelectedMedia(null)} 
         />
@@ -161,7 +167,7 @@ function App() {
 
       {/* Add Account Modal */}
       {isAddModalOpen && (
-        <window.AddAccountModal 
+        <AddAccountModal 
           onClose={() => setIsAddModalOpen(false)}
           onAddAccount={handleAddAccount}
         />
@@ -169,5 +175,3 @@ function App() {
     </div>
   );
 }
-
-window.App = App;

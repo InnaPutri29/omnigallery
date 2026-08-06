@@ -1,4 +1,6 @@
-function MediaCard({ item, onOpenLightbox }) {
+import React from 'react';
+
+export default function MediaCard({ item, onOpenLightbox }) {
   const mediaUrl = item.url || (item.source === 'local' ? `/photos/${item.id}` : `https://drive.google.com/thumbnail?id=${item.id}&sz=w800`);
   const isVideo = item.type === 'video';
 
@@ -99,5 +101,3 @@ function MediaCard({ item, onOpenLightbox }) {
     );
   }
 }
-
-window.MediaCard = MediaCard;

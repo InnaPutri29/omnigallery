@@ -1,9 +1,11 @@
-function AddAccountModal({ onClose, onAddAccount }) {
-  const [name, setName] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [folderId, setFolderId] = React.useState('');
-  const [color, setColor] = React.useState('from-blue-600 to-indigo-600');
-  const [submitting, setSubmitting] = React.useState(false);
+import React, { useState } from 'react';
+
+export default function AddAccountModal({ onClose, onAddAccount }) {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [folderId, setFolderId] = useState('');
+  const [color, setColor] = useState('from-blue-600 to-indigo-600');
+  const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -125,5 +127,3 @@ function AddAccountModal({ onClose, onAddAccount }) {
     </div>
   );
 }
-
-window.AddAccountModal = AddAccountModal;

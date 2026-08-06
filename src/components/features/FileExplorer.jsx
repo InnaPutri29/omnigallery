@@ -1,4 +1,7 @@
-function FileExplorer({
+import React from 'react';
+import MediaCard from '../common/MediaCard.jsx';
+
+export default function FileExplorer({
   allMedia,
   accounts,
   activeCategory,
@@ -210,7 +213,7 @@ function FileExplorer({
         /* Grid View */
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {displayedItems.map(item => (
-            <window.MediaCard key={item.id} item={item} onOpenLightbox={onOpenLightbox} />
+            <MediaCard key={item.id} item={item} onOpenLightbox={onOpenLightbox} />
           ))}
 
           {/* Pagination Controls */}
@@ -284,5 +287,3 @@ function FileExplorer({
     </div>
   );
 }
-
-window.FileExplorer = FileExplorer;

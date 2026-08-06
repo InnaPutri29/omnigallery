@@ -1,4 +1,6 @@
-function Navbar({ searchQuery, onSearchChange, onOpenAddModal, user, onLogout }) {
+import React from 'react';
+
+export default function Navbar({ searchQuery, onSearchChange, onOpenAddModal, user, onLogout }) {
   return (
     <header className="h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-40 px-4 md:px-6 flex items-center justify-between">
       {/* Left Brand Logo */}
@@ -61,5 +63,3 @@ function Navbar({ searchQuery, onSearchChange, onOpenAddModal, user, onLogout })
     </header>
   );
 }
-
-window.Navbar = Navbar;

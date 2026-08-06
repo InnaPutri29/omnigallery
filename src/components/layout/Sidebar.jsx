@@ -1,15 +1,10 @@
-function Sidebar({ activeTab, onSwitchTab, stats }) {
+import React from 'react';
+import { formatBytes } from '../../utils/formatters.js';
+
+export default function Sidebar({ activeTab, onSwitchTab, stats }) {
   const totalUsed = stats ? stats.totalUsed || 0 : 0;
   const totalCapacity = stats ? stats.totalCapacity || 1 : 1;
   const percent = Math.min(100, Math.round((totalUsed / totalCapacity) * 100));
-
-  const formatBytes = (bytes) => {
-    if (!bytes || bytes === 0) return '0 B';
-    const k = 1024;
-    const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-  };
 
   return (
     <aside className="w-64 border-r border-slate-800/80 bg-slate-900/50 flex-shrink-0 flex flex-col justify-between hidden md:flex transition-all">
@@ -79,5 +74,3 @@ function Sidebar({ activeTab, onSwitchTab, stats }) {
     </aside>
   );
 }
-
-window.Sidebar = Sidebar;

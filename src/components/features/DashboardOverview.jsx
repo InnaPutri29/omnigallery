@@ -1,13 +1,9 @@
-function DashboardOverview({ accounts, allMedia, stats, onOpenLightbox, onNavigateToExplorer }) {
-  const recentItems = allMedia.slice(0, 4);
+import React from 'react';
+import MediaCard from '../common/MediaCard.jsx';
+import { formatBytes } from '../../utils/formatters.js';
 
-  const formatBytes = window.formatBytes || ((bytes) => {
-    if (!bytes || bytes === 0) return '0 B';
-    const k = 1024;
-    const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-  });
+export default function DashboardOverview({ accounts, allMedia, stats, onOpenLightbox, onNavigateToExplorer }) {
+  const recentItems = allMedia.slice(0, 4);
 
   const imageCount = allMedia.filter(m => m.type === 'image').length;
   const videoCount = allMedia.filter(m => m.type === 'video').length;
@@ -140,12 +136,10 @@ function DashboardOverview({ accounts, allMedia, stats, onOpenLightbox, onNaviga
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {recentItems.map(item => (
-            <window.MediaCard key={item.id} item={item} onOpenLightbox={onOpenLightbox} />
+            <MediaCard key={item.id} item={item} onOpenLightbox={onOpenLightbox} />
           ))}
         </div>
       </div>
     </div>
   );
 }
-
-window.DashboardOverview = DashboardOverview;

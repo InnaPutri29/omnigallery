@@ -1,13 +1,15 @@
-function LoginModal({ onLoginSuccess }) {
-  const [authMode, setAuthMode] = React.useState('login'); // 'login' | 'register'
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [alert, setAlert] = React.useState(null);
-  const [loading, setLoading] = React.useState(false);
-  const [showConfig, setShowConfig] = React.useState(false);
+import React, { useState } from 'react';
 
-  const [supabaseUrl, setSupabaseUrl] = React.useState(localStorage.getItem('gdgate_supabase_url') || '');
-  const [supabaseKey, setSupabaseKey] = React.useState(localStorage.getItem('gdgate_supabase_key') || '');
+export default function LoginModal({ onLoginSuccess }) {
+  const [authMode, setAuthMode] = useState('login'); // 'login' | 'register'
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [alert, setAlert] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [showConfig, setShowConfig] = useState(false);
+
+  const [supabaseUrl, setSupabaseUrl] = useState(localStorage.getItem('gdgate_supabase_url') || '');
+  const [supabaseKey, setSupabaseKey] = useState(localStorage.getItem('gdgate_supabase_key') || '');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -186,5 +188,3 @@ function LoginModal({ onLoginSuccess }) {
     </div>
   );
 }
-
-window.LoginModal = LoginModal;
