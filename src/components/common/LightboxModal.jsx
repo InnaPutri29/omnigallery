@@ -1,10 +1,7 @@
-import React, { useEffect, useRef, useMemo, useState } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 
 export default function LightboxModal({ item, allMedia = [], onNavigate, onClose }) {
   const videoRef = useRef(null);
-  const [iframeLoaded, setIframeLoaded] = useState(false);
-  const isMov = (item?.ext || '').toLowerCase() === '.mov';
-  const isHevc = isMov; // MOV files from iPhone are HEVC/H.265
 
   // Get index in full media list
   const currentIndex = useMemo(() =>
@@ -28,7 +25,7 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
   }, [currentIndex, allMedia]);
 
   useEffect(() => {
-    if (videoRef.current && !isHevc) {
+    if (videoRef.current) {
       videoRef.current.play().catch(() => {});
     }
   }, [item]);
@@ -38,9 +35,14 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
   const isVideo = item.type === 'video';
   const isGDriveVideo = isVideo && item.source === 'gdrive';
   const isLocalVideo = isVideo && item.source === 'local';
+  const isMov = (item?.ext || '').toLowerCase() === '.mov';
+  const isHevc = isMov; // MOV dari iPhone = HEVC/H.265
 
+  // URL video: MOV/HEVC pakai transcode endpoint, lainnya stream langsung
   const mediaUrl = item.source === 'local'
-    ? `/media-file?path=${encodeURIComponent(item.id)}`
+    ? isHevc
+      ? `/transcode-video?path=${encodeURIComponent(item.id)}`  // Transcode HEVC → H.264
+      : `/media-file?path=${encodeURIComponent(item.id)}`       // Stream langsung
     : `/gdrive-media?id=${item.id}`;
 
   const viewUrl = item.source === 'gdrive'
@@ -151,26 +153,6 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
           ></video>
         )}
 
-        {/* MOV/HEVC — Chrome cannot play H.265, open with system player */}
-        {isLocalVideo && isHevc && (
-          <div className="flex flex-col items-center gap-5 text-center max-w-sm">
-            <div className="w-16 h-16 rounded-2xl bg-amber-500/20 flex items-center justify-center text-3xl">
-              <i className="fa-solid fa-film text-amber-400"></i>
-            </div>
-            <div>
-              <p className="text-white font-extrabold text-sm mb-1">Format iPhone MOV (HEVC/H.265)</p>
-              <p className="text-slate-400 text-xs">Chrome belum mendukung codec ini. Buka dengan media player bawaan laptop untuk memutar video ini.</p>
-            </div>
-            <a
-              href={viewUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="px-6 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-sm flex items-center gap-2 transition-all shadow-lg"
-            >
-              <i className="fa-solid fa-play"></i> Putar di Media Player Laptop
-            </a>
-          </div>
-        )}
       </div>
 
       {/* Caption bottom */}

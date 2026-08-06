@@ -86,6 +86,63 @@ app.get('/gdrive-media', (req, res) => {
     }).on('error', () => res.status(500).send('Gagal mengunduh media'));
 });
 
+// Real-time Video Transcoding (MOV/HEVC → H.264 MP4 untuk Chrome)
+const { spawn } = require('child_process');
+
+app.get('/transcode-video', (req, res) => {
+    const filePath = req.query.path;
+    if (!filePath || !fs.existsSync(filePath)) {
+        return res.status(404).send('File tidak ditemukan');
+    }
+
+    // Cari FFmpeg di PATH atau lokasi umum
+    const ffmpegPaths = ['ffmpeg', 'C:\\ffmpeg\\bin\\ffmpeg.exe', 'C:\\Program Files\\ffmpeg\\bin\\ffmpeg.exe'];
+    const ffmpegCmd = ffmpegPaths[0]; // Pakai PATH dulu
+
+    res.setHeader('Content-Type', 'video/mp4');
+    res.setHeader('Transfer-Encoding', 'chunked');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+
+    const ffmpeg = spawn(ffmpegCmd, [
+        '-i', filePath,           // Input file (MOV/HEVC)
+        '-c:v', 'libx264',        // Encode video ke H.264
+        '-preset', 'ultrafast',   // Kecepatan encode tercepat
+        '-crf', '23',             // Kualitas (0=terbaik, 51=terburuk, 23=seimbang)
+        '-c:a', 'aac',            // Audio ke AAC
+        '-b:a', '128k',           // Bitrate audio
+        '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2', // Fix dimensi ganjil
+        '-movflags', 'frag_keyframe+empty_moov+faststart', // Streaming MP4
+        '-f', 'mp4',              // Output format MP4
+        'pipe:1'                  // Output ke pipe (stream ke browser)
+    ], { stdio: ['ignore', 'pipe', 'pipe'] });
+
+    ffmpeg.stdout.pipe(res);
+
+    ffmpeg.stderr.on('data', (data) => {
+        // Log progress transcoding (tidak di-send ke client)
+        // console.log('[FFmpeg]', data.toString());
+    });
+
+    ffmpeg.on('close', (code) => {
+        if (code !== 0 && !res.headersSent) {
+            res.status(500).send('Transcoding gagal');
+        }
+    });
+
+    ffmpeg.on('error', (err) => {
+        console.error('[FFmpeg Error]', err.message);
+        if (!res.headersSent) {
+            res.status(500).json({ error: 'FFmpeg tidak ditemukan. Install FFmpeg terlebih dahulu.' });
+        }
+    });
+
+    // Jika client disconnect, matikan FFmpeg
+    req.on('close', () => {
+        ffmpeg.kill('SIGKILL');
+    });
+});
+
 // System Persistence Accounts Data (Biar Akun yang Ditambah Nggak Hilang Waktu Restart)
 function loadAccounts() {
     const defaultAccounts = [
