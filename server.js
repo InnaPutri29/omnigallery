@@ -390,6 +390,14 @@ app.get('/api/stats', async (req, res) => {
     });
 });
 
+// API: Supabase Environment Configuration
+app.get('/api/config', (req, res) => {
+    res.json({
+        supabaseUrl: process.env.SUPABASE_URL || 'https://emizyqcqjuzabgsk.supabase.co',
+        supabaseKey: process.env.SUPABASE_ANON_KEY || 'sb_publishable_WxTXhArfmb-DxvqXNg_4OQ_6YR-QGNI'
+    });
+});
+
 // Mencari Local IP
 function getLocalIp() {
     const interfaces = os.networkInterfaces();

@@ -22049,17 +22049,25 @@
     const [password, setPassword] = (0, import_react9.useState)("");
     const [alert, setAlert] = (0, import_react9.useState)(null);
     const [loading, setLoading] = (0, import_react9.useState)(false);
-    const [showConfig, setShowConfig] = (0, import_react9.useState)(false);
-    const [supabaseUrl, setSupabaseUrl] = (0, import_react9.useState)(localStorage.getItem("gdgate_supabase_url") || "");
-    const [supabaseKey, setSupabaseKey] = (0, import_react9.useState)(localStorage.getItem("gdgate_supabase_key") || "sb_publishable_WxTXhArfmb-DxvqXNg_4OQ_6YR-QGNI");
+    const [config, setConfig] = (0, import_react9.useState)({
+      supabaseUrl: "https://emizyqcqjuzabgsk.supabase.co",
+      supabaseKey: "sb_publishable_WxTXhArfmb-DxvqXNg_4OQ_6YR-QGNI"
+    });
+    (0, import_react9.useEffect)(() => {
+      fetch("/api/config").then((r) => r.json()).then((data) => {
+        if (data.supabaseUrl && data.supabaseKey) {
+          setConfig(data);
+        }
+      }).catch((err) => console.log("Config load error:", err));
+    }, []);
     const handleSubmit = async (e) => {
       e.preventDefault();
       if (!email || !password) return;
       setLoading(true);
       setAlert(null);
       try {
-        if (window.supabase && typeof window.supabase.createClient === "function" && supabaseUrl && supabaseKey) {
-          const client = window.supabase.createClient(supabaseUrl, supabaseKey);
+        if (window.supabase && typeof window.supabase.createClient === "function" && config.supabaseUrl && config.supabaseKey) {
+          const client = window.supabase.createClient(config.supabaseUrl, config.supabaseKey);
           if (authMode === "register") {
             const { error } = await client.auth.signUp({ email, password });
             if (error) throw error;
@@ -22078,6 +22086,7 @@
           onLoginSuccess(user);
         }
       } catch (err) {
+        console.log("Auth error:", err);
         const user = { email, id: "usr_" + Date.now() };
         localStorage.setItem("gdgate_user", JSON.stringify(user));
         onLoginSuccess(user);
@@ -22085,18 +22094,10 @@
         setLoading(false);
       }
     };
-    const handleSaveConfig = () => {
-      if (supabaseUrl && supabaseKey) {
-        localStorage.setItem("gdgate_supabase_url", supabaseUrl);
-        localStorage.setItem("gdgate_supabase_key", supabaseKey);
-        setAlert({ type: "success", text: "Kredensial Supabase Berhasil Disimpan!" });
-      } else {
-        setAlert({ type: "error", text: "Masukkan Supabase URL & ANON Key yang valid." });
-      }
-    };
     return /* @__PURE__ */ import_react9.default.createElement("div", { id: "login-screen", className: "fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-4 overflow-y-auto" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "relative w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-8 shadow-2xl space-y-6" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "text-center space-y-2" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold" }, /* @__PURE__ */ import_react9.default.createElement("i", { className: "fa-solid fa-shield-halved" }), " Supabase Secure Auth"), /* @__PURE__ */ import_react9.default.createElement("h2", { className: "text-3xl font-extrabold text-white tracking-tight" }, "Omni", /* @__PURE__ */ import_react9.default.createElement("span", { className: "text-blue-500" }, "Gallery")), /* @__PURE__ */ import_react9.default.createElement("p", { className: "text-xs text-slate-400" }, "Masuk untuk mengelola galeri foto & video Anda")), /* @__PURE__ */ import_react9.default.createElement("div", { className: "flex p-1 bg-slate-950 rounded-2xl border border-slate-800/80" }, /* @__PURE__ */ import_react9.default.createElement(
       "button",
       {
+        type: "button",
         onClick: () => setAuthMode("login"),
         className: `flex-1 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${authMode === "login" ? "bg-blue-600 text-white shadow-md" : "text-slate-400 hover:text-white"}`
       },
@@ -22105,6 +22106,7 @@
     ), /* @__PURE__ */ import_react9.default.createElement(
       "button",
       {
+        type: "button",
         onClick: () => setAuthMode("register"),
         className: `flex-1 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${authMode === "register" ? "bg-blue-600 text-white shadow-md" : "text-slate-400 hover:text-white"}`
       },
@@ -22139,42 +22141,7 @@
         className: "w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-xs shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
       },
       loading ? /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("i", { className: "fa-solid fa-spinner animate-spin" }), " Memproses...") : /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement("i", { className: "fa-solid fa-arrow-right-to-bracket" }), " ", authMode === "login" ? "Masuk ke Dashboard" : "Daftar Akun Baru")
-    )), /* @__PURE__ */ import_react9.default.createElement("div", { className: "pt-4 border-t border-slate-800/80" }, /* @__PURE__ */ import_react9.default.createElement(
-      "button",
-      {
-        type: "button",
-        onClick: () => setShowConfig(!showConfig),
-        className: "w-full text-left flex items-center justify-between text-[11px] font-bold text-slate-400 hover:text-slate-200 transition-colors cursor-pointer"
-      },
-      /* @__PURE__ */ import_react9.default.createElement("span", { className: "flex items-center gap-1.5" }, /* @__PURE__ */ import_react9.default.createElement("i", { className: "fa-solid fa-sliders text-blue-400" }), " Pengaturan Supabase URL & Key"),
-      /* @__PURE__ */ import_react9.default.createElement("i", { className: `fa-solid fa-chevron-down text-[10px] transition-transform ${showConfig ? "rotate-180" : ""}` })
-    ), showConfig && /* @__PURE__ */ import_react9.default.createElement("div", { className: "mt-3 space-y-3 p-3 rounded-2xl bg-slate-950/70 border border-slate-800 text-xs" }, /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { className: "block text-[10px] font-bold text-slate-400 mb-1" }, "SUPABASE URL"), /* @__PURE__ */ import_react9.default.createElement(
-      "input",
-      {
-        type: "text",
-        value: supabaseUrl,
-        onChange: (e) => setSupabaseUrl(e.target.value),
-        placeholder: "https://xyz.supabase.co",
-        className: "w-full px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-white font-mono focus:outline-none"
-      }
-    )), /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { className: "block text-[10px] font-bold text-slate-400 mb-1" }, "SUPABASE ANON KEY"), /* @__PURE__ */ import_react9.default.createElement(
-      "input",
-      {
-        type: "password",
-        value: supabaseKey,
-        onChange: (e) => setSupabaseKey(e.target.value),
-        placeholder: "eyJhbGciOi...",
-        className: "w-full px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-white font-mono focus:outline-none"
-      }
-    )), /* @__PURE__ */ import_react9.default.createElement(
-      "button",
-      {
-        type: "button",
-        onClick: handleSaveConfig,
-        className: "w-full py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-bold text-[11px] transition-all cursor-pointer"
-      },
-      "Simpan Kredensial Supabase"
-    )))));
+    ))));
   }
 
   // src/services/api.js
