@@ -21865,6 +21865,7 @@
   // src/components/common/LightboxModal.jsx
   var import_react7 = __toESM(require_react());
   function LightboxModal({ item, onClose }) {
+    const videoRef = import_react7.default.useRef(null);
     (0, import_react7.useEffect)(() => {
       const handleKeyDown = (e) => {
         if (e.key === "Escape") onClose();
@@ -21872,6 +21873,11 @@
       window.addEventListener("keydown", handleKeyDown);
       return () => window.removeEventListener("keydown", handleKeyDown);
     }, [onClose]);
+    (0, import_react7.useEffect)(() => {
+      if (videoRef.current) {
+        videoRef.current.play().catch((err) => console.log("Autoplay prevented:", err));
+      }
+    }, [item]);
     if (!item) return null;
     const mediaUrl = item.url || (item.source === "local" ? `/media-file?path=${encodeURIComponent(item.id)}` : `/gdrive-media?id=${item.id}`);
     const viewUrl = item.viewUrl || (item.source === "gdrive" ? `https://drive.google.com/file/d/${item.id}/view` : mediaUrl);
@@ -21905,15 +21911,16 @@
       ) : isGDriveVideo ? /* @__PURE__ */ import_react7.default.createElement(
         "iframe",
         {
-          src: `https://drive.google.com/file/d/${item.id}/preview`,
-          className: "w-full h-[65vh] max-w-3xl rounded-2xl shadow-2xl border border-slate-800",
-          allow: "autoplay; encrypted-media",
+          src: `https://drive.google.com/file/d/${item.id}/preview?autoplay=1`,
+          className: "w-full h-[70vh] max-w-4xl rounded-2xl shadow-2xl border border-slate-800",
+          allow: "autoplay; encrypted-media; fullscreen",
           allowFullScreen: true,
           title: item.title
         }
       ) : /* @__PURE__ */ import_react7.default.createElement(
         "video",
         {
+          ref: videoRef,
           src: mediaUrl,
           controls: true,
           autoPlay: true,

@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 
 export default function LightboxModal({ item, onClose }) {
+  const videoRef = React.useRef(null);
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
@@ -8,6 +10,12 @@ export default function LightboxModal({ item, onClose }) {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onClose]);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(err => console.log("Autoplay prevented:", err));
+    }
+  }, [item]);
 
   if (!item) return null;
 
@@ -39,14 +47,15 @@ export default function LightboxModal({ item, onClose }) {
           />
         ) : isGDriveVideo ? (
           <iframe 
-            src={`https://drive.google.com/file/d/${item.id}/preview`}
-            className="w-full h-[65vh] max-w-3xl rounded-2xl shadow-2xl border border-slate-800"
-            allow="autoplay; encrypted-media"
+            src={`https://drive.google.com/file/d/${item.id}/preview?autoplay=1`}
+            className="w-full h-[70vh] max-w-4xl rounded-2xl shadow-2xl border border-slate-800"
+            allow="autoplay; encrypted-media; fullscreen"
             allowFullScreen
             title={item.title}
           ></iframe>
         ) : (
           <video 
+            ref={videoRef}
             src={mediaUrl} 
             controls 
             autoPlay
