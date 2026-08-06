@@ -7,12 +7,7 @@ export default function MediaCard({ item, onOpenLightbox }) {
 
   const handleClick = (e) => {
     e.stopPropagation();
-    if (isVideo) {
-      // Directly open and play video instantly in new tab/player
-      window.open(viewUrl, '_blank');
-    } else {
-      onOpenLightbox(item);
-    }
+    onOpenLightbox(item);
   };
 
   if (isVideo) {

@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 export default function LightboxModal({ item, onClose }) {
-  const videoRef = React.useRef(null);
+  const videoRef = useRef(null);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -13,90 +13,96 @@ export default function LightboxModal({ item, onClose }) {
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.play().catch(err => console.log("Autoplay prevented:", err));
+      videoRef.current.play().catch(() => {});
     }
   }, [item]);
 
   if (!item) return null;
 
-  const mediaUrl = item.url || (item.source === 'local' ? `/media-file?path=${encodeURIComponent(item.id)}` : `/gdrive-media?id=${item.id}`);
-  const viewUrl = item.viewUrl || (item.source === 'gdrive' ? `https://drive.google.com/file/d/${item.id}/view` : mediaUrl);
   const isVideo = item.type === 'video';
-  const isMov = (item.ext || '').toLowerCase() === '.mov';
   const isGDriveVideo = isVideo && item.source === 'gdrive';
 
-  return (
-    <div 
-      className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-4 active"
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-    >
-      <button 
-        onClick={onClose}
-        className="absolute top-6 right-6 text-white hover:text-gray-300 transition-colors p-2 z-10 cursor-pointer"
-      >
-        <i className="fa-solid fa-xmark text-3xl"></i>
-      </button>
+  // Best quality URL: local = full stream, gdrive = direct media proxy
+  const mediaUrl = item.source === 'local'
+    ? `/media-file?path=${encodeURIComponent(item.id)}`
+    : `/gdrive-media?id=${item.id}`;
 
-      <div className="relative w-full max-w-4xl max-h-[80vh] flex flex-col items-center justify-center space-y-3">
+  const viewUrl = item.source === 'gdrive'
+    ? `https://drive.google.com/file/d/${item.id}/view`
+    : mediaUrl;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 bg-black/97 flex flex-col"
+      style={{ backdropFilter: 'blur(8px)' }}
+    >
+      {/* Top bar with close button */}
+      <div className="flex items-center justify-between px-5 py-3 bg-black/60 border-b border-white/10 flex-shrink-0">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 ${isVideo ? 'bg-rose-600/30' : 'bg-purple-600/30'}`}>
+            <i className={`text-sm ${isVideo ? 'fa-solid fa-film text-rose-400' : 'fa-solid fa-image text-purple-400'}`}></i>
+          </div>
+          <div className="min-w-0">
+            <p className="text-white font-bold text-sm truncate">{item.title}</p>
+            <p className="text-slate-400 text-xs truncate">{item.accountName || 'Storage Gateway'}</p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 flex-shrink-0 ml-4">
+          {isVideo && (
+            <a
+              href={viewUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all flex items-center gap-1.5 border border-white/10"
+            >
+              <i className="fa-solid fa-up-right-from-square text-[10px]"></i>
+              Buka Tab Baru
+            </a>
+          )}
+          <button
+            onClick={onClose}
+            className="w-9 h-9 rounded-xl bg-white/10 hover:bg-rose-600 text-white flex items-center justify-center transition-all border border-white/10 hover:border-rose-500 cursor-pointer"
+            title="Tutup (Esc)"
+          >
+            <i className="fa-solid fa-xmark text-base"></i>
+          </button>
+        </div>
+      </div>
+
+      {/* Media content - fills remaining space */}
+      <div
+        className="flex-1 flex items-center justify-center overflow-hidden"
+        onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      >
         {!isVideo ? (
-          <img 
-            src={item.source === 'gdrive' ? `/gdrive-media?id=${item.id}` : mediaUrl} 
-            alt={item.title} 
-            referrerPolicy="no-referrer" 
-            className="max-w-full max-h-[75vh] object-contain rounded-2xl shadow-2xl scale-100 transition-transform duration-300"
+          <img
+            src={item.source === 'gdrive' ? `/gdrive-media?id=${item.id}` : mediaUrl}
+            alt={item.title}
+            referrerPolicy="no-referrer"
+            className="max-w-full max-h-full object-contain"
+            style={{ maxHeight: 'calc(100vh - 64px)' }}
           />
         ) : isGDriveVideo ? (
-          <iframe 
+          <iframe
             src={`https://drive.google.com/file/d/${item.id}/preview?autoplay=1`}
-            className="w-full h-[70vh] max-w-4xl rounded-2xl shadow-2xl border border-slate-800"
+            className="w-full"
+            style={{ height: 'calc(100vh - 64px)', border: 'none' }}
             allow="autoplay; encrypted-media; fullscreen"
             allowFullScreen
             title={item.title}
           ></iframe>
         ) : (
-          <video 
+          <video
             ref={videoRef}
-            src={mediaUrl} 
-            controls 
+            src={mediaUrl}
+            controls
             autoPlay
-            playsInline 
-            className="max-w-full max-h-[75vh] rounded-2xl shadow-2xl"
+            playsInline
+            className="max-w-full"
+            style={{ maxHeight: 'calc(100vh - 64px)' }}
           ></video>
         )}
-      </div>
-
-      <div className="mt-4 text-center space-y-2 max-w-2xl">
-        <p className="text-slate-200 text-base font-bold drop-shadow-md">
-          {item.title} <span className="text-xs text-slate-400 font-normal">({item.accountName || 'Storage Gateway'})</span>
-        </p>
-
-        {isVideo && !isGDriveVideo && isMov && (
-          <div className="mt-1 text-xs font-semibold text-rose-400 bg-rose-950/50 border border-rose-500/30 p-2 rounded-xl">
-            ⚠️ Format iPhone MOV (Codec HEVC/H.265). Chrome Windows membutuhkan pemutar bawaan laptop untuk memutarnya. Klik tombol merah di bawah untuk buka/putar di player laptop.
-          </div>
-        )}
-
-        <div className="pt-2">
-          {isVideo && !isGDriveVideo ? (
-            <a 
-              href={viewUrl} 
-              target="_blank" 
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-extrabold text-xs transition-all shadow-lg border border-rose-400/40"
-            >
-              <i className="fa-solid fa-play"></i> Putar Video di Tab Baru / Media Player ({item.sizeFormatted || ''})
-            </a>
-          ) : (
-            <a 
-              href={viewUrl} 
-              target="_blank" 
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white font-bold text-xs transition-all border border-blue-500/30"
-            >
-              <i className="fa-solid fa-up-right-from-square"></i> Buka di Google Drive Web
-            </a>
-          )}
-        </div>
       </div>
     </div>
   );

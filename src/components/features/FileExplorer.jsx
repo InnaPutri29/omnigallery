@@ -258,13 +258,8 @@ export default function FileExplorer({
             </thead>
             <tbody className="divide-y divide-slate-800/80">
               {displayedItems.map(item => {
-                const viewUrl = item.viewUrl || (item.source === 'gdrive' ? `https://drive.google.com/file/d/${item.id}/view` : `/media-file?path=${encodeURIComponent(item.id)}`);
                 const handleRowClick = () => {
-                  if (item.type === 'video') {
-                    window.open(viewUrl, '_blank');
-                  } else {
-                    onOpenLightbox(item);
-                  }
+                  onOpenLightbox(item);
                 };
                 return (
                 <tr key={item.id} className="hover:bg-slate-800/40 transition-colors cursor-pointer" onClick={handleRowClick}>
