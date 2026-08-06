@@ -5,14 +5,6 @@
   var __getOwnPropNames = Object.getOwnPropertyNames;
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __esm = (fn, res, err) => function __init() {
-    if (err) throw err[0];
-    try {
-      return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
-    } catch (e) {
-      throw err = [e], e;
-    }
-  };
   var __commonJS = (cb, mod) => function __require() {
     try {
       return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
@@ -1341,7 +1333,7 @@
           return dispatcher;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React11 = require_react(), Internals = {
+        var React12 = require_react(), Internals = {
           d: {
             f: noop,
             r: function() {
@@ -1359,7 +1351,7 @@
           },
           p: 0,
           findDOMNode: null
-        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React11.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React12.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
         "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
           "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
         );
@@ -2894,7 +2886,7 @@
           "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
         }
         function validateOptionProps(element, props) {
-          null == props.value && ("object" === typeof props.children && null !== props.children ? React11.Children.forEach(props.children, function(child) {
+          null == props.value && ("object" === typeof props.children && null !== props.children ? React12.Children.forEach(props.children, function(child) {
             null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
               "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
             ));
@@ -18526,14 +18518,14 @@
           ));
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var Scheduler = require_scheduler(), React11 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+        var Scheduler = require_scheduler(), React12 = require_react(), ReactDOM2 = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
         /* @__PURE__ */ Symbol.for("react.scope");
         var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
         /* @__PURE__ */ Symbol.for("react.legacy_hidden");
         /* @__PURE__ */ Symbol.for("react.tracing_marker");
         var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
         /* @__PURE__ */ Symbol.for("react.view_transition");
-        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React11.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React12.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM2.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
           pending: false,
           data: null,
           method: null,
@@ -21321,7 +21313,7 @@
           }
         };
         (function() {
-          var isomorphicReactPackageVersion = React11.version;
+          var isomorphicReactPackageVersion = React12.version;
           if ("19.2.8" !== isomorphicReactPackageVersion)
             throw Error(
               'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.8\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -21461,7 +21453,15 @@
     }
   });
 
+  // src/main.jsx
+  var import_react11 = __toESM(require_react());
+  var import_client = __toESM(require_client());
+
+  // src/App.jsx
+  var import_react10 = __toESM(require_react());
+
   // src/components/layout/Navbar.jsx
+  var import_react = __toESM(require_react());
   function Navbar({ searchQuery, onSearchChange, onOpenAddModal, user, onLogout }) {
     return /* @__PURE__ */ import_react.default.createElement("header", { className: "h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-40 px-4 md:px-6 flex items-center justify-between" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/30" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "fa-solid fa-photo-film text-xl" })), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "font-extrabold text-lg tracking-tight text-white" }, "Omni", /* @__PURE__ */ import_react.default.createElement("span", { className: "text-blue-500" }, "Gallery")), /* @__PURE__ */ import_react.default.createElement("span", { className: "px-2 py-0.5 text-[10px] font-bold rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 uppercase tracking-wide" }, "Media Gateway")), /* @__PURE__ */ import_react.default.createElement("p", { className: "text-xs text-slate-400 hidden sm:block" }, "Multi-Account Cloud & Local Photos Hub"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "hidden md:flex items-center flex-1 max-w-md mx-8" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "relative w-full" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm" }), /* @__PURE__ */ import_react.default.createElement(
       "input",
@@ -21490,27 +21490,19 @@
       /* @__PURE__ */ import_react.default.createElement("i", { className: "fa-solid fa-right-from-bracket" })
     ))));
   }
-  var import_react;
-  var init_Navbar = __esm({
-    "src/components/layout/Navbar.jsx"() {
-      import_react = __toESM(require_react());
-    }
-  });
+
+  // src/components/layout/Sidebar.jsx
+  var import_react2 = __toESM(require_react());
 
   // src/utils/formatters.js
-  var formatBytes;
-  var init_formatters = __esm({
-    "src/utils/formatters.js"() {
-      formatBytes = (bytes) => {
-        if (!bytes || bytes === 0) return "0 B";
-        const k = 1024;
-        const sizes = ["B", "KB", "MB", "GB", "TB"];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
-      };
-      window.formatBytes = formatBytes;
-    }
-  });
+  var formatBytes = (bytes) => {
+    if (!bytes || bytes === 0) return "0 B";
+    const k = 1024;
+    const sizes = ["B", "KB", "MB", "GB", "TB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+  };
+  window.formatBytes = formatBytes;
 
   // src/components/layout/Sidebar.jsx
   function Sidebar({ activeTab, onSwitchTab, stats }) {
@@ -21549,15 +21541,12 @@
       }
     )), /* @__PURE__ */ import_react2.default.createElement("div", { className: "flex justify-between text-[11px] text-slate-400 font-medium" }, /* @__PURE__ */ import_react2.default.createElement("span", null, formatBytes(totalUsed), " Terpakai"), /* @__PURE__ */ import_react2.default.createElement("span", null, formatBytes(totalCapacity), " Total")))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "p-4 border-t border-slate-800/80" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "p-3 rounded-xl bg-slate-950/60 border border-slate-800 flex items-center gap-3" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "fa-solid fa-server" })), /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "text-xs font-bold text-white" }, "OmniGateway v2.0"), /* @__PURE__ */ import_react2.default.createElement("p", { className: "text-[10px] text-emerald-400 font-medium flex items-center gap-1" }, /* @__PURE__ */ import_react2.default.createElement("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse" }), " Connected")))));
   }
-  var import_react2;
-  var init_Sidebar = __esm({
-    "src/components/layout/Sidebar.jsx"() {
-      import_react2 = __toESM(require_react());
-      init_formatters();
-    }
-  });
+
+  // src/components/features/DashboardOverview.jsx
+  var import_react4 = __toESM(require_react());
 
   // src/components/common/MediaCard.jsx
+  var import_react3 = __toESM(require_react());
   function MediaCard({ item, onOpenLightbox }) {
     const mediaUrl = item.url || (item.source === "local" ? `/photos/${item.id}` : `https://drive.google.com/thumbnail?id=${item.id}&sz=w800`);
     const isVideo = item.type === "video";
@@ -21623,12 +21612,6 @@
       );
     }
   }
-  var import_react3;
-  var init_MediaCard = __esm({
-    "src/components/common/MediaCard.jsx"() {
-      import_react3 = __toESM(require_react());
-    }
-  });
 
   // src/components/features/DashboardOverview.jsx
   function DashboardOverview({ accounts, allMedia, stats, onOpenLightbox, onNavigateToExplorer }) {
@@ -21650,16 +21633,9 @@
       /* @__PURE__ */ import_react4.default.createElement("i", { className: "fa-solid fa-arrow-right text-[10px]" })
     )), /* @__PURE__ */ import_react4.default.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5" }, recentItems.map((item) => /* @__PURE__ */ import_react4.default.createElement(MediaCard, { key: item.id, item, onOpenLightbox })))));
   }
-  var import_react4;
-  var init_DashboardOverview = __esm({
-    "src/components/features/DashboardOverview.jsx"() {
-      import_react4 = __toESM(require_react());
-      init_MediaCard();
-      init_formatters();
-    }
-  });
 
   // src/components/features/FileExplorer.jsx
+  var import_react5 = __toESM(require_react());
   function FileExplorer({
     allMedia,
     accounts,
@@ -21851,15 +21827,9 @@
       )))))))
     ));
   }
-  var import_react5;
-  var init_FileExplorer = __esm({
-    "src/components/features/FileExplorer.jsx"() {
-      import_react5 = __toESM(require_react());
-      init_MediaCard();
-    }
-  });
 
   // src/components/features/AccountsManagement.jsx
+  var import_react6 = __toESM(require_react());
   function AccountsManagement({ accounts, onOpenAddModal }) {
     return /* @__PURE__ */ import_react6.default.createElement("div", { className: "p-6 md:p-8 space-y-6 max-w-7xl mx-auto" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-3xl bg-slate-900 border border-slate-800" }, /* @__PURE__ */ import_react6.default.createElement("div", null, /* @__PURE__ */ import_react6.default.createElement("h2", { className: "text-xl font-extrabold text-white" }, "Manajemen Akun Storage"), /* @__PURE__ */ import_react6.default.createElement("p", { className: "text-xs text-slate-400 mt-1" }, "Kelola koneksi akun Google Drive dan direktori penyimpanan lokal Anda.")), /* @__PURE__ */ import_react6.default.createElement(
       "button",
@@ -21887,15 +21857,9 @@
       ))), /* @__PURE__ */ import_react6.default.createElement("div", { className: "space-y-2 pt-2 border-t border-slate-800/80" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex justify-between text-xs" }, /* @__PURE__ */ import_react6.default.createElement("span", { className: "text-slate-400 font-medium" }, "Penggunaan Kapasitas"), /* @__PURE__ */ import_react6.default.createElement("span", { className: "font-bold text-blue-400 font-mono" }, percent, "%")), /* @__PURE__ */ import_react6.default.createElement("div", { className: "w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800 p-0.5" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full transition-all duration-500", style: { width: `${percent}%` } })), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex justify-between text-[11px] text-slate-400 font-mono" }, /* @__PURE__ */ import_react6.default.createElement("span", null, "Terpakai: ", formatBytes(acc.usedBytes)), /* @__PURE__ */ import_react6.default.createElement("span", null, "Total: ", formatBytes(acc.totalBytes)))));
     })));
   }
-  var import_react6;
-  var init_AccountsManagement = __esm({
-    "src/components/features/AccountsManagement.jsx"() {
-      import_react6 = __toESM(require_react());
-      init_formatters();
-    }
-  });
 
   // src/components/common/LightboxModal.jsx
+  var import_react7 = __toESM(require_react());
   function LightboxModal({ item, onClose }) {
     (0, import_react7.useEffect)(() => {
       const handleKeyDown = (e) => {
@@ -21978,14 +21942,9 @@
       )))
     );
   }
-  var import_react7;
-  var init_LightboxModal = __esm({
-    "src/components/common/LightboxModal.jsx"() {
-      import_react7 = __toESM(require_react());
-    }
-  });
 
   // src/components/common/AddAccountModal.jsx
+  var import_react8 = __toESM(require_react());
   function AddAccountModal({ onClose, onAddAccount }) {
     const [name, setName] = (0, import_react8.useState)("");
     const [email, setEmail] = (0, import_react8.useState)("");
@@ -22081,14 +22040,9 @@
       submitting ? "Menghubungkan..." : "Simpan & Hubungkan"
     )))));
   }
-  var import_react8;
-  var init_AddAccountModal = __esm({
-    "src/components/common/AddAccountModal.jsx"() {
-      import_react8 = __toESM(require_react());
-    }
-  });
 
   // src/components/common/LoginModal.jsx
+  var import_react9 = __toESM(require_react());
   function LoginModal({ onLoginSuccess }) {
     const [authMode, setAuthMode] = (0, import_react9.useState)("login");
     const [email, setEmail] = (0, import_react9.useState)("");
@@ -22097,7 +22051,7 @@
     const [loading, setLoading] = (0, import_react9.useState)(false);
     const [showConfig, setShowConfig] = (0, import_react9.useState)(false);
     const [supabaseUrl, setSupabaseUrl] = (0, import_react9.useState)(localStorage.getItem("gdgate_supabase_url") || "");
-    const [supabaseKey, setSupabaseKey] = (0, import_react9.useState)(localStorage.getItem("gdgate_supabase_key") || "");
+    const [supabaseKey, setSupabaseKey] = (0, import_react9.useState)(localStorage.getItem("gdgate_supabase_key") || "sb_publishable_WxTXhArfmb-DxvqXNg_4OQ_6YR-QGNI");
     const handleSubmit = async (e) => {
       e.preventDefault();
       if (!email || !password) return;
@@ -22222,63 +22176,52 @@
       "Simpan Kredensial Supabase"
     )))));
   }
-  var import_react9;
-  var init_LoginModal = __esm({
-    "src/components/common/LoginModal.jsx"() {
-      import_react9 = __toESM(require_react());
-    }
-  });
 
   // src/services/api.js
-  var fetchPhotos, fetchAccounts, fetchStats, addAccount;
-  var init_api = __esm({
-    "src/services/api.js"() {
-      fetchPhotos = async () => {
-        try {
-          const res = await fetch("/api/photos");
-          return await res.json();
-        } catch (e) {
-          console.log("fetchPhotos Error:", e);
-          return [];
-        }
-      };
-      fetchAccounts = async () => {
-        try {
-          const res = await fetch("/api/accounts");
-          return await res.json();
-        } catch (e) {
-          console.log("fetchAccounts Error:", e);
-          return [];
-        }
-      };
-      fetchStats = async () => {
-        try {
-          const res = await fetch("/api/stats");
-          return await res.json();
-        } catch (e) {
-          console.log("fetchStats Error:", e);
-          return null;
-        }
-      };
-      addAccount = async (accountData) => {
-        try {
-          const res = await fetch("/api/accounts", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(accountData)
-          });
-          return await res.json();
-        } catch (e) {
-          console.log("addAccount Error:", e);
-          return null;
-        }
-      };
-      window.fetchPhotos = fetchPhotos;
-      window.fetchAccounts = fetchAccounts;
-      window.fetchStats = fetchStats;
-      window.addAccount = addAccount;
+  var fetchPhotos = async () => {
+    try {
+      const res = await fetch("/api/photos");
+      return await res.json();
+    } catch (e) {
+      console.log("fetchPhotos Error:", e);
+      return [];
     }
-  });
+  };
+  var fetchAccounts = async () => {
+    try {
+      const res = await fetch("/api/accounts");
+      return await res.json();
+    } catch (e) {
+      console.log("fetchAccounts Error:", e);
+      return [];
+    }
+  };
+  var fetchStats = async () => {
+    try {
+      const res = await fetch("/api/stats");
+      return await res.json();
+    } catch (e) {
+      console.log("fetchStats Error:", e);
+      return null;
+    }
+  };
+  var addAccount = async (accountData) => {
+    try {
+      const res = await fetch("/api/accounts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(accountData)
+      });
+      return await res.json();
+    } catch (e) {
+      console.log("addAccount Error:", e);
+      return null;
+    }
+  };
+  window.fetchPhotos = fetchPhotos;
+  window.fetchAccounts = fetchAccounts;
+  window.fetchStats = fetchStats;
+  window.addAccount = addAccount;
 
   // src/App.jsx
   function App() {
@@ -22425,36 +22368,13 @@
       }
     ));
   }
-  var import_react10;
-  var init_App = __esm({
-    "src/App.jsx"() {
-      import_react10 = __toESM(require_react());
-      init_Navbar();
-      init_Sidebar();
-      init_DashboardOverview();
-      init_FileExplorer();
-      init_AccountsManagement();
-      init_LightboxModal();
-      init_AddAccountModal();
-      init_LoginModal();
-      init_api();
-    }
-  });
 
   // src/main.jsx
-  var require_main = __commonJS({
-    "src/main.jsx"() {
-      var import_react11 = __toESM(require_react());
-      var import_client = __toESM(require_client());
-      init_App();
-      var rootElement = document.getElementById("root");
-      if (rootElement) {
-        const root = import_client.default.createRoot(rootElement);
-        root.render(/* @__PURE__ */ import_react11.default.createElement(App, null));
-      }
-    }
-  });
-  require_main();
+  var rootElement = document.getElementById("root");
+  if (rootElement) {
+    const root = import_client.default.createRoot(rootElement);
+    root.render(/* @__PURE__ */ import_react11.default.createElement(App, null));
+  }
 })();
 /*! Bundled license information:
 

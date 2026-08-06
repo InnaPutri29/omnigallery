@@ -9,7 +9,7 @@ export default function LoginModal({ onLoginSuccess }) {
   const [showConfig, setShowConfig] = useState(false);
 
   const [supabaseUrl, setSupabaseUrl] = useState(localStorage.getItem('gdgate_supabase_url') || '');
-  const [supabaseKey, setSupabaseKey] = useState(localStorage.getItem('gdgate_supabase_key') || '');
+  const [supabaseKey, setSupabaseKey] = useState(localStorage.getItem('gdgate_supabase_key') || 'sb_publishable_WxTXhArfmb-DxvqXNg_4OQ_6YR-QGNI');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
