@@ -21549,13 +21549,22 @@
   var import_react3 = __toESM(require_react());
   function MediaCard({ item, onOpenLightbox }) {
     const mediaUrl = item.url || (item.source === "local" ? `/photos/${item.id}` : `https://drive.google.com/thumbnail?id=${item.id}&sz=w800`);
+    const viewUrl = item.viewUrl || (item.source === "gdrive" ? `https://drive.google.com/file/d/${item.id}/view` : `/media-file?path=${encodeURIComponent(item.id)}`);
     const isVideo = item.type === "video";
+    const handleClick = (e) => {
+      e.stopPropagation();
+      if (isVideo) {
+        window.open(viewUrl, "_blank");
+      } else {
+        onOpenLightbox(item);
+      }
+    };
     if (isVideo) {
       const videoThumbnailSource = item.source === "gdrive" ? `/gdrive-media?id=${item.id}` : `${mediaUrl}#t=0.5`;
       return /* @__PURE__ */ import_react3.default.createElement(
         "div",
         {
-          onClick: () => onOpenLightbox(item),
+          onClick: handleClick,
           className: "group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-md hover:shadow-2xl hover:border-rose-500/40 transition-all duration-300 cursor-pointer"
         },
         /* @__PURE__ */ import_react3.default.createElement("div", { className: "aspect-video bg-slate-950 overflow-hidden relative flex items-center justify-center" }, item.source === "gdrive" ? /* @__PURE__ */ import_react3.default.createElement(
@@ -21587,7 +21596,7 @@
       return /* @__PURE__ */ import_react3.default.createElement(
         "div",
         {
-          onClick: () => onOpenLightbox(item),
+          onClick: handleClick,
           className: "group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-md hover:shadow-2xl hover:border-blue-500/50 transition-all duration-300 cursor-pointer"
         },
         /* @__PURE__ */ import_react3.default.createElement("div", { className: "aspect-video bg-slate-950 overflow-hidden relative" }, /* @__PURE__ */ import_react3.default.createElement(
@@ -21818,17 +21827,27 @@
       ))))
     ) : (
       /* List View Table */
-      /* @__PURE__ */ import_react5.default.createElement("div", { className: "rounded-2xl border border-slate-800 overflow-hidden bg-slate-900/90 shadow-xl" }, /* @__PURE__ */ import_react5.default.createElement("table", { className: "w-full text-left text-xs" }, /* @__PURE__ */ import_react5.default.createElement("thead", { className: "bg-slate-950 text-slate-400 uppercase tracking-wider font-extrabold border-b border-slate-800" }, /* @__PURE__ */ import_react5.default.createElement("tr", null, /* @__PURE__ */ import_react5.default.createElement("th", { className: "py-3.5 px-4" }, "Nama File Media"), /* @__PURE__ */ import_react5.default.createElement("th", { className: "py-3.5 px-4" }, "Tipe"), /* @__PURE__ */ import_react5.default.createElement("th", { className: "py-3.5 px-4" }, "Sumber Storage"), /* @__PURE__ */ import_react5.default.createElement("th", { className: "py-3.5 px-4" }, "Ukuran"), /* @__PURE__ */ import_react5.default.createElement("th", { className: "py-3.5 px-4 text-right" }, "Aksi"))), /* @__PURE__ */ import_react5.default.createElement("tbody", { className: "divide-y divide-slate-800/80" }, displayedItems.map((item) => /* @__PURE__ */ import_react5.default.createElement("tr", { key: item.id, className: "hover:bg-slate-800/40 transition-colors cursor-pointer", onClick: () => onOpenLightbox(item) }, /* @__PURE__ */ import_react5.default.createElement("td", { className: "py-3 px-4 font-bold text-slate-200 flex items-center gap-3" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: item.type === "video" ? "fa-solid fa-film text-rose-400" : "fa-solid fa-image text-purple-400" })), /* @__PURE__ */ import_react5.default.createElement("span", { className: "truncate max-w-xs" }, item.title)), /* @__PURE__ */ import_react5.default.createElement("td", { className: `py-3 px-4 uppercase text-[11px] font-extrabold ${item.type === "video" ? "text-rose-400" : "text-purple-400"}` }, item.type), /* @__PURE__ */ import_react5.default.createElement("td", { className: "py-3 px-4 text-slate-400 font-medium" }, item.accountName || (item.source === "local" ? "Local Storage" : "Google Drive")), /* @__PURE__ */ import_react5.default.createElement("td", { className: "py-3 px-4 text-slate-400 font-mono" }, item.sizeFormatted || "N/A"), /* @__PURE__ */ import_react5.default.createElement("td", { className: "py-3 px-4 text-right" }, /* @__PURE__ */ import_react5.default.createElement(
-        "button",
-        {
-          onClick: (e) => {
-            e.stopPropagation();
+      /* @__PURE__ */ import_react5.default.createElement("div", { className: "rounded-2xl border border-slate-800 overflow-hidden bg-slate-900/90 shadow-xl" }, /* @__PURE__ */ import_react5.default.createElement("table", { className: "w-full text-left text-xs" }, /* @__PURE__ */ import_react5.default.createElement("thead", { className: "bg-slate-950 text-slate-400 uppercase tracking-wider font-extrabold border-b border-slate-800" }, /* @__PURE__ */ import_react5.default.createElement("tr", null, /* @__PURE__ */ import_react5.default.createElement("th", { className: "py-3.5 px-4" }, "Nama File Media"), /* @__PURE__ */ import_react5.default.createElement("th", { className: "py-3.5 px-4" }, "Tipe"), /* @__PURE__ */ import_react5.default.createElement("th", { className: "py-3.5 px-4" }, "Sumber Storage"), /* @__PURE__ */ import_react5.default.createElement("th", { className: "py-3.5 px-4" }, "Ukuran"), /* @__PURE__ */ import_react5.default.createElement("th", { className: "py-3.5 px-4 text-right" }, "Aksi"))), /* @__PURE__ */ import_react5.default.createElement("tbody", { className: "divide-y divide-slate-800/80" }, displayedItems.map((item) => {
+        const viewUrl = item.viewUrl || (item.source === "gdrive" ? `https://drive.google.com/file/d/${item.id}/view` : `/media-file?path=${encodeURIComponent(item.id)}`);
+        const handleRowClick = () => {
+          if (item.type === "video") {
+            window.open(viewUrl, "_blank");
+          } else {
             onOpenLightbox(item);
+          }
+        };
+        return /* @__PURE__ */ import_react5.default.createElement("tr", { key: item.id, className: "hover:bg-slate-800/40 transition-colors cursor-pointer", onClick: handleRowClick }, /* @__PURE__ */ import_react5.default.createElement("td", { className: "py-3 px-4 font-bold text-slate-200 flex items-center gap-3" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: item.type === "video" ? "fa-solid fa-film text-rose-400" : "fa-solid fa-image text-purple-400" })), /* @__PURE__ */ import_react5.default.createElement("span", { className: "truncate max-w-xs" }, item.title)), /* @__PURE__ */ import_react5.default.createElement("td", { className: `py-3 px-4 uppercase text-[11px] font-extrabold ${item.type === "video" ? "text-rose-400" : "text-purple-400"}` }, item.type), /* @__PURE__ */ import_react5.default.createElement("td", { className: "py-3 px-4 text-slate-400 font-medium" }, item.accountName || (item.source === "local" ? "Local Storage" : "Google Drive")), /* @__PURE__ */ import_react5.default.createElement("td", { className: "py-3 px-4 text-slate-400 font-mono" }, item.sizeFormatted || "N/A"), /* @__PURE__ */ import_react5.default.createElement("td", { className: "py-3 px-4 text-right" }, /* @__PURE__ */ import_react5.default.createElement(
+          "button",
+          {
+            onClick: (e) => {
+              e.stopPropagation();
+              handleRowClick();
+            },
+            className: `px-3 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${item.type === "video" ? "bg-rose-600/20 text-rose-400 hover:bg-rose-600 hover:text-white" : "bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white"}`
           },
-          className: "px-3 py-1 rounded-lg bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white font-bold text-[11px] transition-all cursor-pointer"
-        },
-        "Buka"
-      )))))))
+          item.type === "video" ? "\u25B6 Putar" : "Buka"
+        )));
+      }))))
     ));
   }
 

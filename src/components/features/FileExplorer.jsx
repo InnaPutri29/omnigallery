@@ -257,8 +257,17 @@ export default function FileExplorer({
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/80">
-              {displayedItems.map(item => (
-                <tr key={item.id} className="hover:bg-slate-800/40 transition-colors cursor-pointer" onClick={() => onOpenLightbox(item)}>
+              {displayedItems.map(item => {
+                const viewUrl = item.viewUrl || (item.source === 'gdrive' ? `https://drive.google.com/file/d/${item.id}/view` : `/media-file?path=${encodeURIComponent(item.id)}`);
+                const handleRowClick = () => {
+                  if (item.type === 'video') {
+                    window.open(viewUrl, '_blank');
+                  } else {
+                    onOpenLightbox(item);
+                  }
+                };
+                return (
+                <tr key={item.id} className="hover:bg-slate-800/40 transition-colors cursor-pointer" onClick={handleRowClick}>
                   <td className="py-3 px-4 font-bold text-slate-200 flex items-center gap-3">
                     <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400">
                       <i className={item.type === 'video' ? 'fa-solid fa-film text-rose-400' : 'fa-solid fa-image text-purple-400'}></i>
@@ -276,14 +285,15 @@ export default function FileExplorer({
                   </td>
                   <td className="py-3 px-4 text-right">
                     <button 
-                      onClick={(e) => { e.stopPropagation(); onOpenLightbox(item); }}
-                      className="px-3 py-1 rounded-lg bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white font-bold text-[11px] transition-all cursor-pointer"
+                      onClick={(e) => { e.stopPropagation(); handleRowClick(); }}
+                      className={`px-3 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer ${item.type === 'video' ? 'bg-rose-600/20 text-rose-400 hover:bg-rose-600 hover:text-white' : 'bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white'}`}
                     >
-                      Buka
+                      {item.type === 'video' ? '▶ Putar' : 'Buka'}
                     </button>
                   </td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
           </table>
         </div>

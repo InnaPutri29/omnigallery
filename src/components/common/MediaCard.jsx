@@ -2,7 +2,18 @@ import React from 'react';
 
 export default function MediaCard({ item, onOpenLightbox }) {
   const mediaUrl = item.url || (item.source === 'local' ? `/photos/${item.id}` : `https://drive.google.com/thumbnail?id=${item.id}&sz=w800`);
+  const viewUrl = item.viewUrl || (item.source === 'gdrive' ? `https://drive.google.com/file/d/${item.id}/view` : `/media-file?path=${encodeURIComponent(item.id)}`);
   const isVideo = item.type === 'video';
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+    if (isVideo) {
+      // Directly open and play video instantly in new tab/player
+      window.open(viewUrl, '_blank');
+    } else {
+      onOpenLightbox(item);
+    }
+  };
 
   if (isVideo) {
     const videoThumbnailSource = item.source === 'gdrive' 
@@ -11,7 +22,7 @@ export default function MediaCard({ item, onOpenLightbox }) {
 
     return (
       <div 
-        onClick={() => onOpenLightbox(item)}
+        onClick={handleClick}
         className="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-md hover:shadow-2xl hover:border-rose-500/40 transition-all duration-300 cursor-pointer"
       >
         <div className="aspect-video bg-slate-950 overflow-hidden relative flex items-center justify-center">
@@ -63,7 +74,7 @@ export default function MediaCard({ item, onOpenLightbox }) {
 
     return (
       <div 
-        onClick={() => onOpenLightbox(item)}
+        onClick={handleClick}
         className="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-md hover:shadow-2xl hover:border-blue-500/50 transition-all duration-300 cursor-pointer"
       >
         <div className="aspect-video bg-slate-950 overflow-hidden relative">
