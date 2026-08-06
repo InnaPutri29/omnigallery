@@ -272,14 +272,29 @@ async function refreshCache() {
     });
 
     // 2. Pemindaian Otomatis Folder Google Drive Terhubung (dengan Subfolder)
+    const sameNameGroups = {};
+    accounts.forEach(acc => {
+        if (!sameNameGroups[acc.name]) sameNameGroups[acc.name] = [];
+        sameNameGroups[acc.name].push(acc);
+    });
+
     for (const acc of accounts) {
         if (acc.type === 'gdrive' && acc.folderId) {
             try {
+                const group = sameNameGroups[acc.name] || [];
+                const subfolderPrefix = group.length > 1 ? `Folder ${group.indexOf(acc) + 1}` : '';
+
                 const driveFiles = await fetchGDriveFolderFiles(acc.folderId, acc.name);
                 driveFiles.forEach(df => {
                     if (df.type === 'image') imageCount++;
                     else if (df.type === 'video') videoCount++;
                     else if (df.type === 'document') docCount++;
+
+                    if (subfolderPrefix) {
+                        df.subfolder = df.subfolder && df.subfolder !== 'Utama' 
+                            ? `${subfolderPrefix} (${df.subfolder})` 
+                            : subfolderPrefix;
+                    }
                     mediaList.push(df);
                 });
             } catch (e) {}
@@ -312,10 +327,22 @@ function formatBytes(bytes, decimals = 2) {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 
-// API: Daftar Akun Storage Terhubung
+// API: Daftar Akun Storage Terhubung (Unified Duplicate Account Names)
 app.get('/api/accounts', async (req, res) => {
     await getOrUpdateCache();
-    res.json(accounts);
+    const uniqueAccountsMap = new Map();
+    accounts.forEach(acc => {
+        if (!uniqueAccountsMap.has(acc.name)) {
+            uniqueAccountsMap.set(acc.name, { ...acc });
+        } else {
+            const existing = uniqueAccountsMap.get(acc.name);
+            existing.usedBytes += acc.usedBytes;
+            existing.totalBytes += acc.totalBytes;
+            existing.email = `${existing.email}, ${acc.email}`;
+            existing.folderId = `${existing.folderId}, ${acc.folderId}`;
+        }
+    });
+    res.json(Array.from(uniqueAccountsMap.values()));
 });
 
 function extractFolderId(input) {
