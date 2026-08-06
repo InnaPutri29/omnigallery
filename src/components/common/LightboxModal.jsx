@@ -1,7 +1,10 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useState } from 'react';
 
 export default function LightboxModal({ item, allMedia = [], onNavigate, onClose }) {
   const videoRef = useRef(null);
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+  const isMov = (item?.ext || '').toLowerCase() === '.mov';
+  const isHevc = isMov; // MOV files from iPhone are HEVC/H.265
 
   // Get index in full media list
   const currentIndex = useMemo(() =>
@@ -10,15 +13,11 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
   const hasPrev = currentIndex > 0;
   const hasNext = currentIndex < allMedia.length - 1;
 
-  const goPrev = () => {
-    if (hasPrev) onNavigate(allMedia[currentIndex - 1]);
-  };
-
-  const goNext = () => {
-    if (hasNext) onNavigate(allMedia[currentIndex + 1]);
-  };
+  const goPrev = () => { if (hasPrev) onNavigate(allMedia[currentIndex - 1]); };
+  const goNext = () => { if (hasNext) onNavigate(allMedia[currentIndex + 1]); };
 
   useEffect(() => {
+    setIframeLoaded(false);
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
       if (e.key === 'ArrowLeft') goPrev();
@@ -29,7 +28,7 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
   }, [currentIndex, allMedia]);
 
   useEffect(() => {
-    if (videoRef.current) {
+    if (videoRef.current && !isHevc) {
       videoRef.current.play().catch(() => {});
     }
   }, [item]);
@@ -38,6 +37,7 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
 
   const isVideo = item.type === 'video';
   const isGDriveVideo = isVideo && item.source === 'gdrive';
+  const isLocalVideo = isVideo && item.source === 'local';
 
   const mediaUrl = item.source === 'local'
     ? `/media-file?path=${encodeURIComponent(item.id)}`
@@ -46,6 +46,11 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
   const viewUrl = item.source === 'gdrive'
     ? `https://drive.google.com/file/d/${item.id}/view`
     : mediaUrl;
+
+  // Thumbnail for poster / GDrive loading preview
+  const thumbnailUrl = item.source === 'gdrive'
+    ? `/gdrive-media?id=${item.id}`
+    : null;
 
   return (
     <div
@@ -73,7 +78,7 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
         <i className="fa-solid fa-up-right-from-square text-sm"></i>
       </a>
 
-      {/* Counter top left */}
+      {/* Counter */}
       {allMedia.length > 0 && (
         <div className="absolute top-4 left-4 z-20 px-3 py-2 rounded-xl bg-black/60 border border-white/10 text-white text-xs font-bold backdrop-blur-sm">
           {currentIndex + 1} / {allMedia.length}
@@ -104,7 +109,9 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
 
       {/* Media content */}
       <div className="relative flex items-center justify-center w-full h-full px-16 py-12">
-        {!isVideo ? (
+
+        {/* Photo */}
+        {!isVideo && (
           <img
             src={item.source === 'gdrive' ? `/gdrive-media?id=${item.id}` : mediaUrl}
             alt={item.title}
@@ -112,32 +119,78 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
             className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl"
             style={{ maxHeight: 'calc(100vh - 100px)', maxWidth: 'calc(100vw - 140px)' }}
           />
-        ) : isGDriveVideo ? (
-          <iframe
-            src={`https://drive.google.com/file/d/${item.id}/preview?autoplay=1`}
-            className="rounded-2xl shadow-2xl"
-            style={{
-              width: 'min(900px, calc(100vw - 140px))',
-              height: 'calc(100vh - 100px)',
-              border: 'none'
-            }}
-            allow="autoplay; encrypted-media; fullscreen"
-            allowFullScreen
-            title={item.title}
-          ></iframe>
-        ) : (
+        )}
+
+        {/* Google Drive Video — iframe with thumbnail shown while loading */}
+        {isGDriveVideo && (
+          <div
+            className="relative rounded-2xl overflow-hidden shadow-2xl"
+            style={{ width: 'min(900px, calc(100vw - 140px))', height: 'calc(100vh - 100px)' }}
+          >
+            {/* Thumbnail shown before iframe loads */}
+            {!iframeLoaded && (
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80 gap-4">
+                {thumbnailUrl && (
+                  <img
+                    src={thumbnailUrl}
+                    alt={item.title}
+                    referrerPolicy="no-referrer"
+                    className="absolute inset-0 w-full h-full object-cover opacity-40"
+                  />
+                )}
+                <div className="relative z-10 flex flex-col items-center gap-3">
+                  <div className="w-14 h-14 rounded-2xl bg-rose-600/90 flex items-center justify-center animate-pulse shadow-xl">
+                    <i className="fa-solid fa-film text-white text-xl"></i>
+                  </div>
+                  <p className="text-white text-xs font-bold animate-pulse">Memuat video dari Google Drive...</p>
+                </div>
+              </div>
+            )}
+            <iframe
+              src={`https://drive.google.com/file/d/${item.id}/preview?autoplay=1`}
+              className="w-full h-full"
+              style={{ border: 'none' }}
+              allow="autoplay; encrypted-media; fullscreen"
+              allowFullScreen
+              title={item.title}
+              onLoad={() => setIframeLoaded(true)}
+            ></iframe>
+          </div>
+        )}
+
+        {/* Local Video */}
+        {isLocalVideo && !isHevc && (
           <video
             ref={videoRef}
             src={mediaUrl}
             controls
             autoPlay
             playsInline
+            preload="auto"
             className="rounded-2xl shadow-2xl"
-            style={{
-              maxWidth: 'calc(100vw - 140px)',
-              maxHeight: 'calc(100vh - 100px)'
-            }}
+            style={{ maxWidth: 'calc(100vw - 140px)', maxHeight: 'calc(100vh - 100px)' }}
           ></video>
+        )}
+
+        {/* MOV/HEVC — Chrome cannot play H.265, open with system player */}
+        {isLocalVideo && isHevc && (
+          <div className="flex flex-col items-center gap-5 text-center max-w-sm">
+            <div className="w-16 h-16 rounded-2xl bg-amber-500/20 flex items-center justify-center text-3xl">
+              <i className="fa-solid fa-film text-amber-400"></i>
+            </div>
+            <div>
+              <p className="text-white font-extrabold text-sm mb-1">Format iPhone MOV (HEVC/H.265)</p>
+              <p className="text-slate-400 text-xs">Chrome belum mendukung codec ini. Buka dengan media player bawaan laptop untuk memutar video ini.</p>
+            </div>
+            <a
+              href={viewUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="px-6 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-sm flex items-center gap-2 transition-all shadow-lg"
+            >
+              <i className="fa-solid fa-play"></i> Putar di Media Player Laptop
+            </a>
+          </div>
         )}
       </div>
 

@@ -21876,6 +21876,9 @@
   var import_react7 = __toESM(require_react());
   function LightboxModal({ item, allMedia = [], onNavigate, onClose }) {
     const videoRef = (0, import_react7.useRef)(null);
+    const [iframeLoaded, setIframeLoaded] = (0, import_react7.useState)(false);
+    const isMov = (item?.ext || "").toLowerCase() === ".mov";
+    const isHevc = isMov;
     const currentIndex = (0, import_react7.useMemo)(() => allMedia.findIndex((m) => m.id === item.id), [allMedia, item]);
     const hasPrev = currentIndex > 0;
     const hasNext = currentIndex < allMedia.length - 1;
@@ -21886,6 +21889,7 @@
       if (hasNext) onNavigate(allMedia[currentIndex + 1]);
     };
     (0, import_react7.useEffect)(() => {
+      setIframeLoaded(false);
       const handleKeyDown = (e) => {
         if (e.key === "Escape") onClose();
         if (e.key === "ArrowLeft") goPrev();
@@ -21895,7 +21899,7 @@
       return () => window.removeEventListener("keydown", handleKeyDown);
     }, [currentIndex, allMedia]);
     (0, import_react7.useEffect)(() => {
-      if (videoRef.current) {
+      if (videoRef.current && !isHevc) {
         videoRef.current.play().catch(() => {
         });
       }
@@ -21903,8 +21907,10 @@
     if (!item) return null;
     const isVideo = item.type === "video";
     const isGDriveVideo = isVideo && item.source === "gdrive";
+    const isLocalVideo = isVideo && item.source === "local";
     const mediaUrl = item.source === "local" ? `/media-file?path=${encodeURIComponent(item.id)}` : `/gdrive-media?id=${item.id}`;
     const viewUrl = item.source === "gdrive" ? `https://drive.google.com/file/d/${item.id}/view` : mediaUrl;
+    const thumbnailUrl = item.source === "gdrive" ? `/gdrive-media?id=${item.id}` : null;
     return /* @__PURE__ */ import_react7.default.createElement(
       "div",
       {
@@ -21953,7 +21959,7 @@
         },
         /* @__PURE__ */ import_react7.default.createElement("i", { className: "fa-solid fa-chevron-right text-lg" })
       ),
-      /* @__PURE__ */ import_react7.default.createElement("div", { className: "relative flex items-center justify-center w-full h-full px-16 py-12" }, !isVideo ? /* @__PURE__ */ import_react7.default.createElement(
+      /* @__PURE__ */ import_react7.default.createElement("div", { className: "relative flex items-center justify-center w-full h-full px-16 py-12" }, !isVideo && /* @__PURE__ */ import_react7.default.createElement(
         "img",
         {
           src: item.source === "gdrive" ? `/gdrive-media?id=${item.id}` : mediaUrl,
@@ -21962,21 +21968,34 @@
           className: "max-w-full max-h-full object-contain rounded-2xl shadow-2xl",
           style: { maxHeight: "calc(100vh - 100px)", maxWidth: "calc(100vw - 140px)" }
         }
-      ) : isGDriveVideo ? /* @__PURE__ */ import_react7.default.createElement(
-        "iframe",
+      ), isGDriveVideo && /* @__PURE__ */ import_react7.default.createElement(
+        "div",
         {
-          src: `https://drive.google.com/file/d/${item.id}/preview?autoplay=1`,
-          className: "rounded-2xl shadow-2xl",
-          style: {
-            width: "min(900px, calc(100vw - 140px))",
-            height: "calc(100vh - 100px)",
-            border: "none"
-          },
-          allow: "autoplay; encrypted-media; fullscreen",
-          allowFullScreen: true,
-          title: item.title
-        }
-      ) : /* @__PURE__ */ import_react7.default.createElement(
+          className: "relative rounded-2xl overflow-hidden shadow-2xl",
+          style: { width: "min(900px, calc(100vw - 140px))", height: "calc(100vh - 100px)" }
+        },
+        !iframeLoaded && /* @__PURE__ */ import_react7.default.createElement("div", { className: "absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80 gap-4" }, thumbnailUrl && /* @__PURE__ */ import_react7.default.createElement(
+          "img",
+          {
+            src: thumbnailUrl,
+            alt: item.title,
+            referrerPolicy: "no-referrer",
+            className: "absolute inset-0 w-full h-full object-cover opacity-40"
+          }
+        ), /* @__PURE__ */ import_react7.default.createElement("div", { className: "relative z-10 flex flex-col items-center gap-3" }, /* @__PURE__ */ import_react7.default.createElement("div", { className: "w-14 h-14 rounded-2xl bg-rose-600/90 flex items-center justify-center animate-pulse shadow-xl" }, /* @__PURE__ */ import_react7.default.createElement("i", { className: "fa-solid fa-film text-white text-xl" })), /* @__PURE__ */ import_react7.default.createElement("p", { className: "text-white text-xs font-bold animate-pulse" }, "Memuat video dari Google Drive..."))),
+        /* @__PURE__ */ import_react7.default.createElement(
+          "iframe",
+          {
+            src: `https://drive.google.com/file/d/${item.id}/preview?autoplay=1`,
+            className: "w-full h-full",
+            style: { border: "none" },
+            allow: "autoplay; encrypted-media; fullscreen",
+            allowFullScreen: true,
+            title: item.title,
+            onLoad: () => setIframeLoaded(true)
+          }
+        )
+      ), isLocalVideo && !isHevc && /* @__PURE__ */ import_react7.default.createElement(
         "video",
         {
           ref: videoRef,
@@ -21984,13 +22003,21 @@
           controls: true,
           autoPlay: true,
           playsInline: true,
+          preload: "auto",
           className: "rounded-2xl shadow-2xl",
-          style: {
-            maxWidth: "calc(100vw - 140px)",
-            maxHeight: "calc(100vh - 100px)"
-          }
+          style: { maxWidth: "calc(100vw - 140px)", maxHeight: "calc(100vh - 100px)" }
         }
-      )),
+      ), isLocalVideo && isHevc && /* @__PURE__ */ import_react7.default.createElement("div", { className: "flex flex-col items-center gap-5 text-center max-w-sm" }, /* @__PURE__ */ import_react7.default.createElement("div", { className: "w-16 h-16 rounded-2xl bg-amber-500/20 flex items-center justify-center text-3xl" }, /* @__PURE__ */ import_react7.default.createElement("i", { className: "fa-solid fa-film text-amber-400" })), /* @__PURE__ */ import_react7.default.createElement("div", null, /* @__PURE__ */ import_react7.default.createElement("p", { className: "text-white font-extrabold text-sm mb-1" }, "Format iPhone MOV (HEVC/H.265)"), /* @__PURE__ */ import_react7.default.createElement("p", { className: "text-slate-400 text-xs" }, "Chrome belum mendukung codec ini. Buka dengan media player bawaan laptop untuk memutar video ini.")), /* @__PURE__ */ import_react7.default.createElement(
+        "a",
+        {
+          href: viewUrl,
+          target: "_blank",
+          rel: "noreferrer",
+          className: "px-6 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-sm flex items-center gap-2 transition-all shadow-lg"
+        },
+        /* @__PURE__ */ import_react7.default.createElement("i", { className: "fa-solid fa-play" }),
+        " Putar di Media Player Laptop"
+      ))),
       /* @__PURE__ */ import_react7.default.createElement("div", { className: "absolute bottom-4 left-0 right-0 text-center px-20 pointer-events-none" }, /* @__PURE__ */ import_react7.default.createElement("p", { className: "text-white font-bold text-sm drop-shadow-md truncate" }, item.title, /* @__PURE__ */ import_react7.default.createElement("span", { className: "text-slate-400 font-normal text-xs ml-2" }, "(", item.accountName || "Storage Gateway", ")")))
     );
   }
