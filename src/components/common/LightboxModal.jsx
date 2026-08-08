@@ -51,7 +51,7 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
   return (
     <div
       className="fixed inset-0 z-50 flex flex-col"
-      style={{ background: 'rgba(2,6,23,0.92)', backdropFilter: 'blur(20px) saturate(160%)' }}
+      style={{ background: 'linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e1b4b 100%)' }}
     >
       {/* Top bar: counter + buttons */}
       <div className="flex items-center justify-between px-3 py-2 flex-shrink-0">
@@ -84,26 +84,14 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
       {/* Media — fills all remaining space */}
       <div className="flex-1 flex items-center justify-center overflow-hidden relative min-h-0">
 
-        {/* Photo — blurred bg + sharp centered image */}
+        {/* Photo */}
         {!isVideo && (
-          <div className="relative w-full h-full">
-            {/* Blurred background */}
-            <img
-              src={item.source === 'gdrive' ? `/gdrive-media?id=${item.id}` : mediaUrl}
-              alt=""
-              referrerPolicy="no-referrer"
-              aria-hidden
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{ filter: 'blur(28px) brightness(0.45) saturate(1.4)', transform: 'scale(1.08)' }}
-            />
-            {/* Sharp centered image */}
-            <img
-              src={item.source === 'gdrive' ? `/gdrive-media?id=${item.id}` : mediaUrl}
-              alt={item.title}
-              referrerPolicy="no-referrer"
-              className="relative z-10 w-full h-full object-contain"
-            />
-          </div>
+          <img
+            src={item.source === 'gdrive' ? `/gdrive-media?id=${item.id}` : mediaUrl}
+            alt={item.title}
+            referrerPolicy="no-referrer"
+            className="w-full h-full object-contain"
+          />
         )}
 
         {/* Google Drive Video */}
@@ -118,40 +106,18 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
           ></iframe>
         )}
 
-        {/* Local Video — blurred bg video + sharp video on top */}
+        {/* Local Video */}
         {isLocalVideo && (
-          <div className="relative w-full h-full overflow-hidden flex items-center justify-center">
-            {/* Blurred background video */}
-            <video
-              src={mediaUrl}
-              muted
-              autoPlay
-              loop
-              playsInline
-              tabIndex={-1}
-              aria-hidden
-              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-              style={{ filter: 'blur(24px) brightness(0.4) saturate(1.4)', transform: 'scale(1.08)' }}
-            ></video>
-            {/* Sharp foreground video with controls */}
-            <video
-              ref={videoRef}
-              src={mediaUrl}
-              controls
-              autoPlay
-              playsInline
-              preload="auto"
-              className="relative z-10"
-              style={{
-                maxWidth: '100%',
-                maxHeight: '100%',
-                width: 'auto',
-                height: 'auto',
-                display: 'block',
-                margin: 'auto'
-              }}
-            ></video>
-          </div>
+          <video
+            ref={videoRef}
+            src={mediaUrl}
+            controls
+            autoPlay
+            playsInline
+            preload="auto"
+            className="w-full h-full"
+            style={{ objectFit: 'contain' }}
+          ></video>
         )}
 
         {/* Prev Arrow — Desktop: sides | Mobile: hidden (use swipe or bottom buttons) */}

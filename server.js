@@ -86,8 +86,188 @@ app.get('/gdrive-media', (req, res) => {
     }).on('error', () => res.status(500).send('Gagal mengunduh media'));
 });
 
-// Real-time Video Transcoding (MOV/HEVC → H.264 MP4 untuk Chrome)
+// Real-time Video Transcoding dengan DISK CACHE (MOV/HEVC → H.264 MP4)
 const { spawn } = require('child_process');
+const crypto = require('crypto');
+
+// Cache folder — simpan hasil transcode agar next open langsung putar
+const CACHE_DIR = path.join(os.tmpdir(), 'omnigallery-cache');
+if (!fs.existsSync(CACHE_DIR)) fs.mkdirSync(CACHE_DIR, { recursive: true });
+
+// Cari FFmpeg
+const FFMPEG_CMD = [
+    'C:\\Users\\HP\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-9.0-full_build\\bin\\ffmpeg.exe',
+    'C:\\ffmpeg\\bin\\ffmpeg.exe',
+    'ffmpeg'
+].find(p => { try { return fs.existsSync(p) || p === 'ffmpeg'; } catch(e) { return false; } }) || 'ffmpeg';
+
+// Track ongoing transcoding jobs (avoid duplicate jobs for same file)
+const transcodingJobs = {};
+
+function getCachePath(filePath) {
+    const hash = crypto.createHash('md5').update(filePath).digest('hex');
+    return path.join(CACHE_DIR, `${hash}.mp4`);
+}
+
+function streamFileWithRange(filePath, req, res) {
+    const stat = fs.statSync(filePath);
+    const fileSize = stat.size;
+    const range = req.headers.range;
+
+    res.setHeader('Content-Type', 'video/mp4');
+    res.setHeader('Accept-Ranges', 'bytes');
+
+    if (range) {
+        const parts = range.replace(/bytes=/, '').split('-');
+        const start = parseInt(parts[0], 10);
+        const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+        const chunkSize = end - start + 1;
+        res.writeHead(206, {
+            'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+            'Content-Length': chunkSize,
+        });
+        fs.createReadStream(filePath, { start, end }).pipe(res);
+    } else {
+        res.writeHead(200, { 'Content-Length': fileSize });
+        fs.createReadStream(filePath).pipe(res);
+    }
+}
+
+app.get('/transcode-video', (req, res) => {
+    const filePath = req.query.path;
+    if (!filePath || !fs.existsSync(filePath)) {
+        return res.status(404).send('File tidak ditemukan');
+    }
+
+    const cachePath = getCachePath(filePath);
+
+    // ✅ Cache HIT — langsung stream dari file cache (instant playback!)
+    if (fs.existsSync(cachePath) && fs.statSync(cachePath).size > 10000) {
+        console.log('[Cache HIT] Streaming from cache:', cachePath);
+        return streamFileWithRange(cachePath, req, res);
+    }
+
+    // ✅ Sudah ada job yang sedang transcoding — tunggu selesai lalu stream
+    if (transcodingJobs[filePath]) {
+        console.log('[Cache PENDING] Waiting for ongoing transcoding...');
+        transcodingJobs[filePath].once('done', () => {
+            if (fs.existsSync(cachePath)) streamFileWithRange(cachePath, req, res);
+            else res.status(500).send('Transcoding gagal');
+        });
+        return;
+    }
+
+    // ✅ Cache MISS — transcode sekarang, simpan ke cache DAN stream ke browser
+    console.log('[Cache MISS] Transcoding:', filePath);
+    const { EventEmitter } = require('events');
+    const emitter = new EventEmitter();
+    transcodingJobs[filePath] = emitter;
+
+    res.setHeader('Content-Type', 'video/mp4');
+    res.setHeader('Transfer-Encoding', 'chunked');
+    res.setHeader('Cache-Control', 'no-cache');
+
+    const cacheWriteStream = fs.createWriteStream(cachePath);
+
+    const ffmpeg = spawn(FFMPEG_CMD, [
+        '-i', filePath,
+        '-c:v', 'libx264',
+        '-preset', 'ultrafast',
+        '-crf', '23',
+        '-c:a', 'aac',
+        '-b:a', '128k',
+        '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2',
+        '-movflags', 'frag_keyframe+empty_moov+faststart',
+        '-f', 'mp4',
+        'pipe:1'
+    ], { stdio: ['ignore', 'pipe', 'pipe'] });
+
+    // Stream ke browser DAN simpan ke cache secara bersamaan
+    ffmpeg.stdout.on('data', (chunk) => {
+        res.write(chunk);
+        cacheWriteStream.write(chunk);
+    });
+
+    ffmpeg.stderr.on('data', (d) => {
+        const line = d.toString().trim();
+        if (line.includes('frame=') || line.includes('Error') || line.includes('error')) {
+            console.log('[FFmpeg]', line);
+        }
+    });
+
+    ffmpeg.on('close', (code) => {
+        cacheWriteStream.end();
+        delete transcodingJobs[filePath];
+        if (code === 0) {
+            console.log('[Cache SAVED]', cachePath);
+            emitter.emit('done');
+        } else {
+            // Hapus cache file yang mungkin corrupt
+            try { fs.unlinkSync(cachePath); } catch(e) {}
+            emitter.emit('done');
+        }
+        res.end();
+    });
+
+    ffmpeg.on('error', (err) => {
+        console.error('[FFmpeg Error]', err.message);
+        cacheWriteStream.end();
+        try { fs.unlinkSync(cachePath); } catch(e) {}
+        delete transcodingJobs[filePath];
+        if (!res.headersSent) res.status(500).json({ error: 'FFmpeg error: ' + err.message });
+        else res.end();
+    });
+
+    req.on('close', () => {
+        // Client disconnect: biarkan FFmpeg lanjut agar cache tersimpan
+        // tapi jangan pipe lagi ke response yang sudah closed
+        ffmpeg.stdout.unpipe(res);
+    });
+});
+
+// Pre-warm cache endpoint: panggil saat hover kartu video
+app.get('/prewarm-video', (req, res) => {
+    const filePath = req.query.path;
+    if (!filePath || !fs.existsSync(filePath)) return res.json({ status: 'skip' });
+
+    const cachePath = getCachePath(filePath);
+    if (fs.existsSync(cachePath) && fs.statSync(cachePath).size > 10000) {
+        return res.json({ status: 'cached' });
+    }
+    if (transcodingJobs[filePath]) {
+        return res.json({ status: 'transcoding' });
+    }
+
+    // Mulai transcoding di background (tidak pipe ke response)
+    console.log('[Pre-warm] Starting background transcoding:', path.basename(filePath));
+    const { EventEmitter } = require('events');
+    const emitter = new EventEmitter();
+    transcodingJobs[filePath] = emitter;
+    const cacheWrite = fs.createWriteStream(cachePath);
+
+    const ff = spawn(FFMPEG_CMD, [
+        '-i', filePath, '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '23',
+        '-c:a', 'aac', '-b:a', '128k', '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2',
+        '-movflags', 'frag_keyframe+empty_moov+faststart', '-f', 'mp4', 'pipe:1'
+    ], { stdio: ['ignore', 'pipe', 'pipe'] });
+
+    ff.stdout.pipe(cacheWrite);
+    ff.on('close', (code) => {
+        cacheWrite.end();
+        delete transcodingJobs[filePath];
+        emitter.emit('done');
+        if (code !== 0) { try { fs.unlinkSync(cachePath); } catch(e) {} }
+        else console.log('[Pre-warm Done]', path.basename(filePath));
+    });
+    ff.on('error', (err) => {
+        cacheWrite.end();
+        delete transcodingJobs[filePath];
+        try { fs.unlinkSync(cachePath); } catch(e) {}
+    });
+
+    res.json({ status: 'started' });
+});
+
 
 app.get('/transcode-video', (req, res) => {
     const filePath = req.query.path;

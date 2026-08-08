@@ -21945,7 +21945,7 @@
       "div",
       {
         className: "fixed inset-0 z-50 flex flex-col",
-        style: { background: "rgba(2,6,23,0.92)", backdropFilter: "blur(20px) saturate(160%)" }
+        style: { background: "linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e1b4b 100%)" }
       },
       /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex items-center justify-between px-3 py-2 flex-shrink-0" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "px-3 py-1.5 rounded-xl bg-black/50 border border-white/10 text-white text-xs font-bold backdrop-blur-sm" }, currentIndex + 1, " / ", allMedia.length), /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react8.default.createElement(
         "a",
@@ -21966,25 +21966,15 @@
         },
         /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-xmark" })
       ))),
-      /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex-1 flex items-center justify-center overflow-hidden relative min-h-0" }, !isVideo && /* @__PURE__ */ import_react8.default.createElement("div", { className: "relative w-full h-full" }, /* @__PURE__ */ import_react8.default.createElement(
-        "img",
-        {
-          src: item.source === "gdrive" ? `/gdrive-media?id=${item.id}` : mediaUrl,
-          alt: "",
-          referrerPolicy: "no-referrer",
-          "aria-hidden": true,
-          className: "absolute inset-0 w-full h-full object-cover",
-          style: { filter: "blur(28px) brightness(0.45) saturate(1.4)", transform: "scale(1.08)" }
-        }
-      ), /* @__PURE__ */ import_react8.default.createElement(
+      /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex-1 flex items-center justify-center overflow-hidden relative min-h-0" }, !isVideo && /* @__PURE__ */ import_react8.default.createElement(
         "img",
         {
           src: item.source === "gdrive" ? `/gdrive-media?id=${item.id}` : mediaUrl,
           alt: item.title,
           referrerPolicy: "no-referrer",
-          className: "relative z-10 w-full h-full object-contain"
+          className: "w-full h-full object-contain"
         }
-      )), isGDriveVideo && /* @__PURE__ */ import_react8.default.createElement(
+      ), isGDriveVideo && /* @__PURE__ */ import_react8.default.createElement(
         "iframe",
         {
           src: `https://drive.google.com/file/d/${item.id}/preview?autoplay=1`,
@@ -21994,20 +21984,7 @@
           allowFullScreen: true,
           title: item.title
         }
-      ), isLocalVideo && /* @__PURE__ */ import_react8.default.createElement("div", { className: "relative w-full h-full overflow-hidden flex items-center justify-center" }, /* @__PURE__ */ import_react8.default.createElement(
-        "video",
-        {
-          src: mediaUrl,
-          muted: true,
-          autoPlay: true,
-          loop: true,
-          playsInline: true,
-          tabIndex: -1,
-          "aria-hidden": true,
-          className: "absolute inset-0 w-full h-full object-cover pointer-events-none",
-          style: { filter: "blur(24px) brightness(0.4) saturate(1.4)", transform: "scale(1.08)" }
-        }
-      ), /* @__PURE__ */ import_react8.default.createElement(
+      ), isLocalVideo && /* @__PURE__ */ import_react8.default.createElement(
         "video",
         {
           ref: videoRef,
@@ -22016,17 +21993,10 @@
           autoPlay: true,
           playsInline: true,
           preload: "auto",
-          className: "relative z-10",
-          style: {
-            maxWidth: "100%",
-            maxHeight: "100%",
-            width: "auto",
-            height: "auto",
-            display: "block",
-            margin: "auto"
-          }
+          className: "w-full h-full",
+          style: { objectFit: "contain" }
         }
-      )), hasPrev && /* @__PURE__ */ import_react8.default.createElement(
+      ), hasPrev && /* @__PURE__ */ import_react8.default.createElement(
         "button",
         {
           onClick: goPrev,
