@@ -21966,15 +21966,25 @@
         },
         /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-xmark" })
       ))),
-      /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex-1 flex items-center justify-center overflow-hidden relative min-h-0" }, !isVideo && /* @__PURE__ */ import_react8.default.createElement(
+      /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex-1 flex items-center justify-center overflow-hidden relative min-h-0" }, !isVideo && /* @__PURE__ */ import_react8.default.createElement("div", { className: "relative w-full h-full" }, /* @__PURE__ */ import_react8.default.createElement(
+        "img",
+        {
+          src: item.source === "gdrive" ? `/gdrive-media?id=${item.id}` : mediaUrl,
+          alt: "",
+          referrerPolicy: "no-referrer",
+          "aria-hidden": true,
+          className: "absolute inset-0 w-full h-full object-cover",
+          style: { filter: "blur(28px) brightness(0.45) saturate(1.4)", transform: "scale(1.08)" }
+        }
+      ), /* @__PURE__ */ import_react8.default.createElement(
         "img",
         {
           src: item.source === "gdrive" ? `/gdrive-media?id=${item.id}` : mediaUrl,
           alt: item.title,
           referrerPolicy: "no-referrer",
-          className: "w-full h-full object-contain"
+          className: "relative z-10 w-full h-full object-contain"
         }
-      ), isGDriveVideo && /* @__PURE__ */ import_react8.default.createElement(
+      )), isGDriveVideo && /* @__PURE__ */ import_react8.default.createElement(
         "iframe",
         {
           src: `https://drive.google.com/file/d/${item.id}/preview?autoplay=1`,
@@ -21984,7 +21994,20 @@
           allowFullScreen: true,
           title: item.title
         }
-      ), isLocalVideo && /* @__PURE__ */ import_react8.default.createElement(
+      ), isLocalVideo && /* @__PURE__ */ import_react8.default.createElement("div", { className: "relative w-full h-full overflow-hidden" }, /* @__PURE__ */ import_react8.default.createElement(
+        "video",
+        {
+          src: mediaUrl,
+          muted: true,
+          autoPlay: true,
+          loop: true,
+          playsInline: true,
+          tabIndex: -1,
+          "aria-hidden": true,
+          className: "absolute inset-0 w-full h-full object-cover pointer-events-none",
+          style: { filter: "blur(24px) brightness(0.4) saturate(1.4)", transform: "scale(1.08)" }
+        }
+      ), /* @__PURE__ */ import_react8.default.createElement(
         "video",
         {
           ref: videoRef,
@@ -21993,10 +22016,10 @@
           autoPlay: true,
           playsInline: true,
           preload: "auto",
-          className: "w-full h-full",
+          className: "relative z-10 w-full h-full",
           style: { objectFit: "contain" }
         }
-      ), hasPrev && /* @__PURE__ */ import_react8.default.createElement(
+      )), hasPrev && /* @__PURE__ */ import_react8.default.createElement(
         "button",
         {
           onClick: goPrev,
