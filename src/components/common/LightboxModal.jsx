@@ -33,7 +33,10 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
   const isVideo = item.type === 'video';
   const isGDriveVideo = isVideo && item.source === 'gdrive';
   const isLocalVideo = isVideo && item.source === 'local';
-  const isMov = (item?.ext || item?.title || '').toLowerCase().endsWith('.mov');
+  // Deteksi file MOV (case-insensitive): cek ext, title, atau path (item.id)
+  const isMov = [item?.ext, item?.title, item?.id]
+    .filter(Boolean)
+    .some(s => s.toLowerCase().endsWith('.mov'));
 
   const mediaUrl = item.source === 'local'
     ? isMov

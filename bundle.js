@@ -21938,7 +21938,7 @@
     const isVideo = item.type === "video";
     const isGDriveVideo = isVideo && item.source === "gdrive";
     const isLocalVideo = isVideo && item.source === "local";
-    const isMov = (item?.ext || item?.title || "").toLowerCase().endsWith(".mov");
+    const isMov = [item?.ext, item?.title, item?.id].filter(Boolean).some((s) => s.toLowerCase().endsWith(".mov"));
     const mediaUrl = item.source === "local" ? isMov ? `/transcode-video?path=${encodeURIComponent(item.id)}` : `/media-file?path=${encodeURIComponent(item.id)}` : `/gdrive-media?id=${item.id}`;
     const viewUrl = item.source === "gdrive" ? `https://drive.google.com/file/d/${item.id}/view` : mediaUrl;
     return /* @__PURE__ */ import_react8.default.createElement(

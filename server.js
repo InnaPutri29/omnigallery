@@ -95,9 +95,14 @@ app.get('/transcode-video', (req, res) => {
         return res.status(404).send('File tidak ditemukan');
     }
 
-    // Cari FFmpeg di PATH atau lokasi umum
-    const ffmpegPaths = ['ffmpeg', 'C:\\ffmpeg\\bin\\ffmpeg.exe', 'C:\\Program Files\\ffmpeg\\bin\\ffmpeg.exe'];
-    const ffmpegCmd = ffmpegPaths[0]; // Pakai PATH dulu
+    // FFmpeg: gunakan path absolut karena winget PATH butuh shell restart
+    const ffmpegCmd = [
+        'C:\\Users\\HP\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-9.0-full_build\\bin\\ffmpeg.exe',
+        'C:\\ffmpeg\\bin\\ffmpeg.exe',
+        'ffmpeg'
+    ].find(p => {
+        try { return require('fs').existsSync(p) || p === 'ffmpeg'; } catch(e) { return false; }
+    }) || 'ffmpeg';
 
     res.setHeader('Content-Type', 'video/mp4');
     res.setHeader('Transfer-Encoding', 'chunked');
@@ -120,8 +125,7 @@ app.get('/transcode-video', (req, res) => {
     ffmpeg.stdout.pipe(res);
 
     ffmpeg.stderr.on('data', (data) => {
-        // Log progress transcoding (tidak di-send ke client)
-        // console.log('[FFmpeg]', data.toString());
+        console.log('[FFmpeg]', data.toString().trim());
     });
 
     ffmpeg.on('close', (code) => {
