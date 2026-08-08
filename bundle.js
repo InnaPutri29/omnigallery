@@ -21967,7 +21967,7 @@
           referrerPolicy: "no-referrer",
           className: "max-w-full max-h-full object-contain"
         }
-      ), isVideo && /* @__PURE__ */ import_react8.default.createElement("div", { className: "relative flex items-center justify-center w-full h-full" }, isVideoLoading && /* @__PURE__ */ import_react8.default.createElement("div", { className: "absolute z-10 flex flex-col items-center gap-2 pointer-events-none" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "w-10 h-10 rounded-full border-2 border-blue-500/30 border-t-blue-400 animate-spin" }), /* @__PURE__ */ import_react8.default.createElement("p", { className: "text-white/50 text-[11px] font-medium" }, "Memuat video (Highest Quality)...")), /* @__PURE__ */ import_react8.default.createElement(
+      ), isVideo && /* @__PURE__ */ import_react8.default.createElement("div", { className: "relative flex items-center justify-center w-full h-full" }, isVideoLoading && /* @__PURE__ */ import_react8.default.createElement("div", { className: "absolute z-10 flex flex-col items-center gap-2 pointer-events-none" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "w-10 h-10 rounded-full border-2 border-blue-500/30 border-t-blue-400 animate-spin" }), /* @__PURE__ */ import_react8.default.createElement("p", { className: "text-white/50 text-[11px] font-medium" }, "Memuat video...")), /* @__PURE__ */ import_react8.default.createElement(
         "video",
         {
           ref: videoRef,

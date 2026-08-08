@@ -99,7 +99,7 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
             {isVideoLoading && (
               <div className="absolute z-10 flex flex-col items-center gap-2 pointer-events-none">
                 <div className="w-10 h-10 rounded-full border-2 border-blue-500/30 border-t-blue-400 animate-spin"></div>
-                <p className="text-white/50 text-[11px] font-medium">Memuat video (Highest Quality)...</p>
+                <p className="text-white/50 text-[11px] font-medium">Memuat video...</p>
               </div>
             )}
             <video

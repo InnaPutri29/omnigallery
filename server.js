@@ -267,10 +267,10 @@ app.get('/transcode-video', (req, res) => {
     const ffmpeg = spawn(FFMPEG_CMD, [
         '-i', filePath,
         '-c:v', 'libx264',
-        '-preset', 'faster', // Balanced preset for better quality
-        '-crf', '18',        // Visually lossless quality
+        '-preset', 'ultrafast', // Kembali ke super cepat
+        '-crf', '23',           // Kualitas standar yang optimal
         '-c:a', 'aac',
-        '-b:a', '192k',      // High quality audio
+        '-b:a', '128k',
         '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2',
         '-movflags', 'frag_keyframe+empty_moov+faststart',
         '-f', 'mp4',
@@ -341,8 +341,8 @@ app.get('/prewarm-video', (req, res) => {
     const cacheWrite = fs.createWriteStream(cachePath);
 
     const ff = spawn(FFMPEG_CMD, [
-        '-i', filePath, '-c:v', 'libx264', '-preset', 'faster', '-crf', '18',
-        '-c:a', 'aac', '-b:a', '192k', '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2',
+        '-i', filePath, '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '23',
+        '-c:a', 'aac', '-b:a', '128k', '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2',
         '-movflags', 'frag_keyframe+empty_moov+faststart', '-f', 'mp4', 'pipe:1'
     ], { stdio: ['ignore', 'pipe', 'pipe'] });
 
