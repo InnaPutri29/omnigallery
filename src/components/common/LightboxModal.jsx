@@ -92,36 +92,19 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
           />
         )}
 
-        {/* Google Drive Video — iframe tanpa frame hitam */}
-        {isGDriveVideo && (
-          <iframe
-            src={`https://drive.google.com/file/d/${item.id}/preview?autoplay=1`}
-            className="max-w-full max-h-full"
-            style={{
-              border: 'none',
-              background: 'transparent',
-              width: '100%',
-              height: '100%',
-            }}
-            allow="autoplay; encrypted-media; fullscreen"
-            allowFullScreen
-            title={item.title}
-          ></iframe>
-        )}
-
-        {/* Local Video — transparan bg, ukuran natural (tidak paksa penuh) */}
-        {isLocalVideo && (
+        {/* Video Player (Local & GDrive) — Native video, transparan bg, loading cerdas */}
+        {isVideo && (
           <div className="relative flex items-center justify-center w-full h-full">
             {/* Loading indicator kecil di tengah, muncul hanya saat buffering */}
             {isVideoLoading && (
               <div className="absolute z-10 flex flex-col items-center gap-2 pointer-events-none">
                 <div className="w-10 h-10 rounded-full border-2 border-blue-500/30 border-t-blue-400 animate-spin"></div>
-                <p className="text-white/50 text-[11px] font-medium">Memuat video...</p>
+                <p className="text-white/50 text-[11px] font-medium">Memuat video (Highest Quality)...</p>
               </div>
             )}
             <video
               ref={videoRef}
-              src={mediaUrl}
+              src={isGDriveVideo ? `https://drive.google.com/uc?export=download&id=${item.id}` : mediaUrl}
               controls
               autoPlay
               playsInline
