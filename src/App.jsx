@@ -27,6 +27,7 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   const [selectedMedia, setSelectedMedia] = useState(null);
+  const [lightboxContext, setLightboxContext] = useState([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   // Check Auth Session on Load
@@ -112,7 +113,10 @@ export default function App() {
               accounts={accounts}
               allMedia={allMedia}
               stats={stats}
-              onOpenLightbox={(item) => setSelectedMedia(item)}
+              onOpenLightbox={(item, context) => {
+                setSelectedMedia(item);
+                setLightboxContext(context || allMedia);
+              }}
               onNavigateToExplorer={() => setActiveTab('explorer')}
             />
           )}
@@ -134,7 +138,10 @@ export default function App() {
               displayLimit={displayLimit}
               onLoadMore={() => setDisplayLimit(prev => prev + 36)}
               onShowAll={() => setDisplayLimit(999999)}
-              onOpenLightbox={(item) => setSelectedMedia(item)}
+              onOpenLightbox={(item, context) => {
+                setSelectedMedia(item);
+                setLightboxContext(context || allMedia);
+              }}
             />
           )}
 
@@ -154,7 +161,7 @@ export default function App() {
       {selectedMedia && (
         <LightboxModal
           item={selectedMedia}
-          allMedia={allMedia}
+          allMedia={lightboxContext.length > 0 ? lightboxContext : allMedia}
           onNavigate={(item) => setSelectedMedia(item)}
           onClose={() => setSelectedMedia(null)}
         />

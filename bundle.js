@@ -21654,7 +21654,7 @@
       },
       "Lihat Semua di Explorer ",
       /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-arrow-right text-[10px]" })
-    )), /* @__PURE__ */ import_react5.default.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5" }, recentItems.map((item) => /* @__PURE__ */ import_react5.default.createElement(MediaCard, { key: item.id, item, onOpenLightbox })))));
+    )), /* @__PURE__ */ import_react5.default.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5" }, recentItems.map((item) => /* @__PURE__ */ import_react5.default.createElement(MediaCard, { key: item.id, item, onOpenLightbox: (item2) => onOpenLightbox(item2, recentItems) })))));
   }
 
   // src/components/features/FileExplorer.jsx
@@ -21818,7 +21818,14 @@
       " Video"
     )) : /* @__PURE__ */ import_react6.default.createElement("p", { className: "text-slate-400 text-sm font-medium" }, "Tidak ada file yang cocok dengan pencarian.")) : viewMode === "grid" ? (
       /* Grid View */
-      /* @__PURE__ */ import_react6.default.createElement("div", { className: "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5" }, displayedItems.map((item) => /* @__PURE__ */ import_react6.default.createElement(MediaCard, { key: item.id, item, onOpenLightbox })), filteredMedia.length > displayLimit && /* @__PURE__ */ import_react6.default.createElement("div", { className: "col-span-full flex flex-col items-center justify-center pt-6 pb-4 space-y-3" }, /* @__PURE__ */ import_react6.default.createElement("p", { className: "text-xs text-slate-400 font-medium" }, "Menampilkan ", displayedItems.length, " dari ", filteredMedia.length, " total ", categoryLabel.toLowerCase()), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex flex-wrap items-center justify-center gap-3" }, /* @__PURE__ */ import_react6.default.createElement(
+      /* @__PURE__ */ import_react6.default.createElement("div", { className: "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5" }, displayedItems.map((item) => /* @__PURE__ */ import_react6.default.createElement(
+        MediaCard,
+        {
+          key: item.id,
+          item,
+          onOpenLightbox: (item2) => onOpenLightbox(item2, filteredMedia)
+        }
+      )), filteredMedia.length > displayLimit && /* @__PURE__ */ import_react6.default.createElement("div", { className: "col-span-full flex flex-col items-center justify-center pt-6 pb-4 space-y-3" }, /* @__PURE__ */ import_react6.default.createElement("p", { className: "text-xs text-slate-400 font-medium" }, "Menampilkan ", displayedItems.length, " dari ", filteredMedia.length, " total ", categoryLabel.toLowerCase()), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex flex-wrap items-center justify-center gap-3" }, /* @__PURE__ */ import_react6.default.createElement(
         "button",
         {
           onClick: onLoadMore,
@@ -21843,7 +21850,7 @@
       /* List View Table */
       /* @__PURE__ */ import_react6.default.createElement("div", { className: "rounded-2xl border border-slate-800 overflow-hidden bg-slate-900/90 shadow-xl" }, /* @__PURE__ */ import_react6.default.createElement("table", { className: "w-full text-left text-xs" }, /* @__PURE__ */ import_react6.default.createElement("thead", { className: "bg-slate-950 text-slate-400 uppercase tracking-wider font-extrabold border-b border-slate-800" }, /* @__PURE__ */ import_react6.default.createElement("tr", null, /* @__PURE__ */ import_react6.default.createElement("th", { className: "py-3.5 px-4" }, "Nama File Media"), /* @__PURE__ */ import_react6.default.createElement("th", { className: "py-3.5 px-4" }, "Tipe"), /* @__PURE__ */ import_react6.default.createElement("th", { className: "py-3.5 px-4" }, "Sumber Storage"), /* @__PURE__ */ import_react6.default.createElement("th", { className: "py-3.5 px-4" }, "Ukuran"), /* @__PURE__ */ import_react6.default.createElement("th", { className: "py-3.5 px-4 text-right" }, "Aksi"))), /* @__PURE__ */ import_react6.default.createElement("tbody", { className: "divide-y divide-slate-800/80" }, displayedItems.map((item) => {
         const handleRowClick = () => {
-          onOpenLightbox(item);
+          onOpenLightbox(item, filteredMedia);
         };
         return /* @__PURE__ */ import_react6.default.createElement("tr", { key: item.id, className: "hover:bg-slate-800/40 transition-colors cursor-pointer", onClick: handleRowClick }, /* @__PURE__ */ import_react6.default.createElement("td", { className: "py-3 px-4 font-bold text-slate-200 flex items-center gap-3" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400" }, /* @__PURE__ */ import_react6.default.createElement("i", { className: item.type === "video" ? "fa-solid fa-film text-rose-400" : "fa-solid fa-image text-purple-400" })), /* @__PURE__ */ import_react6.default.createElement("span", { className: "truncate max-w-xs" }, item.title)), /* @__PURE__ */ import_react6.default.createElement("td", { className: `py-3 px-4 uppercase text-[11px] font-extrabold ${item.type === "video" ? "text-rose-400" : "text-purple-400"}` }, item.type), /* @__PURE__ */ import_react6.default.createElement("td", { className: "py-3 px-4 text-slate-400 font-medium" }, item.accountName || (item.source === "local" ? "Local Storage" : "Google Drive")), /* @__PURE__ */ import_react6.default.createElement("td", { className: "py-3 px-4 text-slate-400 font-mono" }, item.sizeFormatted || "N/A"), /* @__PURE__ */ import_react6.default.createElement("td", { className: "py-3 px-4 text-right" }, /* @__PURE__ */ import_react6.default.createElement(
           "button",
@@ -22132,11 +22139,11 @@
   // src/components/common/LoginModal.jsx
   var import_react10 = __toESM(require_react());
   function LoginModal({ onLoginSuccess }) {
-    const [authMode, setAuthMode] = (0, import_react10.useState)("login");
     const [email, setEmail] = (0, import_react10.useState)("");
     const [password, setPassword] = (0, import_react10.useState)("");
     const [alert, setAlert] = (0, import_react10.useState)(null);
     const [loading, setLoading] = (0, import_react10.useState)(false);
+    const ALLOWED_EMAIL = "innaputrimeida@gmail.com";
     const [config, setConfig] = (0, import_react10.useState)({
       supabaseUrl: "https://emizyqcqjuzabgsk.supabase.co",
       supabaseKey: "sb_publishable_WxTXhArfmb-DxvqXNg_4OQ_6YR-QGNI"
@@ -22151,63 +22158,38 @@
     const handleSubmit = async (e) => {
       e.preventDefault();
       if (!email || !password) return;
+      if (email.toLowerCase().trim() !== ALLOWED_EMAIL) {
+        setAlert({ type: "error", text: "Akses ditolak. Akun ini tidak terdaftar di OmniGallery." });
+        return;
+      }
       setLoading(true);
       setAlert(null);
       try {
         if (window.supabase && typeof window.supabase.createClient === "function" && config.supabaseUrl && config.supabaseKey) {
           const client = window.supabase.createClient(config.supabaseUrl, config.supabaseKey);
-          if (authMode === "register") {
-            const { error } = await client.auth.signUp({ email, password });
-            if (error) throw error;
-            setAlert({ type: "success", text: "Registrasi Berhasil! Silakan masuk dengan akun Anda." });
-            setAuthMode("login");
-          } else {
-            const { data, error } = await client.auth.signInWithPassword({ email, password });
-            if (error) throw error;
-            const user = data.user || { email };
-            localStorage.setItem("gdgate_user", JSON.stringify(user));
-            onLoginSuccess(user);
-          }
-        } else {
-          const user = { email, id: "usr_" + Date.now() };
+          const { data, error } = await client.auth.signInWithPassword({ email, password });
+          if (error) throw error;
+          const user = data.user || { email };
           localStorage.setItem("gdgate_user", JSON.stringify(user));
           onLoginSuccess(user);
+        } else {
+          throw new Error("Supabase tidak tersedia. Periksa koneksi internet Anda.");
         }
       } catch (err) {
-        console.log("Auth error:", err);
-        const user = { email, id: "usr_" + Date.now() };
-        localStorage.setItem("gdgate_user", JSON.stringify(user));
-        onLoginSuccess(user);
+        console.error("Auth error:", err);
+        setAlert({ type: "error", text: err.message || "Email atau password salah. Silakan coba lagi." });
       } finally {
         setLoading(false);
       }
     };
-    return /* @__PURE__ */ import_react10.default.createElement("div", { id: "login-screen", className: "fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-4 overflow-y-auto" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "relative w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-8 shadow-2xl space-y-6" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "text-center space-y-2" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-shield-halved" }), " Supabase Secure Auth"), /* @__PURE__ */ import_react10.default.createElement("h2", { className: "text-3xl font-extrabold text-white tracking-tight" }, "Omni", /* @__PURE__ */ import_react10.default.createElement("span", { className: "text-blue-500" }, "Gallery")), /* @__PURE__ */ import_react10.default.createElement("p", { className: "text-xs text-slate-400" }, "Masuk untuk mengelola galeri foto & video Anda")), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex p-1 bg-slate-950 rounded-2xl border border-slate-800/80" }, /* @__PURE__ */ import_react10.default.createElement(
-      "button",
-      {
-        type: "button",
-        onClick: () => setAuthMode("login"),
-        className: `flex-1 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${authMode === "login" ? "bg-blue-600 text-white shadow-md" : "text-slate-400 hover:text-white"}`
-      },
-      /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-right-to-bracket mr-1" }),
-      " Masuk"
-    ), /* @__PURE__ */ import_react10.default.createElement(
-      "button",
-      {
-        type: "button",
-        onClick: () => setAuthMode("register"),
-        className: `flex-1 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${authMode === "register" ? "bg-blue-600 text-white shadow-md" : "text-slate-400 hover:text-white"}`
-      },
-      /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-user-plus mr-1" }),
-      " Daftar Akun"
-    )), alert && /* @__PURE__ */ import_react10.default.createElement("div", { className: `p-3 rounded-2xl text-xs font-semibold flex items-center gap-2 border ${alert.type === "error" ? "bg-rose-500/20 text-rose-400 border-rose-500/30" : "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"}` }, /* @__PURE__ */ import_react10.default.createElement("i", { className: alert.type === "error" ? "fa-solid fa-triangle-exclamation" : "fa-solid fa-circle-check" }), alert.text), /* @__PURE__ */ import_react10.default.createElement("form", { onSubmit: handleSubmit, className: "space-y-4" }, /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Alamat Email"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "relative" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm" }), /* @__PURE__ */ import_react10.default.createElement(
+    return /* @__PURE__ */ import_react10.default.createElement("div", { id: "login-screen", className: "fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-4 overflow-y-auto" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "relative w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-8 shadow-2xl space-y-6" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "text-center space-y-2" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-shield-halved" }), " Supabase Secure Auth"), /* @__PURE__ */ import_react10.default.createElement("h2", { className: "text-3xl font-extrabold text-white tracking-tight" }, "Omni", /* @__PURE__ */ import_react10.default.createElement("span", { className: "text-blue-500" }, "Gallery")), /* @__PURE__ */ import_react10.default.createElement("p", { className: "text-xs text-slate-400" }, "Masuk untuk mengelola galeri foto & video Anda")), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex items-center justify-center gap-2 py-2 px-4 bg-blue-600/10 border border-blue-500/20 rounded-2xl" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-right-to-bracket text-blue-400 text-xs" }), /* @__PURE__ */ import_react10.default.createElement("span", { className: "text-xs font-bold text-blue-300" }, "Masuk ke Dashboard")), alert && /* @__PURE__ */ import_react10.default.createElement("div", { className: `p-3 rounded-2xl text-xs font-semibold flex items-center gap-2 border ${alert.type === "error" ? "bg-rose-500/20 text-rose-400 border-rose-500/30" : "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"}` }, /* @__PURE__ */ import_react10.default.createElement("i", { className: alert.type === "error" ? "fa-solid fa-triangle-exclamation" : "fa-solid fa-circle-check" }), alert.text), /* @__PURE__ */ import_react10.default.createElement("form", { onSubmit: handleSubmit, className: "space-y-4" }, /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Alamat Email"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "relative" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm" }), /* @__PURE__ */ import_react10.default.createElement(
       "input",
       {
         type: "email",
         value: email,
         onChange: (e) => setEmail(e.target.value),
         required: true,
-        placeholder: "nama@email.com",
+        placeholder: ALLOWED_EMAIL,
         className: "w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all"
       }
     ))), /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Kata Sandi (Password)"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "relative" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-key absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm" }), /* @__PURE__ */ import_react10.default.createElement(
@@ -22228,7 +22210,7 @@
         disabled: loading,
         className: "w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-xs shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
       },
-      loading ? /* @__PURE__ */ import_react10.default.createElement(import_react10.default.Fragment, null, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-spinner animate-spin" }), " Memproses...") : /* @__PURE__ */ import_react10.default.createElement(import_react10.default.Fragment, null, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-arrow-right-to-bracket" }), " ", authMode === "login" ? "Masuk ke Dashboard" : "Daftar Akun Baru")
+      loading ? /* @__PURE__ */ import_react10.default.createElement(import_react10.default.Fragment, null, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-spinner animate-spin" }), " Memproses...") : /* @__PURE__ */ import_react10.default.createElement(import_react10.default.Fragment, null, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-arrow-right-to-bracket" }), " Masuk ke Dashboard")
     ))));
   }
 
@@ -22296,6 +22278,7 @@
     const [stats, setStats] = (0, import_react12.useState)(null);
     const [loading, setLoading] = (0, import_react12.useState)(true);
     const [selectedMedia, setSelectedMedia] = (0, import_react12.useState)(null);
+    const [lightboxContext, setLightboxContext] = (0, import_react12.useState)([]);
     const [isAddModalOpen, setIsAddModalOpen] = (0, import_react12.useState)(false);
     (0, import_react12.useEffect)(() => {
       const savedUser = localStorage.getItem("gdgate_user");
@@ -22369,7 +22352,10 @@
         accounts,
         allMedia,
         stats,
-        onOpenLightbox: (item) => setSelectedMedia(item),
+        onOpenLightbox: (item, context) => {
+          setSelectedMedia(item);
+          setLightboxContext(context || allMedia);
+        },
         onNavigateToExplorer: () => setActiveTab("explorer")
       }
     ), !loading && activeTab === "explorer" && /* @__PURE__ */ import_react11.default.createElement(
@@ -22400,7 +22386,10 @@
         displayLimit,
         onLoadMore: () => setDisplayLimit((prev) => prev + 36),
         onShowAll: () => setDisplayLimit(999999),
-        onOpenLightbox: (item) => setSelectedMedia(item)
+        onOpenLightbox: (item, context) => {
+          setSelectedMedia(item);
+          setLightboxContext(context || allMedia);
+        }
       }
     ), !loading && activeTab === "accounts" && /* @__PURE__ */ import_react11.default.createElement(
       AccountsManagement,
@@ -22412,7 +22401,7 @@
       LightboxModal,
       {
         item: selectedMedia,
-        allMedia,
+        allMedia: lightboxContext.length > 0 ? lightboxContext : allMedia,
         onNavigate: (item) => setSelectedMedia(item),
         onClose: () => setSelectedMedia(null)
       }

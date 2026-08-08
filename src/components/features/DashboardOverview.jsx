@@ -136,7 +136,7 @@ export default function DashboardOverview({ accounts, allMedia, stats, onOpenLig
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {recentItems.map(item => (
-            <MediaCard key={item.id} item={item} onOpenLightbox={onOpenLightbox} />
+            <MediaCard key={item.id} item={item} onOpenLightbox={(item) => onOpenLightbox(item, recentItems)} />
           ))}
         </div>
       </div>

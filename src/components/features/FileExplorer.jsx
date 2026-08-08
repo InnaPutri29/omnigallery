@@ -217,7 +217,11 @@ export default function FileExplorer({
         /* Grid View */
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
           {displayedItems.map(item => (
-            <MediaCard key={item.id} item={item} onOpenLightbox={onOpenLightbox} />
+            <MediaCard 
+              key={item.id} 
+              item={item} 
+              onOpenLightbox={(item) => onOpenLightbox(item, filteredMedia)} 
+            />
           ))}
 
           {/* Pagination Controls */}
@@ -259,7 +263,7 @@ export default function FileExplorer({
             <tbody className="divide-y divide-slate-800/80">
               {displayedItems.map(item => {
                 const handleRowClick = () => {
-                  onOpenLightbox(item);
+                  onOpenLightbox(item, filteredMedia);
                 };
                 return (
                 <tr key={item.id} className="hover:bg-slate-800/40 transition-colors cursor-pointer" onClick={handleRowClick}>

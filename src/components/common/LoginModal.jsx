@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
 export default function LoginModal({ onLoginSuccess }) {
-  const [authMode, setAuthMode] = useState('login'); // 'login' | 'register'
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [alert, setAlert] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  // Hanya email ini yang boleh masuk
+  const ALLOWED_EMAIL = 'innaputrimeida@gmail.com';
   
   const [config, setConfig] = useState({
     supabaseUrl: 'https://emizyqcqjuzabgsk.supabase.co',
@@ -27,35 +29,29 @@ export default function LoginModal({ onLoginSuccess }) {
     e.preventDefault();
     if (!email || !password) return;
 
+    // ⛔ Cek email whitelist dulu
+    if (email.toLowerCase().trim() !== ALLOWED_EMAIL) {
+      setAlert({ type: 'error', text: 'Akses ditolak. Akun ini tidak terdaftar di OmniGallery.' });
+      return;
+    }
+
     setLoading(true);
     setAlert(null);
 
     try {
       if (window.supabase && typeof window.supabase.createClient === 'function' && config.supabaseUrl && config.supabaseKey) {
         const client = window.supabase.createClient(config.supabaseUrl, config.supabaseKey);
-        if (authMode === 'register') {
-          const { error } = await client.auth.signUp({ email, password });
-          if (error) throw error;
-          setAlert({ type: 'success', text: 'Registrasi Berhasil! Silakan masuk dengan akun Anda.' });
-          setAuthMode('login');
-        } else {
-          const { data, error } = await client.auth.signInWithPassword({ email, password });
-          if (error) throw error;
-          const user = data.user || { email };
-          localStorage.setItem('gdgate_user', JSON.stringify(user));
-          onLoginSuccess(user);
-        }
-      } else {
-        const user = { email, id: 'usr_' + Date.now() };
+        const { data, error } = await client.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        const user = data.user || { email };
         localStorage.setItem('gdgate_user', JSON.stringify(user));
         onLoginSuccess(user);
+      } else {
+        throw new Error('Supabase tidak tersedia. Periksa koneksi internet Anda.');
       }
     } catch (err) {
-      console.log("Auth error:", err);
-      // Fallback smooth login
-      const user = { email, id: 'usr_' + Date.now() };
-      localStorage.setItem('gdgate_user', JSON.stringify(user));
-      onLoginSuccess(user);
+      console.error('Auth error:', err);
+      setAlert({ type: 'error', text: err.message || 'Email atau password salah. Silakan coba lagi.' });
     } finally {
       setLoading(false);
     }
@@ -75,22 +71,10 @@ export default function LoginModal({ onLoginSuccess }) {
           <p className="text-xs text-slate-400">Masuk untuk mengelola galeri foto & video Anda</p>
         </div>
 
-        {/* Tab Auth */}
-        <div className="flex p-1 bg-slate-950 rounded-2xl border border-slate-800/80">
-          <button 
-            type="button"
-            onClick={() => setAuthMode('login')}
-            className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${authMode === 'login' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}
-          >
-            <i className="fa-solid fa-right-to-bracket mr-1"></i> Masuk
-          </button>
-          <button 
-            type="button"
-            onClick={() => setAuthMode('register')}
-            className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${authMode === 'register' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}
-          >
-            <i className="fa-solid fa-user-plus mr-1"></i> Daftar Akun
-          </button>
+        {/* Single login badge - no register */}
+        <div className="flex items-center justify-center gap-2 py-2 px-4 bg-blue-600/10 border border-blue-500/20 rounded-2xl">
+          <i className="fa-solid fa-right-to-bracket text-blue-400 text-xs"></i>
+          <span className="text-xs font-bold text-blue-300">Masuk ke Dashboard</span>
         </div>
 
         {/* Alert Notification */}
@@ -112,7 +96,7 @@ export default function LoginModal({ onLoginSuccess }) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required 
-                placeholder="nama@email.com" 
+                placeholder={ALLOWED_EMAIL}
                 className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all"
               />
             </div>
@@ -142,7 +126,9 @@ export default function LoginModal({ onLoginSuccess }) {
             {loading ? (
               <><i className="fa-solid fa-spinner animate-spin"></i> Memproses...</>
             ) : (
-              <><i className="fa-solid fa-arrow-right-to-bracket"></i> {authMode === 'login' ? 'Masuk ke Dashboard' : 'Daftar Akun Baru'}</>
+            <>
+              <i className="fa-solid fa-arrow-right-to-bracket"></i> Masuk ke Dashboard
+            </>
             )}
           </button>
         </form>
