@@ -92,8 +92,25 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
           />
         )}
 
-        {/* Video Player (Local & GDrive) — Native video, transparan bg, loading cerdas */}
-        {isVideo && (
+        {/* Google Drive Video — terpaksa pakai iframe agar loading instan (Google's adaptive streaming) */}
+        {isGDriveVideo && (
+          <iframe
+            src={`https://drive.google.com/file/d/${item.id}/preview?autoplay=1`}
+            className="max-w-full max-h-full"
+            style={{
+              border: 'none',
+              background: 'transparent',
+              width: '100%',
+              height: '100%',
+            }}
+            allow="autoplay; encrypted-media; fullscreen"
+            allowFullScreen
+            title={item.title}
+          ></iframe>
+        )}
+
+        {/* Local Video — transparan bg, loading cerdas */}
+        {isLocalVideo && (
           <div className="relative flex items-center justify-center w-full h-full">
             {/* Loading indicator kecil di tengah, muncul hanya saat buffering */}
             {isVideoLoading && (
@@ -104,7 +121,7 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
             )}
             <video
               ref={videoRef}
-              src={isGDriveVideo ? `/gdrive-video?id=${item.id}` : mediaUrl}
+              src={mediaUrl}
               controls
               autoPlay
               playsInline
