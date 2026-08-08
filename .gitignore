@@ -10,9 +10,10 @@ node_modules/
 *.log
 npm-debug.log*
 
-# Secret keys
+# Secret keys & binaries
 gdrive-key.json
 *.json.secret
+cloudflared.exe
 scratch_*
 
 # OS generated files
