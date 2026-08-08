@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useState } from 'react';
 
 export default function LightboxModal({ item, allMedia = [], onNavigate, onClose }) {
   const videoRef = useRef(null);
+  const [isVideoLoading, setIsVideoLoading] = useState(true);
 
   const currentIndex = useMemo(() =>
     allMedia.findIndex(m => m.id === item.id), [allMedia, item]);
@@ -23,6 +24,7 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
   }, [currentIndex, allMedia]);
 
   useEffect(() => {
+    setIsVideoLoading(true);
     if (videoRef.current) {
       videoRef.current.play().catch(() => {});
     }
@@ -33,7 +35,6 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
   const isVideo = item.type === 'video';
   const isGDriveVideo = isVideo && item.source === 'gdrive';
   const isLocalVideo = isVideo && item.source === 'local';
-  // Deteksi file MOV (case-insensitive): cek ext, title, atau path (item.id)
   const isMov = [item?.ext, item?.title, item?.id]
     .filter(Boolean)
     .some(s => s.toLowerCase().endsWith('.mov'));
@@ -55,12 +56,9 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
     >
       {/* Top bar: counter + buttons */}
       <div className="flex items-center justify-between px-3 py-2 flex-shrink-0">
-        {/* Counter */}
         <div className="px-3 py-1.5 rounded-xl bg-black/50 border border-white/10 text-white text-xs font-bold backdrop-blur-sm">
           {currentIndex + 1} / {allMedia.length}
         </div>
-
-        {/* Right: open tab + close */}
         <div className="flex items-center gap-2">
           <a
             href={viewUrl}
@@ -90,37 +88,59 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
             src={item.source === 'gdrive' ? `/gdrive-media?id=${item.id}` : mediaUrl}
             alt={item.title}
             referrerPolicy="no-referrer"
-            className="w-full h-full object-contain"
+            className="max-w-full max-h-full object-contain"
           />
         )}
 
-        {/* Google Drive Video */}
+        {/* Google Drive Video — iframe tanpa frame hitam */}
         {isGDriveVideo && (
           <iframe
             src={`https://drive.google.com/file/d/${item.id}/preview?autoplay=1`}
-            className="w-full h-full"
-            style={{ border: 'none' }}
+            className="max-w-full max-h-full"
+            style={{
+              border: 'none',
+              background: 'transparent',
+              width: '100%',
+              height: '100%',
+            }}
             allow="autoplay; encrypted-media; fullscreen"
             allowFullScreen
             title={item.title}
           ></iframe>
         )}
 
-        {/* Local Video */}
+        {/* Local Video — transparan bg, ukuran natural (tidak paksa penuh) */}
         {isLocalVideo && (
-          <video
-            ref={videoRef}
-            src={mediaUrl}
-            controls
-            autoPlay
-            playsInline
-            preload="auto"
-            className="w-full h-full"
-            style={{ objectFit: 'contain' }}
-          ></video>
+          <div className="relative flex items-center justify-center w-full h-full">
+            {/* Loading indicator kecil di tengah, muncul hanya saat buffering */}
+            {isVideoLoading && (
+              <div className="absolute z-10 flex flex-col items-center gap-2 pointer-events-none">
+                <div className="w-10 h-10 rounded-full border-2 border-blue-500/30 border-t-blue-400 animate-spin"></div>
+                <p className="text-white/50 text-[11px] font-medium">Memuat video...</p>
+              </div>
+            )}
+            <video
+              ref={videoRef}
+              src={mediaUrl}
+              controls
+              autoPlay
+              playsInline
+              preload="auto"
+              onCanPlay={() => setIsVideoLoading(false)}
+              onWaiting={() => setIsVideoLoading(true)}
+              onPlaying={() => setIsVideoLoading(false)}
+              className="max-w-full max-h-full"
+              style={{
+                objectFit: 'contain',
+                background: 'transparent',  // ← tidak ada bar hitam!
+                opacity: isVideoLoading ? 0 : 1,
+                transition: 'opacity 0.3s ease',
+              }}
+            ></video>
+          </div>
         )}
 
-        {/* Prev Arrow — Desktop: sides | Mobile: hidden (use swipe or bottom buttons) */}
+        {/* Prev Arrow — Desktop only */}
         {hasPrev && (
           <button
             onClick={goPrev}
@@ -141,7 +161,6 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
 
       {/* Bottom bar: caption + mobile prev/next */}
       <div className="flex items-center justify-between px-3 py-2 flex-shrink-0 gap-2">
-        {/* Prev — mobile only */}
         <button
           onClick={goPrev}
           disabled={!hasPrev}
@@ -150,13 +169,11 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
           <i className="fa-solid fa-chevron-left text-sm"></i>
         </button>
 
-        {/* Caption */}
         <div className="flex-1 text-center min-w-0">
           <p className="text-white font-bold text-xs truncate">{item.title}</p>
           <p className="text-slate-400 text-[10px] truncate">{item.accountName || 'Storage Gateway'}</p>
         </div>
 
-        {/* Next — mobile only */}
         <button
           onClick={goNext}
           disabled={!hasNext}
