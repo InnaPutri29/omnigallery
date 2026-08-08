@@ -652,8 +652,8 @@ async function refreshCache() {
                     modified: stat.mtime || new Date(),
                     source: 'local',
                     url: `/media-file?path=${encodeURIComponent(filePath)}`,
-                    accountId: 'acc-local',
-                    accountName: accounts[0] ? accounts[0].name : 'Local Storage',
+                    accountId: `acc-local-${rootDirName.toLowerCase().replace(/\s+/g, '')}`,
+                    accountName: dir,
                     subfolder: subfolder
                 });
             }
@@ -770,7 +770,7 @@ app.post('/api/accounts', async (req, res) => {
 // API: Hapus Akun Storage
 app.delete('/api/accounts/:id', async (req, res) => {
     const { id } = req.params;
-    if (id === 'acc-local') {
+    if (id.startsWith('acc-local')) {
         return res.status(400).json({ error: 'Akun penyimpanan lokal tidak dapat dihapus' });
     }
     accounts = accounts.filter(acc => acc.id !== id);

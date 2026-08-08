@@ -1,11 +1,44 @@
 [
   {
-    "id": "acc-local",
-    "name": "Local Storage (D:\\FOTO, D:\\HP, D:\\Keluarga Besar Cirea & D:\\Wisuda Teh Vivi)",
+    "id": "acc-local-foto",
+    "name": "D:\\FOTO",
     "email": "local@laptop.storage",
     "type": "local",
-    "path": "D:\\FOTO, D:\\HP, D:\\Keluarga Besar Cirea, D:\\Wisuda Teh Vivi",
-    "usedBytes": 142794277671,
+    "path": "D:\\FOTO",
+    "usedBytes": 35700000000,
+    "totalBytes": 268435456000,
+    "status": "active",
+    "color": "from-blue-600 to-indigo-600"
+  },
+  {
+    "id": "acc-local-hp",
+    "name": "D:\\HP",
+    "email": "local@laptop.storage",
+    "type": "local",
+    "path": "D:\\HP",
+    "usedBytes": 35700000000,
+    "totalBytes": 268435456000,
+    "status": "active",
+    "color": "from-blue-600 to-indigo-600"
+  },
+  {
+    "id": "acc-local-cirea",
+    "name": "D:\\Keluarga Besar Cirea",
+    "email": "local@laptop.storage",
+    "type": "local",
+    "path": "D:\\Keluarga Besar Cirea",
+    "usedBytes": 35700000000,
+    "totalBytes": 268435456000,
+    "status": "active",
+    "color": "from-blue-600 to-indigo-600"
+  },
+  {
+    "id": "acc-local-vivi",
+    "name": "D:\\Wisuda Teh Vivi",
+    "email": "local@laptop.storage",
+    "type": "local",
+    "path": "D:\\Wisuda Teh Vivi",
+    "usedBytes": 35700000000,
     "totalBytes": 268435456000,
     "status": "active",
     "color": "from-blue-600 to-indigo-600"
