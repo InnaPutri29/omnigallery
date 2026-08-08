@@ -1,10 +1,10 @@
 [
   {
     "id": "acc-local",
-    "name": "Local Storage (D:\\FOTO & D:\\HP)",
+    "name": "Local Storage (D:\\FOTO, D:\\HP & D:\\Keluarga Besar Cirea)",
     "email": "local@laptop.storage",
     "type": "local",
-    "path": "D:\\FOTO, D:\\HP",
+    "path": "D:\\FOTO, D:\\HP, D:\\Keluarga Besar Cirea",
     "usedBytes": 142794277671,
     "totalBytes": 268435456000,
     "status": "active",
@@ -38,6 +38,17 @@
     "email": "innaputrimeida@gmail.com",
     "type": "gdrive",
     "folderId": "1MHI_3pZLMewn3wcpgQAXrzIuJpE9_GMe",
+    "usedBytes": 1288490188.8,
+    "totalBytes": 16106127360,
+    "status": "active",
+    "color": "from-cyan-500 to-blue-600"
+  },
+  {
+    "id": "acc-gdrive-1786162836911",
+    "name": "DANCE",
+    "email": "innaputrimeidaa@gmail.com",
+    "type": "gdrive",
+    "folderId": "1dl5mXHqKKOVHw1ZU4q43PQdYuVKVWjkF",
     "usedBytes": 1288490188.8,
     "totalBytes": 16106127360,
     "status": "active",

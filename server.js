@@ -25,7 +25,7 @@ const app = express();
 const PORT = 3000;
 
 // Folder lokal yang di-scan secara rekursif
-const LOCAL_DIRS = ['D:\\FOTO', 'D:\\HP'];
+const LOCAL_DIRS = ['D:\\FOTO', 'D:\\HP', 'D:\\Keluarga Besar Cirea'];
 const ACCOUNTS_FILE = path.join(__dirname, 'accounts.json');
 
 app.use(express.json());
