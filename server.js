@@ -920,7 +920,7 @@ function getLocalIp() {
 }
 
 // Catch-all route untuk SPA (Single Page Application) & Vercel Routing
-app.get('*', (req, res) => {
+app.use((req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
