@@ -22,7 +22,7 @@ export default function MediaCard({ item, onOpenLightbox }) {
     return (
       <div
         onClick={handleClick}
-        className="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-md hover:shadow-2xl hover:border-rose-500/40 transition-all duration-300 cursor-pointer"
+        className="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-md hover:shadow-2xl hover:border-blue-500/50 transition-all duration-300 cursor-pointer"
       >
         <div className="aspect-video bg-slate-950 overflow-hidden relative flex items-center justify-center">
           <img
@@ -35,17 +35,18 @@ export default function MediaCard({ item, onOpenLightbox }) {
             onError={(e) => { e.target.style.display = 'none'; }}
           />
 
-          <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-300 flex items-center justify-center">
-            <div className="w-12 h-12 rounded-2xl bg-rose-600/90 text-white flex items-center justify-center shadow-xl group-hover:scale-110 transition-all border border-rose-400/40 backdrop-blur-sm">
-              <i className="fa-solid fa-play text-lg ml-0.5"></i>
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300" />
+
+          {/* Tombol biru muncul di pojok kanan atas saat dihover (sama seperti foto, tapi icon play) */}
+          <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <div className="w-8 h-8 rounded-xl bg-blue-600/90 text-white flex items-center justify-center shadow-lg backdrop-blur-sm">
+              <i className="fa-solid fa-play text-xs ml-0.5"></i>
             </div>
           </div>
 
-          <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-sm text-rose-400 px-2.5 py-1 rounded-full text-[10px] font-extrabold flex items-center gap-1 border border-rose-500/30">
-            <i className="fa-solid fa-film"></i> VIDEO
-          </div>
-
-          <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white px-2 py-0.5 rounded-lg text-[10px] font-mono">
+          {/* Indikator kecil di kiri bawah agar tahu ini video */}
+          <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white px-2 py-0.5 rounded-lg text-[10px] font-mono flex items-center gap-1">
+            <i className="fa-solid fa-film text-[9px] text-blue-400"></i>
             {(item.ext || 'MP4').replace('.', '').toUpperCase()}
           </div>
         </div>
