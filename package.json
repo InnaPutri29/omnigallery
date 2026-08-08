@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "build": "esbuild src/main.jsx --bundle --outfile=bundle.js --loader:.jsx=jsx --loader:.js=jsx",
-    "tunnel": "npx localtunnel --port 3000 --subdomain omnigallery-inna"
+    "tunnel": ".\\cloudflared.exe tunnel --url http://localhost:3000"
   },
   "keywords": [],
   "author": "",
