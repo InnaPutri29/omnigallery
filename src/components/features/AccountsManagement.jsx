@@ -21,8 +21,10 @@ export default function AccountsManagement({ accounts, onOpenAddModal }) {
         {accounts.map(acc => {
           const percent = Math.min(100, Math.round((acc.usedBytes / (acc.totalBytes || 1)) * 100));
           const isDrive = acc.type === 'gdrive';
-          const cleanFolderId = (acc.folderId || '').split('/')[0];
-          const driveUrl = cleanFolderId ? `https://drive.google.com/drive/folders/${cleanFolderId}` : '#';
+          const folderIds = (acc.folderId || '')
+            .split(',')
+            .map(id => id.trim())
+            .filter(Boolean);
 
           return (
             <div key={acc.id} className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 hover:border-blue-500/40 transition-all shadow-md">
@@ -45,17 +47,29 @@ export default function AccountsManagement({ accounts, onOpenAddModal }) {
 
               <div>
                 <p className="text-xs text-slate-400 font-mono">{acc.email}</p>
-                {cleanFolderId && (
-                  <div className="mt-2">
-                    <p className="text-[11px] text-slate-400 font-mono truncate" title={cleanFolderId}>ID Folder: {cleanFolderId}</p>
-                    <a 
-                      href={driveUrl} 
-                      target="_blank" 
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 mt-2 px-3 py-1 rounded-lg bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white text-xs font-bold transition-all"
-                    >
-                      <i className="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Buka Folder Drive
-                    </a>
+                {isDrive && folderIds.length > 0 && (
+                  <div className="mt-2 space-y-2">
+                    <p className="text-[11px] text-slate-400 font-mono truncate" title={acc.folderId}>
+                      ID Folder: {acc.folderId}
+                    </p>
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {folderIds.map((fId, idx) => {
+                        const cleanId = fId.replace(/.*folders\//, '').replace(/.*id=/, '');
+                        const url = `https://drive.google.com/drive/folders/${cleanId}`;
+                        const label = folderIds.length > 1 ? `Buka Folder Drive ${idx + 1}` : 'Buka Folder Drive';
+                        return (
+                          <a 
+                            key={fId + idx}
+                            href={url} 
+                            target="_blank" 
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white text-xs font-bold transition-all border border-blue-500/30 shadow-sm"
+                          >
+                            <i className="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> {label}
+                          </a>
+                        );
+                      })}
+                    </div>
                   </div>
                 )}
               </div>
