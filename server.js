@@ -824,10 +824,33 @@ app.delete('/api/media', async (req, res) => {
                         console.log('[Delete GDrive File] Permanently deleted via Service Account:', id);
                         deletedSuccess = true;
                     } catch (dErr) {
-                        console.error('[Delete GDrive API Error]', dErr.message);
-                        return res.status(403).json({ 
-                            error: 'Gagal menghapus dari Google Drive (' + dErr.message + '). Pastikan folder Drive Anda sudah di-SHARE ke email: omnigallery-bot@ivory-channel-504903-p1.iam.gserviceaccount.com sebagai EDITOR!' 
-                        });
+                        console.warn('[Delete GDrive delete failed, trying removeParents...]', dErr.message);
+                        try {
+                            // Opsi 3 (Akun Google Pribadi): Keluarkan file dari folder (Remove from Folder)
+                            const meta = await driveClient.files.get({
+                                fileId: id,
+                                fields: 'parents',
+                                supportsAllDrives: true
+                            });
+                            const parentIds = (meta.data.parents || []).join(',');
+                            if (parentIds) {
+                                await driveClient.files.update({
+                                    fileId: id,
+                                    removeParents: parentIds,
+                                    supportsAllDrives: true,
+                                    supportsTeamDrives: true
+                                });
+                                console.log('[Delete GDrive File] Removed from folder parents:', parentIds);
+                                deletedSuccess = true;
+                            } else {
+                                throw dErr;
+                            }
+                        } catch (rErr) {
+                            console.error('[Delete GDrive API Error]', rErr.message);
+                            return res.status(403).json({ 
+                                error: 'Gagal menghapus dari Google Drive (' + rErr.message + '). Pastikan folder Drive Anda sudah di-SHARE ke email: omnigallery-bot@ivory-channel-504903-p1.iam.gserviceaccount.com sebagai EDITOR!' 
+                            });
+                        }
                     }
                 }
             } else {
