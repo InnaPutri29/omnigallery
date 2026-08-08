@@ -801,19 +801,37 @@ app.delete('/api/media', async (req, res) => {
 
         if (source === 'gdrive') {
             if (driveClient) {
+                let deletedSuccess = false;
                 try {
-                    // Memindahkan file di Google Drive ke folder Sampah (Trash)
+                    // Opsi 1: Coba pindahkan ke Trash
                     await driveClient.files.update({
                         fileId: id,
+                        supportsAllDrives: true,
+                        supportsTeamDrives: true,
                         requestBody: { trashed: true }
                     });
-                    console.log('[Delete GDrive File] Moved to Trash in Google Drive:', id);
+                    console.log('[Delete GDrive File] Moved to Trash:', id);
+                    deletedSuccess = true;
                 } catch (gErr) {
-                    console.error('[Delete GDrive API Error]', gErr.message);
-                    // Jika gagal ke GDrive (misal belum di-share ke service account), berikan pesan peringatan di console
+                    console.warn('[Delete GDrive update failed, trying files.delete...]', gErr.message);
+                    try {
+                        // Opsi 2: Coba delete langsung
+                        await driveClient.files.delete({
+                            fileId: id,
+                            supportsAllDrives: true,
+                            supportsTeamDrives: true
+                        });
+                        console.log('[Delete GDrive File] Permanently deleted via Service Account:', id);
+                        deletedSuccess = true;
+                    } catch (dErr) {
+                        console.error('[Delete GDrive API Error]', dErr.message);
+                        return res.status(403).json({ 
+                            error: 'Gagal menghapus dari Google Drive (' + dErr.message + '). Pastikan folder Drive Anda sudah di-SHARE ke email: omnigallery-bot@ivory-channel-504903-p1.iam.gserviceaccount.com sebagai EDITOR!' 
+                        });
+                    }
                 }
             } else {
-                console.warn('[Delete GDrive] driveClient tidak aktif. Hanya menghapus dari tampilan.');
+                console.warn('[Delete GDrive] driveClient tidak aktif.');
             }
         }
 
