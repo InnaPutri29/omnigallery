@@ -9,7 +9,7 @@ import LightboxModal from './components/common/LightboxModal.jsx';
 import AddAccountModal from './components/common/AddAccountModal.jsx';
 import LoginModal from './components/common/LoginModal.jsx';
 import { useState, useEffect } from 'react';
-import { fetchPhotos, fetchAccounts, fetchStats, addAccount } from './services/api.js';
+import { fetchPhotos, fetchAccounts, fetchStats, addAccount, deleteMedia } from './services/api.js';
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -55,6 +55,21 @@ export default function App() {
   };
 
   useEffect(() => { if (user) fetchData(); }, [user]);
+
+  const handleDeleteMedia = async (itemToDelete) => {
+    try {
+      const res = await deleteMedia(itemToDelete);
+      if (res && !res.error) {
+        setAllMedia(prev => prev.filter(m => m.id !== itemToDelete.id));
+        setLightboxContext(prev => prev.filter(m => m.id !== itemToDelete.id));
+        setSelectedMedia(null);
+      } else {
+        alert("Gagal menghapus file: " + (res?.error || "Error tidak diketahui"));
+      }
+    } catch (e) {
+      alert("Error: " + e.message);
+    }
+  };
 
   const handleLogout = () => {
     if (window.confirm("Apakah Anda yakin ingin keluar dari OmniGallery Dashboard?")) {
@@ -164,6 +179,7 @@ export default function App() {
           allMedia={lightboxContext.length > 0 ? lightboxContext : allMedia}
           onNavigate={(item) => setSelectedMedia(item)}
           onClose={() => setSelectedMedia(null)}
+          onDelete={handleDeleteMedia}
         />
       )}
 

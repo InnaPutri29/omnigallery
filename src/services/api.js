@@ -42,7 +42,22 @@ export const addAccount = async (accountData) => {
   }
 };
 
+export const deleteMedia = async (item) => {
+  try {
+    const res = await fetch('/api/media', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: item.id, source: item.source })
+    });
+    return await res.json();
+  } catch (e) {
+    console.log("deleteMedia Error:", e);
+    return null;
+  }
+};
+
 window.fetchPhotos = fetchPhotos;
 window.fetchAccounts = fetchAccounts;
 window.fetchStats = fetchStats;
 window.addAccount = addAccount;
+window.deleteMedia = deleteMedia;

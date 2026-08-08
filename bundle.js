@@ -21899,7 +21899,7 @@
 
   // src/components/common/LightboxModal.jsx
   var import_react8 = __toESM(require_react());
-  function LightboxModal({ item, allMedia = [], onNavigate, onClose }) {
+  function LightboxModal({ item, allMedia = [], onNavigate, onClose, onDelete }) {
     const videoRef = (0, import_react8.useRef)(null);
     const [isVideoLoading, setIsVideoLoading] = (0, import_react8.useState)(true);
     const currentIndex = (0, import_react8.useMemo)(() => allMedia.findIndex((m) => m.id === item.id), [allMedia, item]);
@@ -21950,6 +21950,19 @@
           className: "w-9 h-9 rounded-xl bg-white/10 hover:bg-blue-600 text-white flex items-center justify-center transition-all border border-white/10 cursor-pointer"
         },
         /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-up-right-from-square text-xs" })
+      ), /* @__PURE__ */ import_react8.default.createElement(
+        "button",
+        {
+          onClick: () => {
+            const sourceLabel = item.source === "local" ? "file dari laptop" : "file dari tampilan galeri";
+            if (window.confirm(`Apakah Anda yakin ingin menghapus "${item.title}" (${sourceLabel})?`)) {
+              if (onDelete) onDelete(item);
+            }
+          },
+          title: "Hapus Media",
+          className: "w-9 h-9 rounded-xl bg-rose-500/20 hover:bg-rose-600 text-rose-300 hover:text-white flex items-center justify-center transition-all border border-rose-500/30 cursor-pointer"
+        },
+        /* @__PURE__ */ import_react8.default.createElement("i", { className: "fa-solid fa-trash-can text-xs" })
       ), /* @__PURE__ */ import_react8.default.createElement(
         "button",
         {
@@ -22138,7 +22151,7 @@
   function LoginModal({ onLoginSuccess }) {
     const [email, setEmail] = (0, import_react10.useState)("");
     const [password, setPassword] = (0, import_react10.useState)("");
-    const [alert, setAlert] = (0, import_react10.useState)(null);
+    const [alert2, setAlert] = (0, import_react10.useState)(null);
     const [loading, setLoading] = (0, import_react10.useState)(false);
     const ALLOWED_EMAIL = "innaputrimeida@gmail.com";
     const [config, setConfig] = (0, import_react10.useState)({
@@ -22179,7 +22192,7 @@
         setLoading(false);
       }
     };
-    return /* @__PURE__ */ import_react10.default.createElement("div", { id: "login-screen", className: "fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-4 overflow-y-auto" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "relative w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-8 shadow-2xl space-y-6" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "text-center space-y-2" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-shield-halved" }), " Supabase Secure Auth"), /* @__PURE__ */ import_react10.default.createElement("h2", { className: "text-3xl font-extrabold text-white tracking-tight" }, "Omni", /* @__PURE__ */ import_react10.default.createElement("span", { className: "text-blue-500" }, "Gallery")), /* @__PURE__ */ import_react10.default.createElement("p", { className: "text-xs text-slate-400" }, "Masuk untuk mengelola galeri foto & video Anda")), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex items-center justify-center gap-2 py-2 px-4 bg-blue-600/10 border border-blue-500/20 rounded-2xl" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-right-to-bracket text-blue-400 text-xs" }), /* @__PURE__ */ import_react10.default.createElement("span", { className: "text-xs font-bold text-blue-300" }, "Masuk ke Dashboard")), alert && /* @__PURE__ */ import_react10.default.createElement("div", { className: `p-3 rounded-2xl text-xs font-semibold flex items-center gap-2 border ${alert.type === "error" ? "bg-rose-500/20 text-rose-400 border-rose-500/30" : "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"}` }, /* @__PURE__ */ import_react10.default.createElement("i", { className: alert.type === "error" ? "fa-solid fa-triangle-exclamation" : "fa-solid fa-circle-check" }), alert.text), /* @__PURE__ */ import_react10.default.createElement("form", { onSubmit: handleSubmit, className: "space-y-4" }, /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Alamat Email"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "relative" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm" }), /* @__PURE__ */ import_react10.default.createElement(
+    return /* @__PURE__ */ import_react10.default.createElement("div", { id: "login-screen", className: "fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-4 overflow-y-auto" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "relative w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-8 shadow-2xl space-y-6" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "text-center space-y-2" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-shield-halved" }), " Supabase Secure Auth"), /* @__PURE__ */ import_react10.default.createElement("h2", { className: "text-3xl font-extrabold text-white tracking-tight" }, "Omni", /* @__PURE__ */ import_react10.default.createElement("span", { className: "text-blue-500" }, "Gallery")), /* @__PURE__ */ import_react10.default.createElement("p", { className: "text-xs text-slate-400" }, "Masuk untuk mengelola galeri foto & video Anda")), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex items-center justify-center gap-2 py-2 px-4 bg-blue-600/10 border border-blue-500/20 rounded-2xl" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-right-to-bracket text-blue-400 text-xs" }), /* @__PURE__ */ import_react10.default.createElement("span", { className: "text-xs font-bold text-blue-300" }, "Masuk ke Dashboard")), alert2 && /* @__PURE__ */ import_react10.default.createElement("div", { className: `p-3 rounded-2xl text-xs font-semibold flex items-center gap-2 border ${alert2.type === "error" ? "bg-rose-500/20 text-rose-400 border-rose-500/30" : "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"}` }, /* @__PURE__ */ import_react10.default.createElement("i", { className: alert2.type === "error" ? "fa-solid fa-triangle-exclamation" : "fa-solid fa-circle-check" }), alert2.text), /* @__PURE__ */ import_react10.default.createElement("form", { onSubmit: handleSubmit, className: "space-y-4" }, /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Alamat Email"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "relative" }, /* @__PURE__ */ import_react10.default.createElement("i", { className: "fa-solid fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm" }), /* @__PURE__ */ import_react10.default.createElement(
       "input",
       {
         type: "email",
@@ -22255,10 +22268,24 @@
       return null;
     }
   };
+  var deleteMedia = async (item) => {
+    try {
+      const res = await fetch("/api/media", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: item.id, source: item.source })
+      });
+      return await res.json();
+    } catch (e) {
+      console.log("deleteMedia Error:", e);
+      return null;
+    }
+  };
   window.fetchPhotos = fetchPhotos;
   window.fetchAccounts = fetchAccounts;
   window.fetchStats = fetchStats;
   window.addAccount = addAccount;
+  window.deleteMedia = deleteMedia;
 
   // src/App.jsx
   function App() {
@@ -22306,6 +22333,20 @@
     (0, import_react12.useEffect)(() => {
       if (user) fetchData();
     }, [user]);
+    const handleDeleteMedia = async (itemToDelete) => {
+      try {
+        const res = await deleteMedia(itemToDelete);
+        if (res && !res.error) {
+          setAllMedia((prev) => prev.filter((m) => m.id !== itemToDelete.id));
+          setLightboxContext((prev) => prev.filter((m) => m.id !== itemToDelete.id));
+          setSelectedMedia(null);
+        } else {
+          alert("Gagal menghapus file: " + (res?.error || "Error tidak diketahui"));
+        }
+      } catch (e) {
+        alert("Error: " + e.message);
+      }
+    };
     const handleLogout = () => {
       if (window.confirm("Apakah Anda yakin ingin keluar dari OmniGallery Dashboard?")) {
         localStorage.removeItem("gdgate_user");
@@ -22400,7 +22441,8 @@
         item: selectedMedia,
         allMedia: lightboxContext.length > 0 ? lightboxContext : allMedia,
         onNavigate: (item) => setSelectedMedia(item),
-        onClose: () => setSelectedMedia(null)
+        onClose: () => setSelectedMedia(null),
+        onDelete: handleDeleteMedia
       }
     ), isAddModalOpen && /* @__PURE__ */ import_react11.default.createElement(
       AddAccountModal,

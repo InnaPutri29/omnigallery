@@ -762,6 +762,38 @@ app.delete('/api/accounts/:id', async (req, res) => {
     res.json({ message: 'Akun berhasil dihapus' });
 });
 
+// API: Hapus Media (Lokal: Hapus file fisik + cache, GDrive: Hapus dari daftar tampilan)
+app.delete('/api/media', async (req, res) => {
+    const { id, source } = req.body || {};
+    if (!id) return res.status(400).json({ error: 'ID media tidak boleh kosong' });
+
+    try {
+        if (source === 'local') {
+            if (fs.existsSync(id)) {
+                fs.unlinkSync(id);
+                console.log('[Delete Local File]', id);
+            }
+            // Hapus cache thumbnail & video
+            const thumbPath = path.join(CACHE_DIR, `${crypto.createHash('md5').update(id).digest('hex')}.webp`);
+            const vthumbPath = path.join(CACHE_DIR, `${crypto.createHash('md5').update(id).digest('hex')}_vthumb.jpg`);
+            const mp4Path = getCachePath(id);
+            try { if (fs.existsSync(thumbPath)) fs.unlinkSync(thumbPath); } catch(e){}
+            try { if (fs.existsSync(vthumbPath)) fs.unlinkSync(vthumbPath); } catch(e){}
+            try { if (fs.existsSync(mp4Path)) fs.unlinkSync(mp4Path); } catch(e){}
+        }
+
+        // Hapus dari cachedMediaList
+        if (cachedMediaList) {
+            cachedMediaList = cachedMediaList.filter(m => m.id !== id);
+        }
+
+        res.json({ message: 'Media berhasil dihapus', id });
+    } catch (e) {
+        console.error('[Delete Error]', e);
+        res.status(500).json({ error: 'Gagal menghapus media: ' + e.message });
+    }
+});
+
 // API: Mengambil daftar media
 app.get('/api/photos', async (req, res) => {
     const { mediaList } = await getOrUpdateCache();

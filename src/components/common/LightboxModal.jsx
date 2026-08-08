@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useMemo, useState } from 'react';
 
-export default function LightboxModal({ item, allMedia = [], onNavigate, onClose }) {
+export default function LightboxModal({ item, allMedia = [], onNavigate, onClose, onDelete }) {
   const videoRef = useRef(null);
   const [isVideoLoading, setIsVideoLoading] = useState(true);
 
@@ -69,6 +69,18 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
           >
             <i className="fa-solid fa-up-right-from-square text-xs"></i>
           </a>
+          <button
+            onClick={() => {
+              const sourceLabel = item.source === 'local' ? 'file dari laptop' : 'file dari tampilan galeri';
+              if (window.confirm(`Apakah Anda yakin ingin menghapus "${item.title}" (${sourceLabel})?`)) {
+                if (onDelete) onDelete(item);
+              }
+            }}
+            title="Hapus Media"
+            className="w-9 h-9 rounded-xl bg-rose-500/20 hover:bg-rose-600 text-rose-300 hover:text-white flex items-center justify-center transition-all border border-rose-500/30 cursor-pointer"
+          >
+            <i className="fa-solid fa-trash-can text-xs"></i>
+          </button>
           <button
             onClick={onClose}
             title="Tutup (Esc)"
