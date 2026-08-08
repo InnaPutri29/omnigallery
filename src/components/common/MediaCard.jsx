@@ -44,11 +44,6 @@ export default function MediaCard({ item, onOpenLightbox }) {
             </div>
           </div>
 
-          {/* Indikator kecil di kiri bawah agar tahu ini video */}
-          <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white px-2 py-0.5 rounded-lg text-[10px] font-mono flex items-center gap-1">
-            <i className="fa-solid fa-film text-[9px] text-blue-400"></i>
-            {(item.ext || 'MP4').replace('.', '').toUpperCase()}
-          </div>
         </div>
 
         <div className="p-3.5 space-y-1">
