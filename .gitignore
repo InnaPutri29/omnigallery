@@ -10,6 +10,11 @@ node_modules/
 *.log
 npm-debug.log*
 
+# Secret keys
+gdrive-key.json
+*.json.secret
+scratch_*
+
 # OS generated files
 .DS_Store
 Thumbs.db

@@ -3,6 +3,23 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 const https = require('https');
+const { google } = require('googleapis');
+
+// Inisialisasi Google Drive API via Service Account Key (gdrive-key.json)
+let driveClient = null;
+try {
+    const keyPath = path.join(__dirname, 'gdrive-key.json');
+    if (fs.existsSync(keyPath)) {
+        const auth = new google.auth.GoogleAuth({
+            keyFile: keyPath,
+            scopes: ['https://www.googleapis.com/auth/drive'],
+        });
+        driveClient = google.drive({ version: 'v3', auth });
+        console.log('✅ Google Drive API initialized with Service Account!');
+    }
+} catch (e) {
+    console.error('⚠️ Google Drive API Auth Error:', e.message);
+}
 
 const app = express();
 const PORT = 3000;
@@ -780,6 +797,24 @@ app.delete('/api/media', async (req, res) => {
             try { if (fs.existsSync(thumbPath)) fs.unlinkSync(thumbPath); } catch(e){}
             try { if (fs.existsSync(vthumbPath)) fs.unlinkSync(vthumbPath); } catch(e){}
             try { if (fs.existsSync(mp4Path)) fs.unlinkSync(mp4Path); } catch(e){}
+        }
+
+        if (source === 'gdrive') {
+            if (driveClient) {
+                try {
+                    // Memindahkan file di Google Drive ke folder Sampah (Trash)
+                    await driveClient.files.update({
+                        fileId: id,
+                        requestBody: { trashed: true }
+                    });
+                    console.log('[Delete GDrive File] Moved to Trash in Google Drive:', id);
+                } catch (gErr) {
+                    console.error('[Delete GDrive API Error]', gErr.message);
+                    // Jika gagal ke GDrive (misal belum di-share ke service account), berikan pesan peringatan di console
+                }
+            } else {
+                console.warn('[Delete GDrive] driveClient tidak aktif. Hanya menghapus dari tampilan.');
+            }
         }
 
         // Hapus dari cachedMediaList
