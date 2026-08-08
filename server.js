@@ -919,15 +919,24 @@ function getLocalIp() {
     return 'localhost';
 }
 
+// Catch-all route untuk SPA (Single Page Application) & Vercel Routing
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 // Warm up cache on server start
 getOrUpdateCache(true);
 
-// Jalankan server
-app.listen(PORT, '0.0.0.0', () => {
-    const ip = getLocalIp();
-    console.log('\n=======================================================');
-    console.log(`🚀 OMNIGALLERY DASHBOARD BERJALAN!`);
-    console.log(`💻 Buka di Laptop: http://localhost:${PORT}`);
-    console.log(`📱 Buka di HP    : http://${ip}:${PORT}`);
-    console.log('=======================================================\n');
-});
+// Jalankan server jika lokal
+if (require.main === module) {
+    app.listen(PORT, '0.0.0.0', () => {
+        const ip = getLocalIp();
+        console.log('\n=======================================================');
+        console.log(`🚀 OMNIGALLERY DASHBOARD BERJALAN!`);
+        console.log(`💻 Buka di Laptop: http://localhost:${PORT}`);
+        console.log(`📱 Buka di HP    : http://${ip}:${PORT}`);
+        console.log('=======================================================\n');
+    });
+}
+
+module.exports = app;
