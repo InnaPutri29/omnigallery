@@ -3,45 +3,21 @@
   "builds": [
     {
       "src": "server.js",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "index.html",
+          "bundle.js",
+          "style.css",
+          "accounts.json"
+        ]
+      }
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/server.js"
-    },
-    {
-      "src": "/gdrive-(.*)",
-      "dest": "/server.js"
-    },
-    {
-      "src": "/media-file(.*)",
-      "dest": "/server.js"
-    },
-    {
-      "src": "/thumbnail(.*)",
-      "dest": "/server.js"
-    },
-    {
-      "src": "/video-thumb(.*)",
-      "dest": "/server.js"
-    },
-    {
-      "src": "/transcode-video(.*)",
-      "dest": "/server.js"
-    },
-    {
-      "src": "/bundle.js",
-      "dest": "/bundle.js"
-    },
-    {
-      "src": "/style.css",
-      "dest": "/style.css"
-    },
-    {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "server.js"
     }
   ]
 }

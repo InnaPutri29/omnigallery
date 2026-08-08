@@ -29,6 +29,7 @@ const LOCAL_DIRS = ['D:\\FOTO', 'D:\\HP', 'D:\\Keluarga Besar Cirea', 'D:\\Wisud
 const ACCOUNTS_FILE = path.join(__dirname, 'accounts.json');
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname)));
 
 // Ekstensi file yang didukung
 const IMAGE_EXTS = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.svg', '.heic', '.heif'];
