@@ -78,31 +78,7 @@ function AddAccountModal({ onClose, onAddAccount }) {
             </p>
           </div>
 
-          <div>
-            <label className="block text-xs font-bold text-slate-300 mb-1.5">Warna Kartu Tema</label>
-            <div className="flex items-center gap-2">
-              <button 
-                type="button" 
-                onClick={() => setColor('from-blue-600 to-indigo-600')} 
-                className={`w-8 h-8 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 cursor-pointer ${color === 'from-blue-600 to-indigo-600' ? 'ring-2 ring-white' : ''}`}
-              ></button>
-              <button 
-                type="button" 
-                onClick={() => setColor('from-emerald-600 to-teal-600')} 
-                className={`w-8 h-8 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 cursor-pointer ${color === 'from-emerald-600 to-teal-600' ? 'ring-2 ring-white' : ''}`}
-              ></button>
-              <button 
-                type="button" 
-                onClick={() => setColor('from-purple-600 to-pink-600')} 
-                className={`w-8 h-8 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 cursor-pointer ${color === 'from-purple-600 to-pink-600' ? 'ring-2 ring-white' : ''}`}
-              ></button>
-              <button 
-                type="button" 
-                onClick={() => setColor('from-amber-600 to-rose-600')} 
-                className={`w-8 h-8 rounded-xl bg-gradient-to-r from-amber-600 to-rose-600 cursor-pointer ${color === 'from-amber-600 to-rose-600' ? 'ring-2 ring-white' : ''}`}
-              ></button>
-            </div>
-          </div>
+
 
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
             <button 

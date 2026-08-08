@@ -22105,35 +22105,7 @@
         placeholder: "https://drive.google.com/drive/folders/1MHI_3pZLMewn3wcpgQAXrzIuJpE9_GMe",
         className: "w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all font-mono"
       }
-    ), /* @__PURE__ */ import_react9.default.createElement("p", { className: "text-[10px] text-slate-400 mt-1" }, "*Pastikan status akses folder di Google Drive disetel ke ", /* @__PURE__ */ import_react9.default.createElement("b", null, '"Siapa saja yang memiliki link" (Public View)'), ".")), /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Warna Kartu Tema"), /* @__PURE__ */ import_react9.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react9.default.createElement(
-      "button",
-      {
-        type: "button",
-        onClick: () => setColor("from-blue-600 to-indigo-600"),
-        className: `w-8 h-8 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 cursor-pointer ${color === "from-blue-600 to-indigo-600" ? "ring-2 ring-white" : ""}`
-      }
-    ), /* @__PURE__ */ import_react9.default.createElement(
-      "button",
-      {
-        type: "button",
-        onClick: () => setColor("from-emerald-600 to-teal-600"),
-        className: `w-8 h-8 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 cursor-pointer ${color === "from-emerald-600 to-teal-600" ? "ring-2 ring-white" : ""}`
-      }
-    ), /* @__PURE__ */ import_react9.default.createElement(
-      "button",
-      {
-        type: "button",
-        onClick: () => setColor("from-purple-600 to-pink-600"),
-        className: `w-8 h-8 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 cursor-pointer ${color === "from-purple-600 to-pink-600" ? "ring-2 ring-white" : ""}`
-      }
-    ), /* @__PURE__ */ import_react9.default.createElement(
-      "button",
-      {
-        type: "button",
-        onClick: () => setColor("from-amber-600 to-rose-600"),
-        className: `w-8 h-8 rounded-xl bg-gradient-to-r from-amber-600 to-rose-600 cursor-pointer ${color === "from-amber-600 to-rose-600" ? "ring-2 ring-white" : ""}`
-      }
-    ))), /* @__PURE__ */ import_react9.default.createElement("div", { className: "flex items-center justify-end gap-3 pt-4 border-t border-slate-800" }, /* @__PURE__ */ import_react9.default.createElement(
+    ), /* @__PURE__ */ import_react9.default.createElement("p", { className: "text-[10px] text-slate-400 mt-1" }, "*Pastikan status akses folder di Google Drive disetel ke ", /* @__PURE__ */ import_react9.default.createElement("b", null, '"Siapa saja yang memiliki link" (Public View)'), ".")), /* @__PURE__ */ import_react9.default.createElement("div", { className: "flex items-center justify-end gap-3 pt-4 border-t border-slate-800" }, /* @__PURE__ */ import_react9.default.createElement(
       "button",
       {
         type: "button",
