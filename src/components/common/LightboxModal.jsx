@@ -120,7 +120,7 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
 
         {/* Local Video — blurred bg video + sharp video on top */}
         {isLocalVideo && (
-          <div className="relative w-full h-full overflow-hidden">
+          <div className="relative w-full h-full overflow-hidden flex items-center justify-center">
             {/* Blurred background video */}
             <video
               src={mediaUrl}
@@ -141,8 +141,15 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
               autoPlay
               playsInline
               preload="auto"
-              className="relative z-10 w-full h-full"
-              style={{ objectFit: 'contain' }}
+              className="relative z-10"
+              style={{
+                maxWidth: '100%',
+                maxHeight: '100%',
+                width: 'auto',
+                height: 'auto',
+                display: 'block',
+                margin: 'auto'
+              }}
             ></video>
           </div>
         )}

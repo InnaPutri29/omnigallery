@@ -21994,7 +21994,7 @@
           allowFullScreen: true,
           title: item.title
         }
-      ), isLocalVideo && /* @__PURE__ */ import_react8.default.createElement("div", { className: "relative w-full h-full overflow-hidden" }, /* @__PURE__ */ import_react8.default.createElement(
+      ), isLocalVideo && /* @__PURE__ */ import_react8.default.createElement("div", { className: "relative w-full h-full overflow-hidden flex items-center justify-center" }, /* @__PURE__ */ import_react8.default.createElement(
         "video",
         {
           src: mediaUrl,
@@ -22016,8 +22016,15 @@
           autoPlay: true,
           playsInline: true,
           preload: "auto",
-          className: "relative z-10 w-full h-full",
-          style: { objectFit: "contain" }
+          className: "relative z-10",
+          style: {
+            maxWidth: "100%",
+            maxHeight: "100%",
+            width: "auto",
+            height: "auto",
+            display: "block",
+            margin: "auto"
+          }
         }
       )), hasPrev && /* @__PURE__ */ import_react8.default.createElement(
         "button",
