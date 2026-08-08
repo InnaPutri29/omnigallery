@@ -51,7 +51,7 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
   return (
     <div
       className="fixed inset-0 z-50 flex flex-col"
-      style={{ background: 'linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e1b4b 100%)' }}
+      style={{ background: 'rgba(2, 6, 23, 0.82)', backdropFilter: 'blur(18px)' }}
     >
       {/* Top bar: counter + buttons */}
       <div className="flex items-center justify-between px-3 py-2 flex-shrink-0">

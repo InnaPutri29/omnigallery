@@ -21945,7 +21945,7 @@
       "div",
       {
         className: "fixed inset-0 z-50 flex flex-col",
-        style: { background: "linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e1b4b 100%)" }
+        style: { background: "rgba(2, 6, 23, 0.82)", backdropFilter: "blur(18px)" }
       },
       /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex items-center justify-between px-3 py-2 flex-shrink-0" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "px-3 py-1.5 rounded-xl bg-black/50 border border-white/10 text-white text-xs font-bold backdrop-blur-sm" }, currentIndex + 1, " / ", allMedia.length), /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react8.default.createElement(
         "a",
