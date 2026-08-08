@@ -6,11 +6,7 @@
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
   var __commonJS = (cb, mod) => function __require() {
-    try {
-      return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-    } catch (e) {
-      throw mod = 0, e;
-    }
+    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
   var __copyProps = (to, from, except, desc) => {
     if (from && typeof from === "object" || typeof from === "function") {
@@ -498,7 +494,7 @@
           }
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), MAYBE_ITERATOR_SYMBOL = Symbol.iterator, didWarnStateUpdateForUnmountedComponent = {}, ReactNoopUpdateQueue = {
+        var REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = Symbol.for("react.activity"), MAYBE_ITERATOR_SYMBOL = Symbol.iterator, didWarnStateUpdateForUnmountedComponent = {}, ReactNoopUpdateQueue = {
           isMounted: function() {
             return false;
           },
@@ -541,7 +537,7 @@
         deprecatedAPIs.constructor = PureComponent;
         assign(deprecatedAPIs, Component.prototype);
         deprecatedAPIs.isPureReactComponent = true;
-        var isArrayImpl = Array.isArray, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = {
+        var isArrayImpl = Array.isArray, REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference"), ReactSharedInternals = {
           H: null,
           A: null,
           T: null,
@@ -1351,7 +1347,7 @@
           },
           p: 0,
           findDOMNode: null
-        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React13.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+        }, REACT_PORTAL_TYPE = Symbol.for("react.portal"), ReactSharedInternals = React13.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
         "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
           "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
         );
@@ -18518,14 +18514,14 @@
           ));
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var Scheduler = require_scheduler(), React13 = require_react(), ReactDOM2 = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
-        /* @__PURE__ */ Symbol.for("react.scope");
-        var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
-        /* @__PURE__ */ Symbol.for("react.legacy_hidden");
-        /* @__PURE__ */ Symbol.for("react.tracing_marker");
-        var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
-        /* @__PURE__ */ Symbol.for("react.view_transition");
-        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React13.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM2.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+        var Scheduler = require_scheduler(), React13 = require_react(), ReactDOM2 = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = Symbol.for("react.element"), REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy");
+        Symbol.for("react.scope");
+        var REACT_ACTIVITY_TYPE = Symbol.for("react.activity");
+        Symbol.for("react.legacy_hidden");
+        Symbol.for("react.tracing_marker");
+        var REACT_MEMO_CACHE_SENTINEL = Symbol.for("react.memo_cache_sentinel");
+        Symbol.for("react.view_transition");
+        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React13.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM2.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
           pending: false,
           data: null,
           method: null,
@@ -21582,47 +21578,37 @@
   // src/components/common/MediaCard.jsx
   var import_react4 = __toESM(require_react());
   function MediaCard({ item, onOpenLightbox }) {
-    const mediaUrl = item.url || (item.source === "local" ? `/photos/${item.id}` : `https://drive.google.com/thumbnail?id=${item.id}&sz=w800`);
-    const viewUrl = item.viewUrl || (item.source === "gdrive" ? `https://drive.google.com/file/d/${item.id}/view` : `/media-file?path=${encodeURIComponent(item.id)}`);
     const isVideo = item.type === "video";
+    const isLocal = item.source === "local";
+    const thumbUrl = isLocal ? isVideo ? `/video-thumb?path=${encodeURIComponent(item.id)}` : `/thumbnail?path=${encodeURIComponent(item.id)}&w=400` : isVideo ? `https://drive.google.com/thumbnail?id=${item.id}&sz=w400` : `https://drive.google.com/thumbnail?id=${item.id}&sz=w400`;
     const handleClick = (e) => {
       e.stopPropagation();
       onOpenLightbox(item);
     };
     if (isVideo) {
-      const videoThumbnailSource = item.source === "gdrive" ? `/gdrive-media?id=${item.id}` : `${mediaUrl}#t=0.5`;
       return /* @__PURE__ */ import_react4.default.createElement(
         "div",
         {
           onClick: handleClick,
           className: "group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-md hover:shadow-2xl hover:border-rose-500/40 transition-all duration-300 cursor-pointer"
         },
-        /* @__PURE__ */ import_react4.default.createElement("div", { className: "aspect-video bg-slate-950 overflow-hidden relative flex items-center justify-center" }, item.source === "gdrive" ? /* @__PURE__ */ import_react4.default.createElement(
+        /* @__PURE__ */ import_react4.default.createElement("div", { className: "aspect-video bg-slate-950 overflow-hidden relative flex items-center justify-center" }, /* @__PURE__ */ import_react4.default.createElement(
           "img",
           {
-            src: videoThumbnailSource,
+            src: thumbUrl,
             alt: item.title,
             loading: "lazy",
+            decoding: "async",
             referrerPolicy: "no-referrer",
             className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500",
             onError: (e) => {
               e.target.style.display = "none";
             }
           }
-        ) : /* @__PURE__ */ import_react4.default.createElement(
-          "video",
-          {
-            src: videoThumbnailSource,
-            preload: "metadata",
-            muted: true,
-            playsInline: true,
-            className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 pointer-events-none"
-          }
         ), /* @__PURE__ */ import_react4.default.createElement("div", { className: "absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-300 flex items-center justify-center" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-rose-600/90 text-white flex items-center justify-center shadow-xl group-hover:scale-110 transition-all border border-rose-400/40 backdrop-blur-sm" }, /* @__PURE__ */ import_react4.default.createElement("i", { className: "fa-solid fa-play text-lg ml-0.5" }))), /* @__PURE__ */ import_react4.default.createElement("div", { className: "absolute top-3 right-3 bg-black/70 backdrop-blur-sm text-rose-400 px-2.5 py-1 rounded-full text-[10px] font-extrabold flex items-center gap-1 border border-rose-500/30" }, /* @__PURE__ */ import_react4.default.createElement("i", { className: "fa-solid fa-film" }), " VIDEO"), /* @__PURE__ */ import_react4.default.createElement("div", { className: "absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white px-2 py-0.5 rounded-lg text-[10px] font-mono" }, (item.ext || "MP4").replace(".", "").toUpperCase())),
         /* @__PURE__ */ import_react4.default.createElement("div", { className: "p-3.5 space-y-1" }, /* @__PURE__ */ import_react4.default.createElement("h4", { className: "font-bold text-xs text-white truncate", title: item.title }, item.title), /* @__PURE__ */ import_react4.default.createElement("p", { className: "text-[11px] text-slate-400 flex items-center justify-between" }, /* @__PURE__ */ import_react4.default.createElement("span", { className: "truncate max-w-[130px]" }, item.accountName || "Storage Gateway"), /* @__PURE__ */ import_react4.default.createElement("span", { className: "font-mono" }, item.sizeFormatted || "")))
       );
     } else {
-      const fallbackUrl = item.source === "gdrive" ? `https://drive.google.com/uc?export=view&id=${item.id}` : "";
       return /* @__PURE__ */ import_react4.default.createElement(
         "div",
         {
@@ -21632,21 +21618,19 @@
         /* @__PURE__ */ import_react4.default.createElement("div", { className: "aspect-video bg-slate-950 overflow-hidden relative" }, /* @__PURE__ */ import_react4.default.createElement(
           "img",
           {
-            src: mediaUrl,
+            src: thumbUrl,
             alt: item.title,
             loading: "lazy",
+            decoding: "async",
             referrerPolicy: "no-referrer",
             className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500",
             onError: (e) => {
-              e.target.onerror = null;
-              if (fallbackUrl) {
-                e.target.src = fallbackUrl;
-              } else {
-                e.target.parentElement.innerHTML = '<div class="w-full h-full flex flex-col items-center justify-center bg-slate-900 text-slate-500 text-xs font-bold gap-1"><i class="fa-solid fa-image text-2xl text-purple-400/50"></i>Foto</div>';
+              if (isLocal) {
+                e.target.src = `/media-file?path=${encodeURIComponent(item.id)}`;
               }
             }
           }
-        ), /* @__PURE__ */ import_react4.default.createElement("div", { className: "absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center" }, /* @__PURE__ */ import_react4.default.createElement("span", { className: "px-3 py-1.5 rounded-xl bg-blue-600 text-white text-xs font-bold opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all" }, "Pratinjau"))),
+        ), /* @__PURE__ */ import_react4.default.createElement("div", { className: "absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300" }), /* @__PURE__ */ import_react4.default.createElement("div", { className: "absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "w-8 h-8 rounded-xl bg-blue-600/90 text-white flex items-center justify-center shadow-lg backdrop-blur-sm" }, /* @__PURE__ */ import_react4.default.createElement("i", { className: "fa-solid fa-magnifying-glass-plus text-xs" })))),
         /* @__PURE__ */ import_react4.default.createElement("div", { className: "p-3.5 space-y-1" }, /* @__PURE__ */ import_react4.default.createElement("h4", { className: "font-bold text-xs text-white truncate", title: item.title }, item.title), /* @__PURE__ */ import_react4.default.createElement("p", { className: "text-[11px] text-slate-400 flex items-center justify-between" }, /* @__PURE__ */ import_react4.default.createElement("span", { className: "truncate max-w-[130px]" }, item.accountName || "Storage Gateway"), /* @__PURE__ */ import_react4.default.createElement("span", { className: "font-mono" }, item.sizeFormatted || "")))
       );
     }

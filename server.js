@@ -31,7 +31,7 @@ app.use(express.static(__dirname));
 // Serve file media lokal via legacy /photos path
 app.use('/photos', express.static(LOCAL_DIRS[0]));
 
-// Endpoint streaming file media lokal dari path mana pun secara aman (dengan HTTP Range streaming)
+// Endpoint streaming file media lokal dengan HTTP Cache
 app.get('/media-file', (req, res) => {
     const filePath = req.query.path;
     if (!filePath || !fs.existsSync(filePath)) {
@@ -49,21 +49,116 @@ app.get('/media-file', (req, res) => {
             const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
             const chunksize = (end - start) + 1;
             const file = fs.createReadStream(filePath, { start, end });
-            const head = {
+            const ext = filePath.toLowerCase();
+            const ct = ext.endsWith('.mov') || ext.endsWith('.mp4') ? 'video/mp4' : 'video/webm';
+            res.writeHead(206, {
                 'Content-Range': `bytes ${start}-${end}/${fileSize}`,
                 'Accept-Ranges': 'bytes',
                 'Content-Length': chunksize,
-                'Content-Type': filePath.toLowerCase().endsWith('.mov') ? 'video/mp4' : (filePath.toLowerCase().endsWith('.mp4') ? 'video/mp4' : 'video/webm'),
-            };
-            res.writeHead(206, head);
+                'Content-Type': ct,
+                'Cache-Control': 'public, max-age=86400',
+            });
             file.pipe(res);
         } else {
+            res.setHeader('Cache-Control', 'public, max-age=86400');
             res.sendFile(path.resolve(filePath));
         }
     } catch (e) {
         res.sendFile(path.resolve(filePath));
     }
 });
+
+// ⚡ Thumbnail endpoint — resize gambar ke 400px lebar, cache ke disk
+// Format: /thumbnail?path=D:\FOTO\...&w=400
+const sharp = require('sharp');
+const THUMB_CACHE_DIR = path.join(os.tmpdir(), 'omnigallery-thumbs');
+if (!fs.existsSync(THUMB_CACHE_DIR)) fs.mkdirSync(THUMB_CACHE_DIR, { recursive: true });
+
+app.get('/thumbnail', async (req, res) => {
+    const filePath = req.query.path;
+    const width = parseInt(req.query.w || '400', 10);
+
+    if (!filePath || !fs.existsSync(filePath)) {
+        return res.status(404).send('File tidak ditemukan');
+    }
+
+    const hash = require('crypto').createHash('md5').update(filePath + width).digest('hex');
+    const cachePath = path.join(THUMB_CACHE_DIR, `${hash}.webp`);
+
+    // Cache hit → langsung kirim (sangat cepat!)
+    if (fs.existsSync(cachePath)) {
+        res.setHeader('Content-Type', 'image/webp');
+        res.setHeader('Cache-Control', 'public, max-age=604800'); // 7 hari
+        return fs.createReadStream(cachePath).pipe(res);
+    }
+
+    try {
+        const ext = filePath.toLowerCase();
+        const isImage = ['.jpg','.jpeg','.png','.gif','.webp','.bmp','.heic','.heif'].some(e => ext.endsWith(e));
+
+        if (isImage) {
+            // Resize & konversi ke WebP (jauh lebih kecil dari JPEG)
+            await sharp(filePath)
+                .resize(width, null, { withoutEnlargement: true })
+                .webp({ quality: 75 })
+                .toFile(cachePath);
+
+            res.setHeader('Content-Type', 'image/webp');
+            res.setHeader('Cache-Control', 'public, max-age=604800');
+            fs.createReadStream(cachePath).pipe(res);
+        } else {
+            // Bukan gambar (video), kembalikan langsung
+            res.setHeader('Cache-Control', 'public, max-age=86400');
+            res.sendFile(path.resolve(filePath));
+        }
+    } catch (err) {
+        console.error('[Thumbnail Error]', err.message);
+        // Fallback: kirim file asli
+        res.setHeader('Cache-Control', 'public, max-age=3600');
+        res.sendFile(path.resolve(filePath));
+    }
+});
+
+// ⚡ Video thumbnail — ambil frame pertama via FFmpeg, cache ke disk
+app.get('/video-thumb', (req, res) => {
+    const filePath = req.query.path;
+    if (!filePath || !fs.existsSync(filePath)) return res.status(404).send('Not found');
+
+    const hash = require('crypto').createHash('md5').update(filePath).digest('hex');
+    const cachePath = path.join(THUMB_CACHE_DIR, `vid_${hash}.jpg`);
+
+    if (fs.existsSync(cachePath)) {
+        res.setHeader('Content-Type', 'image/jpeg');
+        res.setHeader('Cache-Control', 'public, max-age=604800');
+        return fs.createReadStream(cachePath).pipe(res);
+    }
+
+    const ff = spawn(FFMPEG_CMD, [
+        '-ss', '0.5',
+        '-i', filePath,
+        '-vframes', '1',
+        '-vf', 'scale=400:-1',
+        '-f', 'image2',
+        '-vcodec', 'mjpeg',
+        'pipe:1'
+    ], { stdio: ['ignore', 'pipe', 'pipe'] });
+
+    const chunks = [];
+    ff.stdout.on('data', c => chunks.push(c));
+    ff.on('close', (code) => {
+        if (code === 0 && chunks.length > 0) {
+            const buf = Buffer.concat(chunks);
+            fs.writeFileSync(cachePath, buf);
+            res.setHeader('Content-Type', 'image/jpeg');
+            res.setHeader('Cache-Control', 'public, max-age=604800');
+            res.end(buf);
+        } else {
+            res.status(500).send('Thumbnail failed');
+        }
+    });
+    ff.on('error', () => res.status(500).send('FFmpeg error'));
+});
+
 
 // Endpoint Proxy Gambar & Media Google Drive (Bypass Referrer & Cross-Origin Restriction)
 app.get('/gdrive-media', (req, res) => {

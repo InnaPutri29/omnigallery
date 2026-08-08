@@ -1,9 +1,17 @@
 import React from 'react';
 
 export default function MediaCard({ item, onOpenLightbox }) {
-  const mediaUrl = item.url || (item.source === 'local' ? `/photos/${item.id}` : `https://drive.google.com/thumbnail?id=${item.id}&sz=w800`);
-  const viewUrl = item.viewUrl || (item.source === 'gdrive' ? `https://drive.google.com/file/d/${item.id}/view` : `/media-file?path=${encodeURIComponent(item.id)}`);
   const isVideo = item.type === 'video';
+  const isLocal = item.source === 'local';
+
+  // ⚡ Thumbnail URL — pakai endpoint thumbnail kecil (WebP 400px) untuk lokal
+  const thumbUrl = isLocal
+    ? isVideo
+      ? `/video-thumb?path=${encodeURIComponent(item.id)}`        // Frame video via FFmpeg
+      : `/thumbnail?path=${encodeURIComponent(item.id)}&w=400`    // Gambar resize WebP
+    : isVideo
+      ? `https://drive.google.com/thumbnail?id=${item.id}&sz=w400` // GDrive video thumb
+      : `https://drive.google.com/thumbnail?id=${item.id}&sz=w400`; // GDrive image thumb
 
   const handleClick = (e) => {
     e.stopPropagation();
@@ -11,34 +19,21 @@ export default function MediaCard({ item, onOpenLightbox }) {
   };
 
   if (isVideo) {
-    const videoThumbnailSource = item.source === 'gdrive' 
-      ? `/gdrive-media?id=${item.id}` 
-      : `${mediaUrl}#t=0.5`;
-
     return (
-      <div 
+      <div
         onClick={handleClick}
         className="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-md hover:shadow-2xl hover:border-rose-500/40 transition-all duration-300 cursor-pointer"
       >
         <div className="aspect-video bg-slate-950 overflow-hidden relative flex items-center justify-center">
-          {item.source === 'gdrive' ? (
-            <img 
-              src={videoThumbnailSource} 
-              alt={item.title} 
-              loading="lazy" 
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              onError={(e) => { e.target.style.display = 'none'; }}
-            />
-          ) : (
-            <video 
-              src={videoThumbnailSource} 
-              preload="metadata" 
-              muted 
-              playsInline 
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 pointer-events-none"
-            ></video>
-          )}
+          <img
+            src={thumbUrl}
+            alt={item.title}
+            loading="lazy"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            onError={(e) => { e.target.style.display = 'none'; }}
+          />
 
           <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-300 flex items-center justify-center">
             <div className="w-12 h-12 rounded-2xl bg-rose-600/90 text-white flex items-center justify-center shadow-xl group-hover:scale-110 transition-all border border-rose-400/40 backdrop-blur-sm">
@@ -65,34 +60,33 @@ export default function MediaCard({ item, onOpenLightbox }) {
       </div>
     );
   } else {
-    const fallbackUrl = item.source === 'gdrive' ? `https://drive.google.com/uc?export=view&id=${item.id}` : '';
-
     return (
-      <div 
+      <div
         onClick={handleClick}
         className="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-md hover:shadow-2xl hover:border-blue-500/50 transition-all duration-300 cursor-pointer"
       >
         <div className="aspect-video bg-slate-950 overflow-hidden relative">
-          <img 
-            src={mediaUrl} 
-            alt={item.title} 
-            loading="lazy" 
+          <img
+            src={thumbUrl}
+            alt={item.title}
+            loading="lazy"
+            decoding="async"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             onError={(e) => {
-              e.target.onerror = null;
-              if (fallbackUrl) {
-                e.target.src = fallbackUrl;
-              } else {
-                e.target.parentElement.innerHTML = '<div class="w-full h-full flex flex-col items-center justify-center bg-slate-900 text-slate-500 text-xs font-bold gap-1"><i class="fa-solid fa-image text-2xl text-purple-400/50"></i>Foto</div>';
+              // Fallback ke URL asli jika thumbnail gagal
+              if (isLocal) {
+                e.target.src = `/media-file?path=${encodeURIComponent(item.id)}`;
               }
             }}
           />
 
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
-            <span className="px-3 py-1.5 rounded-xl bg-blue-600 text-white text-xs font-bold opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all">
-              Pratinjau
-            </span>
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300" />
+
+          <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <div className="w-8 h-8 rounded-xl bg-blue-600/90 text-white flex items-center justify-center shadow-lg backdrop-blur-sm">
+              <i className="fa-solid fa-magnifying-glass-plus text-xs"></i>
+            </div>
           </div>
         </div>
 
