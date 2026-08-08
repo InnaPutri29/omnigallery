@@ -88,7 +88,7 @@ app.get('/media-file', (req, res) => {
 // ⚡ Thumbnail endpoint — resize gambar ke 400px lebar, cache ke disk
 // Format: /thumbnail?path=D:\FOTO\...&w=400
 const sharp = require('sharp');
-const THUMB_CACHE_DIR = path.join(os.tmpdir(), 'omnigallery-thumbs');
+const THUMB_CACHE_DIR = path.join(os.tmpdir(), 'omnigallery-thumbs-v2');
 if (!fs.existsSync(THUMB_CACHE_DIR)) fs.mkdirSync(THUMB_CACHE_DIR, { recursive: true });
 
 app.get('/thumbnail', async (req, res) => {
@@ -114,8 +114,9 @@ app.get('/thumbnail', async (req, res) => {
         const isImage = ['.jpg','.jpeg','.png','.gif','.webp','.bmp','.heic','.heif'].some(e => ext.endsWith(e));
 
         if (isImage) {
-            // Resize & konversi ke WebP (jauh lebih kecil dari JPEG)
+            // Auto-rotate sesuai orientasi EXIF kamera + Resize & konversi ke WebP
             await sharp(filePath)
+                .rotate()
                 .resize(width, null, { withoutEnlargement: true })
                 .webp({ quality: 75 })
                 .toFile(cachePath);
