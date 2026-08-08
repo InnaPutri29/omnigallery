@@ -181,6 +181,42 @@ app.get('/gdrive-media', (req, res) => {
     }).on('error', () => res.status(500).send('Gagal mengunduh media'));
 });
 
+// Endpoint Proxy Video Google Drive (Bypass Referrer & Cross-Origin Restriction with Range Support)
+app.get('/gdrive-video', (req, res) => {
+    const fileId = req.query.id;
+    if (!fileId) return res.status(400).send('Missing file ID');
+
+    const primaryUrl = `https://lh3.googleusercontent.com/d/${fileId}`;
+    
+    // Teruskan header Range dari browser client ke Google
+    const headers = {};
+    if (req.headers.range) {
+        headers['Range'] = req.headers.range;
+    }
+
+    https.get(primaryUrl, { headers }, (remoteRes) => {
+        // Cek jika Google mengembalikan 200 OK atau 206 Partial Content
+        if (remoteRes.statusCode === 200 || remoteRes.statusCode === 206) {
+            // Copy semua header penting dari Google ke response kita
+            const proxyHeaders = { ...remoteRes.headers };
+            // Paksa tipe konten ke video agar browser tahu ini bisa diputar
+            proxyHeaders['content-type'] = proxyHeaders['content-type'] || 'video/mp4';
+            
+            res.writeHead(remoteRes.statusCode, proxyHeaders);
+            remoteRes.pipe(res);
+        } else {
+            // Jika lh3 gagal, coba uc?export=download tanpa range (fallback lambat)
+            const fallbackUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+            https.get(fallbackUrl, { headers }, (altRes) => {
+                const altHeaders = { ...altRes.headers };
+                altHeaders['content-type'] = altHeaders['content-type'] || 'video/mp4';
+                res.writeHead(altRes.statusCode, altHeaders);
+                altRes.pipe(res);
+            }).on('error', () => res.status(404).send('Video tidak ditemukan'));
+        }
+    }).on('error', () => res.status(500).send('Gagal memuat video'));
+});
+
 // Real-time Video Transcoding dengan DISK CACHE (MOV/HEVC → H.264 MP4)
 const { spawn } = require('child_process');
 const crypto = require('crypto');
