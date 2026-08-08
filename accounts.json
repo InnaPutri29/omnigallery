@@ -1,10 +1,10 @@
 [
   {
     "id": "acc-local",
-    "name": "Local Storage (D:\\FOTO, D:\\HP & D:\\Keluarga Besar Cirea)",
+    "name": "Local Storage (D:\\FOTO, D:\\HP, D:\\Keluarga Besar Cirea & D:\\Wisuda Teh Vivi)",
     "email": "local@laptop.storage",
     "type": "local",
-    "path": "D:\\FOTO, D:\\HP, D:\\Keluarga Besar Cirea",
+    "path": "D:\\FOTO, D:\\HP, D:\\Keluarga Besar Cirea, D:\\Wisuda Teh Vivi",
     "usedBytes": 142794277671,
     "totalBytes": 268435456000,
     "status": "active",
