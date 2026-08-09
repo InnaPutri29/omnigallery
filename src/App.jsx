@@ -167,6 +167,7 @@ export default function App() {
           {!loading && activeTab === 'accounts' && (
             <AccountsManagement
               accounts={accounts}
+              allMedia={allMedia}
               onOpenAddModal={() => setIsAddModalOpen(true)}
               onRefreshData={fetchData}
             />

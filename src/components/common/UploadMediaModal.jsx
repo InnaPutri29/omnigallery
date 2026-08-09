@@ -63,7 +63,7 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+    <div className="fixed inset-0 z-[100] w-screen h-screen min-h-screen bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4 overflow-y-auto">
       <div className="relative w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
         
         {/* Modal Header */}

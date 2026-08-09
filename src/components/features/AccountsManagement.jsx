@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { formatBytes } from '../../utils/formatters.js';
 import { renameFolder } from '../../services/api.js';
 
-export default function AccountsManagement({ accounts = [], onOpenAddModal, onRefreshData }) {
+export default function AccountsManagement({ accounts = [], allMedia = [], onOpenAddModal, onRefreshData }) {
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [editingName, setEditingName] = useState('');
   const [loading, setLoading] = useState(false);
@@ -50,13 +50,38 @@ export default function AccountsManagement({ accounts = [], onOpenAddModal, onRe
     }
   };
 
+  const handleRenameSubfolderItem = async (oldSubfolderName) => {
+    const newSubName = window.prompt(`Ubah nama subfolder "${oldSubfolderName}" di Google Drive / Hardisk:`, oldSubfolderName);
+    if (!newSubName || !newSubName.trim() || newSubName.trim() === oldSubfolderName) return;
+
+    setLoading(true);
+    setAlert(null);
+
+    try {
+      const res = await renameFolder(selectedAccount.type, oldSubfolderName, newSubName.trim());
+      if (res && !res.error) {
+        setAlert({ type: 'success', text: `Subfolder "${oldSubfolderName}" berhasil diubah menjadi "${newSubName.trim()}"!` });
+        if (onRefreshData) onRefreshData();
+      } else {
+        setAlert({ type: 'error', text: res?.error || 'Gagal mengubah nama subfolder' });
+      }
+    } catch (err) {
+      setAlert({ type: 'error', text: 'Error: ' + err.message });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const accountMedia = selectedAccount ? allMedia.filter(m => m.accountName === selectedAccount.name) : [];
+  const subfolders = selectedAccount ? [...new Set(accountMedia.map(m => m.subfolder).filter(Boolean))] : [];
+
   return (
     <div className="p-6 md:p-8 space-y-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-3xl bg-slate-900 border border-slate-800">
         <div>
           <h2 className="text-xl font-extrabold text-white">Manajemen Akun Storage</h2>
-          <p className="text-xs text-slate-400 mt-1">Kelola koneksi akun Google Drive, ubah nama folder, dan pantau direktori penyimpanan Anda.</p>
+          <p className="text-xs text-slate-400 mt-1">Kelola koneksi akun Google Drive, ubah nama folder & subfolder, dan pantau direktori penyimpanan Anda.</p>
         </div>
         <button
           onClick={onOpenAddModal}
@@ -143,7 +168,7 @@ export default function AccountsManagement({ accounts = [], onOpenAddModal, onRe
                   onClick={() => handleOpenDetail(acc)}
                   className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-blue-400 hover:text-white font-bold text-xs transition-all flex items-center gap-2 cursor-pointer border border-slate-700/80"
                 >
-                  <i className="fa-solid fa-pen-to-square"></i> Lihat Detail & Edit Nama
+                  <i className="fa-solid fa-pen-to-square"></i> Lihat Detail & Edit Nama / Subfolder
                 </button>
               </div>
             </div>
@@ -151,10 +176,10 @@ export default function AccountsManagement({ accounts = [], onOpenAddModal, onRe
         })}
       </div>
 
-      {/* Modal Detail & Edit Nama Folder */}
+      {/* Modal Detail & Edit Nama Folder + Subfolders */}
       {selectedAccount && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-          <div className="relative w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+        <div className="fixed inset-0 z-[100] w-screen h-screen min-h-screen bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4 overflow-y-auto">
+          <div className="relative w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
             
             {/* Modal Header */}
             <div className="flex items-center justify-between">
@@ -164,7 +189,7 @@ export default function AccountsManagement({ accounts = [], onOpenAddModal, onRe
                 </div>
                 <div>
                   <h3 className="text-base font-extrabold text-white">Detail & Edit Penyimpanan</h3>
-                  <p className="text-xs text-slate-400 font-mono truncate max-w-[200px]">{selectedAccount.email}</p>
+                  <p className="text-xs text-slate-400 font-mono truncate max-w-[220px]">{selectedAccount.email}</p>
                 </div>
               </div>
               <button 
@@ -191,7 +216,7 @@ export default function AccountsManagement({ accounts = [], onOpenAddModal, onRe
               </div>
               <div className="flex justify-between text-slate-400">
                 <span>Email Terhubung:</span>
-                <span className="text-white font-bold truncate max-w-[180px]">{selectedAccount.email}</span>
+                <span className="text-white font-bold truncate max-w-[200px]">{selectedAccount.email}</span>
               </div>
               {selectedAccount.type === 'gdrive' ? (
                 <div className="text-slate-400 pt-1">
@@ -206,10 +231,10 @@ export default function AccountsManagement({ accounts = [], onOpenAddModal, onRe
               )}
             </div>
 
-            {/* Form Edit Nama Folder */}
+            {/* Section 1: Form Edit Nama Main Folder */}
             <form onSubmit={handleSaveRename} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5">Nama Folder / Penyimpanan</label>
+                <label className="block text-xs font-bold text-slate-300 mb-1.5">Nama Folder Utama / Penyimpanan</label>
                 <div className="relative">
                   <i className="fa-solid fa-folder-pen absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
                   <input
@@ -221,11 +246,43 @@ export default function AccountsManagement({ accounts = [], onOpenAddModal, onRe
                     className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all font-semibold"
                   />
                 </div>
-                <p className="text-[10px] text-slate-400 mt-1.5">
-                  {selectedAccount.type === 'gdrive' 
-                    ? '⚠️ Mengubah nama di sini akan otomatis mengubah nama folder langsung di akun Google Drive Anda.' 
-                    : '⚠️ Mengubah nama di sini akan otomatis merename nama folder di hardisk Windows Anda.'}
-                </p>
+              </div>
+
+              {/* Section 2: Subfolders List & Rename */}
+              <div className="space-y-2 pt-3 border-t border-slate-800">
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-bold text-slate-300">Daftar Subfolder di Penyimpanan Ini</label>
+                  <span className="text-[10px] text-amber-400 font-mono font-bold">{subfolders.length} Subfolder</span>
+                </div>
+
+                {subfolders.length === 0 ? (
+                  <p className="text-xs text-slate-500 italic p-3 rounded-xl bg-slate-950 border border-slate-800 text-center">
+                    Tidak ada subfolder di penyimpanan ini.
+                  </p>
+                ) : (
+                  <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                    {subfolders.map(sf => {
+                      const count = accountMedia.filter(m => m.subfolder === sf).length;
+                      return (
+                        <div key={sf} className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                          <div className="flex items-center gap-2 truncate">
+                            <i className="fa-solid fa-folder text-amber-400"></i>
+                            <span className="text-white font-semibold truncate">{sf}</span>
+                            <span className="text-[10px] text-slate-500 font-mono">({count} file)</span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => handleRenameSubfolderItem(sf)}
+                            disabled={loading}
+                            className="px-2.5 py-1 rounded-lg bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white font-bold text-[11px] transition-all flex items-center gap-1.5 border border-blue-500/30 cursor-pointer"
+                          >
+                            <i className="fa-solid fa-pen-to-square text-[10px]"></i> Edit Subfolder
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
 
               {/* Action Buttons */}
@@ -249,7 +306,7 @@ export default function AccountsManagement({ accounts = [], onOpenAddModal, onRe
                     </>
                   ) : (
                     <>
-                      <i className="fa-solid fa-check"></i> Simpan Perubahan
+                      <i className="fa-solid fa-check"></i> Simpan Nama Utama
                     </>
                   )}
                 </button>
