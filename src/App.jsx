@@ -160,6 +160,7 @@ export default function App() {
                 setSelectedMedia(item);
                 setLightboxContext(context || allMedia);
               }}
+              onRefreshData={fetchData}
             />
           )}
 

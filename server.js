@@ -964,6 +964,85 @@ app.post('/api/upload', upload.array('files', 10), async (req, res) => {
     }
 });
 
+// API: Ganti Nama Folder / Subfolder (Google Drive & Local Storage)
+app.put('/api/rename-folder', async (req, res) => {
+    const { folderType, folderIdOrPath, oldName, newName, accountName } = req.body || {};
+
+    if (!newName || !newName.trim()) {
+        return res.status(400).json({ error: 'Nama folder baru tidak boleh kosong' });
+    }
+
+    const cleanNewName = newName.trim();
+
+    try {
+        if (folderType === 'gdrive') {
+            if (!driveClient) {
+                return res.status(400).json({ error: 'Koneksi Google Drive API belum aktif' });
+            }
+
+            let targetFolderId = folderIdOrPath;
+            if (!targetFolderId) {
+                const q = `mimeType = 'application/vnd.google-apps.folder' and name = '${oldName.replace(/'/g, "\\'")}' and trashed = false`;
+                const searchRes = await driveClient.files.list({
+                    q: q,
+                    fields: 'files(id, name)',
+                    supportsAllDrives: true,
+                    includeItemsFromAllDrives: true
+                });
+                if (searchRes.data.files && searchRes.data.files.length > 0) {
+                    targetFolderId = searchRes.data.files[0].id;
+                }
+            }
+
+            if (!targetFolderId) {
+                return res.status(404).json({ error: `Folder Google Drive "${oldName}" tidak ditemukan` });
+            }
+
+            // Update nama folder di Google Drive!
+            await driveClient.files.update({
+                fileId: targetFolderId,
+                requestBody: { name: cleanNewName },
+                supportsAllDrives: true
+            });
+
+            console.log(`[Rename GDrive Folder Success] "${oldName}" -> "${cleanNewName}" (${targetFolderId})`);
+        } else if (folderType === 'local') {
+            let oldFolderPath = folderIdOrPath || oldName;
+            if (!fs.existsSync(oldFolderPath)) {
+                for (const baseDir of LOCAL_DIRS) {
+                    const candidate = path.join(baseDir, oldName);
+                    if (fs.existsSync(candidate)) {
+                        oldFolderPath = candidate;
+                        break;
+                    }
+                }
+            }
+
+            if (!fs.existsSync(oldFolderPath)) {
+                return res.status(404).json({ error: `Folder lokal "${oldName}" tidak ditemukan di disk` });
+            }
+
+            const parentDir = path.dirname(oldFolderPath);
+            const newFolderPath = path.join(parentDir, cleanNewName);
+
+            fs.renameSync(oldFolderPath, newFolderPath);
+            console.log(`[Rename Local Folder Success] "${oldFolderPath}" -> "${newFolderPath}"`);
+        }
+
+        // Refresh cache galeri
+        await getOrUpdateCache(true);
+
+        res.json({
+            message: `Nama folder berhasil diubah menjadi "${cleanNewName}"`,
+            oldName,
+            newName: cleanNewName
+        });
+    } catch (e) {
+        console.error('[Rename Folder Error]', e);
+        res.status(500).json({ error: 'Gagal mengubah nama folder: ' + e.message });
+    }
+});
+
 // API: Mengambil daftar media
 app.get('/api/photos', async (req, res) => {
     const { mediaList } = await getOrUpdateCache();

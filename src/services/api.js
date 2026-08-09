@@ -69,9 +69,24 @@ export const uploadMedia = async (formData) => {
   }
 };
 
+export const renameFolder = async (folderType, oldName, newName, folderIdOrPath = '') => {
+  try {
+    const res = await fetch('/api/rename-folder', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ folderType, oldName, newName, folderIdOrPath })
+    });
+    return await res.json();
+  } catch (e) {
+    console.log("renameFolder Error:", e);
+    return null;
+  }
+};
+
 window.fetchPhotos = fetchPhotos;
 window.fetchAccounts = fetchAccounts;
 window.fetchStats = fetchStats;
 window.addAccount = addAccount;
 window.deleteMedia = deleteMedia;
 window.uploadMedia = uploadMedia;
+window.renameFolder = renameFolder;

@@ -1,5 +1,6 @@
 import React from 'react';
 import MediaCard from '../common/MediaCard.jsx';
+import { renameFolder } from '../../services/api.js';
 
 export default function FileExplorer({
   allMedia,
@@ -17,8 +18,28 @@ export default function FileExplorer({
   displayLimit,
   onLoadMore,
   onShowAll,
-  onOpenLightbox
+  onOpenLightbox,
+  onRefreshData
 }) {
+  const handleRenameSubfolder = async (subfolderName) => {
+    const newName = window.prompt(`Ubah nama folder "${subfolderName}" di Google Drive / Hardisk:`, subfolderName);
+    if (!newName || newName.trim() === '' || newName.trim() === subfolderName) return;
+
+    const currentAcc = accounts.find(a => a.name === activeStorageFilter);
+    const folderType = currentAcc?.type || 'gdrive';
+
+    try {
+      const res = await renameFolder(folderType, subfolderName, newName.trim());
+      if (res && !res.error) {
+        alert(`Nama folder berhasil diubah dari "${subfolderName}" menjadi "${newName.trim()}"!`);
+        if (onRefreshData) onRefreshData();
+      } else {
+        alert("Gagal mengubah nama folder: " + (res?.error || "Error tidak diketahui"));
+      }
+    } catch (e) {
+      alert("Error: " + e.message);
+    }
+  };
   const filteredMedia = allMedia.filter(item => {
     if (activeCategory === 'image' && item.type !== 'image') return false;
     if (activeCategory === 'video' && item.type !== 'video') return false;
@@ -120,14 +141,22 @@ export default function FileExplorer({
               const isSelected = activeSubfolderFilter === sf;
 
               return (
-                <button
-                  key={sf}
-                  onClick={() => onSelectSubfolder(sf)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${isSelected ? 'bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md' : 'bg-slate-950 text-slate-300 border-slate-800 hover:text-white'}`}
-                >
-                  <i className="fa-solid fa-folder mr-1.5 text-amber-400"></i>
-                  {sf} <span className="ml-1 text-[10px] opacity-75 font-mono">({count})</span>
-                </button>
+                <div key={sf} className="inline-flex items-center flex-shrink-0 group">
+                  <button
+                    onClick={() => onSelectSubfolder(sf)}
+                    className={`px-3.5 py-1.5 rounded-l-xl text-xs font-bold transition-all cursor-pointer border-y border-l ${isSelected ? 'bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md' : 'bg-slate-950 text-slate-300 border-slate-800 hover:text-white'}`}
+                  >
+                    <i className="fa-solid fa-folder mr-1.5 text-amber-400"></i>
+                    {sf} <span className="ml-1 text-[10px] opacity-75 font-mono">({count})</span>
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); handleRenameSubfolder(sf); }}
+                    title={`Ubah Nama Folder "${sf}"`}
+                    className={`px-2.5 py-1.5 rounded-r-xl text-xs transition-all cursor-pointer border-y border-r ${isSelected ? 'bg-amber-600 text-slate-950 border-amber-400 hover:bg-amber-700' : 'bg-slate-900 text-slate-400 border-slate-800 hover:text-amber-400 hover:bg-slate-800'}`}
+                  >
+                    <i className="fa-solid fa-pen-to-square text-[11px]"></i>
+                  </button>
+                </div>
               );
             })}
           </div>

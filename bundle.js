@@ -21667,6 +21667,95 @@
 
   // src/components/features/FileExplorer.jsx
   var import_react6 = __toESM(require_react());
+
+  // src/services/api.js
+  var fetchPhotos = async () => {
+    try {
+      const res = await fetch("/api/photos");
+      return await res.json();
+    } catch (e) {
+      console.log("fetchPhotos Error:", e);
+      return [];
+    }
+  };
+  var fetchAccounts = async () => {
+    try {
+      const res = await fetch("/api/accounts");
+      return await res.json();
+    } catch (e) {
+      console.log("fetchAccounts Error:", e);
+      return [];
+    }
+  };
+  var fetchStats = async () => {
+    try {
+      const res = await fetch("/api/stats");
+      return await res.json();
+    } catch (e) {
+      console.log("fetchStats Error:", e);
+      return null;
+    }
+  };
+  var addAccount = async (accountData) => {
+    try {
+      const res = await fetch("/api/accounts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(accountData)
+      });
+      return await res.json();
+    } catch (e) {
+      console.log("addAccount Error:", e);
+      return null;
+    }
+  };
+  var deleteMedia = async (item) => {
+    try {
+      const res = await fetch("/api/media", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: item.id, source: item.source })
+      });
+      return await res.json();
+    } catch (e) {
+      console.log("deleteMedia Error:", e);
+      return null;
+    }
+  };
+  var uploadMedia = async (formData) => {
+    try {
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData
+      });
+      return await res.json();
+    } catch (e) {
+      console.log("uploadMedia Error:", e);
+      return null;
+    }
+  };
+  var renameFolder = async (folderType, oldName, newName, folderIdOrPath = "") => {
+    try {
+      const res = await fetch("/api/rename-folder", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ folderType, oldName, newName, folderIdOrPath })
+      });
+      return await res.json();
+    } catch (e) {
+      console.log("renameFolder Error:", e);
+      return null;
+    }
+  };
+  window.fetchPhotos = fetchPhotos;
+  window.fetchAccounts = fetchAccounts;
+  window.fetchStats = fetchStats;
+  window.addAccount = addAccount;
+  window.deleteMedia = deleteMedia;
+  window.uploadMedia = uploadMedia;
+  window.renameFolder = renameFolder;
+
+  // src/components/features/FileExplorer.jsx
   function FileExplorer({
     allMedia,
     accounts,
@@ -21683,8 +21772,26 @@
     displayLimit,
     onLoadMore,
     onShowAll,
-    onOpenLightbox
+    onOpenLightbox,
+    onRefreshData
   }) {
+    const handleRenameSubfolder = async (subfolderName) => {
+      const newName = window.prompt(`Ubah nama folder "${subfolderName}" di Google Drive / Hardisk:`, subfolderName);
+      if (!newName || newName.trim() === "" || newName.trim() === subfolderName) return;
+      const currentAcc = accounts.find((a) => a.name === activeStorageFilter);
+      const folderType = currentAcc?.type || "gdrive";
+      try {
+        const res = await renameFolder(folderType, subfolderName, newName.trim());
+        if (res && !res.error) {
+          alert(`Nama folder berhasil diubah dari "${subfolderName}" menjadi "${newName.trim()}"!`);
+          if (onRefreshData) onRefreshData();
+        } else {
+          alert("Gagal mengubah nama folder: " + (res?.error || "Error tidak diketahui"));
+        }
+      } catch (e) {
+        alert("Error: " + e.message);
+      }
+    };
     const filteredMedia = allMedia.filter((item) => {
       if (activeCategory === "image" && item.type !== "image") return false;
       if (activeCategory === "video" && item.type !== "video") return false;
@@ -21754,18 +21861,28 @@
     ), availableSubfolders.map((sf) => {
       const count = itemsInActiveStorage.filter((m) => m.subfolder === sf).length;
       const isSelected = activeSubfolderFilter === sf;
-      return /* @__PURE__ */ import_react6.default.createElement(
+      return /* @__PURE__ */ import_react6.default.createElement("div", { key: sf, className: "inline-flex items-center flex-shrink-0 group" }, /* @__PURE__ */ import_react6.default.createElement(
         "button",
         {
-          key: sf,
           onClick: () => onSelectSubfolder(sf),
-          className: `px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${isSelected ? "bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md" : "bg-slate-950 text-slate-300 border-slate-800 hover:text-white"}`
+          className: `px-3.5 py-1.5 rounded-l-xl text-xs font-bold transition-all cursor-pointer border-y border-l ${isSelected ? "bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md" : "bg-slate-950 text-slate-300 border-slate-800 hover:text-white"}`
         },
         /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-folder mr-1.5 text-amber-400" }),
         sf,
         " ",
         /* @__PURE__ */ import_react6.default.createElement("span", { className: "ml-1 text-[10px] opacity-75 font-mono" }, "(", count, ")")
-      );
+      ), /* @__PURE__ */ import_react6.default.createElement(
+        "button",
+        {
+          onClick: (e) => {
+            e.stopPropagation();
+            handleRenameSubfolder(sf);
+          },
+          title: `Ubah Nama Folder "${sf}"`,
+          className: `px-2.5 py-1.5 rounded-r-xl text-xs transition-all cursor-pointer border-y border-r ${isSelected ? "bg-amber-600 text-slate-950 border-amber-400 hover:bg-amber-700" : "bg-slate-900 text-slate-400 border-slate-800 hover:text-amber-400 hover:bg-slate-800"}`
+        },
+        /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-pen-to-square text-[11px]" })
+      ));
     }))), /* @__PURE__ */ import_react6.default.createElement("div", { className: "p-4 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center gap-2 w-full md:w-auto" }, /* @__PURE__ */ import_react6.default.createElement(
       "button",
       {
@@ -22134,81 +22251,6 @@
 
   // src/components/common/UploadMediaModal.jsx
   var import_react10 = __toESM(require_react());
-
-  // src/services/api.js
-  var fetchPhotos = async () => {
-    try {
-      const res = await fetch("/api/photos");
-      return await res.json();
-    } catch (e) {
-      console.log("fetchPhotos Error:", e);
-      return [];
-    }
-  };
-  var fetchAccounts = async () => {
-    try {
-      const res = await fetch("/api/accounts");
-      return await res.json();
-    } catch (e) {
-      console.log("fetchAccounts Error:", e);
-      return [];
-    }
-  };
-  var fetchStats = async () => {
-    try {
-      const res = await fetch("/api/stats");
-      return await res.json();
-    } catch (e) {
-      console.log("fetchStats Error:", e);
-      return null;
-    }
-  };
-  var addAccount = async (accountData) => {
-    try {
-      const res = await fetch("/api/accounts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(accountData)
-      });
-      return await res.json();
-    } catch (e) {
-      console.log("addAccount Error:", e);
-      return null;
-    }
-  };
-  var deleteMedia = async (item) => {
-    try {
-      const res = await fetch("/api/media", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: item.id, source: item.source })
-      });
-      return await res.json();
-    } catch (e) {
-      console.log("deleteMedia Error:", e);
-      return null;
-    }
-  };
-  var uploadMedia = async (formData) => {
-    try {
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData
-      });
-      return await res.json();
-    } catch (e) {
-      console.log("uploadMedia Error:", e);
-      return null;
-    }
-  };
-  window.fetchPhotos = fetchPhotos;
-  window.fetchAccounts = fetchAccounts;
-  window.fetchStats = fetchStats;
-  window.addAccount = addAccount;
-  window.deleteMedia = deleteMedia;
-  window.uploadMedia = uploadMedia;
-
-  // src/components/common/UploadMediaModal.jsx
   function UploadMediaModal({ accounts = [], onClose, onUploadSuccess }) {
     const [selectedTargetId, setSelectedTargetId] = (0, import_react10.useState)(accounts[0]?.folderId || accounts[0]?.path || "");
     const [files, setFiles] = (0, import_react10.useState)([]);
@@ -22274,7 +22316,10 @@
         onChange: (e) => setSelectedTargetId(e.target.value),
         className: "w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:border-blue-500 focus:outline-none transition-all cursor-pointer font-medium"
       },
-      /* @__PURE__ */ import_react10.default.createElement("optgroup", { label: "\u2601\uFE0F Google Drive Cloud" }, accounts.filter((a) => a.type === "gdrive").map((a) => /* @__PURE__ */ import_react10.default.createElement("option", { key: a.id, value: a.folderId || a.id }, a.name, " (", a.email, ")"))),
+      /* @__PURE__ */ import_react10.default.createElement("optgroup", { label: "\u2601\uFE0F Google Drive Cloud" }, accounts.filter((a) => a.type === "gdrive").map((a) => {
+        const primaryEmail = (a.email || "").split(",")[0].trim();
+        return /* @__PURE__ */ import_react10.default.createElement("option", { key: a.id, value: a.folderId || a.id }, a.name, " (", primaryEmail, ")");
+      })),
       /* @__PURE__ */ import_react10.default.createElement("optgroup", { label: "\u{1F4BB} Penyimpanan Lokal" }, accounts.filter((a) => a.type === "local").map((a) => /* @__PURE__ */ import_react10.default.createElement("option", { key: a.id, value: a.path || a.id }, a.name, " (", a.path, ")")))
     )), /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("label", { className: "block text-xs font-bold text-slate-300 mb-1.5" }, "Pilih Foto atau Video"), /* @__PURE__ */ import_react10.default.createElement(
       "div",
@@ -22546,7 +22591,8 @@
         onOpenLightbox: (item, context) => {
           setSelectedMedia(item);
           setLightboxContext(context || allMedia);
-        }
+        },
+        onRefreshData: fetchData
       }
     ), !loading && activeTab === "accounts" && /* @__PURE__ */ import_react12.default.createElement(
       AccountsManagement,
