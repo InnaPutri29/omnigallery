@@ -104,21 +104,21 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
               className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:border-blue-500 focus:outline-none transition-all cursor-pointer font-medium"
             >
               <optgroup label="☁️ Google Drive Cloud">
-                {accounts.filter(a => a.type === 'gdrive').map(a => {
-                  const primaryEmail = (a.email || '').split(',')[0].trim();
+                {accounts.filter(a => a.type === 'gdrive').map(a => (
+                  <option key={a.id} value={a.folderId || a.id}>
+                    {a.name} ({a.email})
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="💻 Penyimpanan Lokal">
+                {accounts.filter(a => a.type === 'local').map(a => {
+                  const label = a.name === a.path ? a.name : `${a.name} (${a.path})`;
                   return (
-                    <option key={a.id} value={a.folderId || a.id}>
-                      {a.name} ({primaryEmail})
+                    <option key={a.id} value={a.path || a.id}>
+                      {label}
                     </option>
                   );
                 })}
-              </optgroup>
-              <optgroup label="💻 Penyimpanan Lokal">
-                {accounts.filter(a => a.type === 'local').map(a => (
-                  <option key={a.id} value={a.path || a.id}>
-                    {a.name} ({a.path})
-                  </option>
-                ))}
               </optgroup>
             </select>
           </div>

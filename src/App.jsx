@@ -168,6 +168,7 @@ export default function App() {
             <AccountsManagement
               accounts={accounts}
               onOpenAddModal={() => setIsAddModalOpen(true)}
+              onRefreshData={fetchData}
             />
           )}
         </main>

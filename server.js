@@ -1029,6 +1029,31 @@ app.put('/api/rename-folder', async (req, res) => {
             console.log(`[Rename Local Folder Success] "${oldFolderPath}" -> "${newFolderPath}"`);
         }
 
+        // Update accounts.json jika ini adalah nama penyimpanan akun
+        if (fs.existsSync(ACCOUNTS_FILE)) {
+            try {
+                let accountsData = JSON.parse(fs.readFileSync(ACCOUNTS_FILE, 'utf8'));
+                let updated = false;
+                accountsData = accountsData.map(acc => {
+                    if (acc.name === oldName || acc.id === folderIdOrPath || (acc.folderId && acc.folderId.includes(folderIdOrPath))) {
+                        acc.name = cleanNewName;
+                        if (acc.type === 'local' && acc.path) {
+                            const parentDir = path.dirname(acc.path);
+                            acc.path = path.join(parentDir, cleanNewName);
+                        }
+                        updated = true;
+                    }
+                    return acc;
+                });
+                if (updated) {
+                    fs.writeFileSync(ACCOUNTS_FILE, JSON.stringify(accountsData, null, 2));
+                    console.log('[Accounts JSON Updated]', cleanNewName);
+                }
+            } catch (accErr) {
+                console.error('[Error Updating Accounts JSON]', accErr);
+            }
+        }
+
         // Refresh cache galeri
         await getOrUpdateCache(true);
 
