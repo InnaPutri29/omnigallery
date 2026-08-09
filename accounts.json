@@ -55,6 +55,17 @@
     "color": "from-blue-600 to-indigo-600"
   },
   {
+    "id": "acc-local-icloud4",
+    "name": "D:\\HP\\iCloude Photos4",
+    "email": "local@laptop.storage",
+    "type": "local",
+    "path": "D:\\HP\\iCloude Photos4",
+    "usedBytes": 35700000000,
+    "totalBytes": 268435456000,
+    "status": "active",
+    "color": "from-blue-600 to-indigo-600"
+  },
+  {
     "id": "acc-gdrive-1785997578039",
     "name": "I & N",
     "email": "innaputrimeidaa@gmail.com",
