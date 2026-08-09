@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { uploadMedia } from '../../services/api.js';
 
 export default function UploadMediaModal({ accounts = [], onClose, onUploadSuccess }) {
-  const [selectedTargetId, setSelectedTargetId] = useState(accounts[0]?.folderId || accounts[0]?.path || '');
+  const [selectedAccountId, setSelectedAccountId] = useState(accounts[0]?.id || '');
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
 
-  const selectedAccount = accounts.find(a => a.folderId === selectedTargetId || a.path === selectedTargetId || a.id === selectedTargetId) || accounts[0];
+  const selectedAccount = accounts.find(a => a.id === selectedAccountId) || accounts[0];
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -46,7 +46,7 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
     try {
       const res = await uploadMedia(formData);
       if (res && res.uploadedResults && res.uploadedResults.length > 0) {
-        setAlert({ type: 'success', text: `Berhasil mengunggah ${res.uploadedResults.length} file ke ${selectedAccount.name}!` });
+        setAlert({ type: 'success', text: `Berhasil mengunggah ${res.uploadedResults.length} file ke ${selectedAccount.name} (${selectedAccount.email || selectedAccount.path})!` });
         setFiles([]);
         if (onUploadSuccess) onUploadSuccess();
         setTimeout(() => {
@@ -99,13 +99,13 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
           <div>
             <label className="block text-xs font-bold text-slate-300 mb-1.5">Tujuan Penyimpanan</label>
             <select
-              value={selectedTargetId}
-              onChange={(e) => setSelectedTargetId(e.target.value)}
+              value={selectedAccountId}
+              onChange={(e) => setSelectedAccountId(e.target.value)}
               className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:border-blue-500 focus:outline-none transition-all cursor-pointer font-medium"
             >
               <optgroup label="☁️ Google Drive Cloud">
                 {accounts.filter(a => a.type === 'gdrive').map(a => (
-                  <option key={a.id} value={a.folderId || a.id}>
+                  <option key={a.id} value={a.id}>
                     {a.name} ({a.email})
                   </option>
                 ))}
@@ -114,7 +114,7 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
                 {accounts.filter(a => a.type === 'local').map(a => {
                   const label = a.name === a.path ? a.name : `${a.name} (${a.path})`;
                   return (
-                    <option key={a.id} value={a.path || a.id}>
+                    <option key={a.id} value={a.id}>
                       {label}
                     </option>
                   );
