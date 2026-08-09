@@ -56,8 +56,22 @@ export const deleteMedia = async (item) => {
   }
 };
 
+export const uploadMedia = async (formData) => {
+  try {
+    const res = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData
+    });
+    return await res.json();
+  } catch (e) {
+    console.log("uploadMedia Error:", e);
+    return null;
+  }
+};
+
 window.fetchPhotos = fetchPhotos;
 window.fetchAccounts = fetchAccounts;
 window.fetchStats = fetchStats;
 window.addAccount = addAccount;
 window.deleteMedia = deleteMedia;
+window.uploadMedia = uploadMedia;

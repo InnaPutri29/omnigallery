@@ -4,6 +4,8 @@ const path = require('path');
 const os = require('os');
 const https = require('https');
 const { google } = require('googleapis');
+const multer = require('multer');
+const upload = multer({ dest: os.tmpdir() });
 
 // Inisialisasi Google Drive API via Service Account Key (gdrive-key.json)
 let driveClient = null;
@@ -869,6 +871,96 @@ app.delete('/api/media', async (req, res) => {
     } catch (e) {
         console.error('[Delete Error]', e);
         res.status(500).json({ error: 'Gagal menghapus media: ' + e.message });
+    }
+});
+
+// API: Upload Media (Google Drive & Local Storage)
+app.post('/api/upload', upload.array('files', 10), async (req, res) => {
+    const files = req.files || [];
+    const { destinationType, targetId } = req.body || {};
+
+    if (files.length === 0) {
+        return res.status(400).json({ error: 'Tidak ada file yang diunggah' });
+    }
+    if (!destinationType || !targetId) {
+        return res.status(400).json({ error: 'Tujuan penyimpanan (destinationType / targetId) harus diisi' });
+    }
+
+    const uploadedResults = [];
+    const errors = [];
+
+    try {
+        if (destinationType === 'gdrive') {
+            if (!driveClient) {
+                return res.status(400).json({ error: 'Koneksi Google Drive API (Service Account) belum aktif' });
+            }
+
+            const cleanFolderId = targetId.split(',')[0].trim();
+
+            for (const file of files) {
+                try {
+                    const fileMetadata = {
+                        name: file.originalname,
+                        parents: [cleanFolderId]
+                    };
+                    const media = {
+                        mimeType: file.mimetype,
+                        body: fs.createReadStream(file.path)
+                    };
+
+                    const response = await driveClient.files.create({
+                        requestBody: fileMetadata,
+                        media: media,
+                        fields: 'id, name, webViewLink, webContentLink',
+                        supportsAllDrives: true
+                    });
+
+                    console.log('[Upload GDrive Success]', response.data.name, response.data.id);
+                    uploadedResults.push({ id: response.data.id, name: response.data.name, source: 'gdrive' });
+                } catch (gErr) {
+                    console.error('[Upload GDrive Error]', gErr.message);
+                    errors.push(`${file.originalname}: ${gErr.message}`);
+                } finally {
+                    try { fs.unlinkSync(file.path); } catch (e) {}
+                }
+            }
+        } else if (destinationType === 'local') {
+            let destFolder = targetId;
+            if (!fs.existsSync(destFolder)) {
+                const matchDir = LOCAL_DIRS.find(d => d.toLowerCase().includes(targetId.toLowerCase()) || path.basename(d).toLowerCase() === targetId.toLowerCase());
+                if (matchDir) destFolder = matchDir;
+            }
+
+            if (!fs.existsSync(destFolder)) {
+                try { fs.mkdirSync(destFolder, { recursive: true }); } catch (e) {}
+            }
+
+            for (const file of files) {
+                try {
+                    const destPath = path.join(destFolder, file.originalname);
+                    fs.copyFileSync(file.path, destPath);
+                    console.log('[Upload Local Success]', destPath);
+                    uploadedResults.push({ id: destPath, name: file.originalname, source: 'local' });
+                } catch (lErr) {
+                    console.error('[Upload Local Error]', lErr.message);
+                    errors.push(`${file.originalname}: ${lErr.message}`);
+                } finally {
+                    try { fs.unlinkSync(file.path); } catch (e) {}
+                }
+            }
+        }
+
+        // Trigger cache refresh
+        await getOrUpdateCache(true);
+
+        res.json({
+            message: `Berhasil mengunggah ${uploadedResults.length} file`,
+            uploadedResults,
+            errors
+        });
+    } catch (e) {
+        console.error('[Upload Endpoint Error]', e);
+        res.status(500).json({ error: 'Gagal memproses unggahan: ' + e.message });
     }
 });
 

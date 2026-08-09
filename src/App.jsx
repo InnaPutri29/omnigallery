@@ -7,6 +7,7 @@ import FileExplorer from './components/features/FileExplorer.jsx';
 import AccountsManagement from './components/features/AccountsManagement.jsx';
 import LightboxModal from './components/common/LightboxModal.jsx';
 import AddAccountModal from './components/common/AddAccountModal.jsx';
+import UploadMediaModal from './components/common/UploadMediaModal.jsx';
 import LoginModal from './components/common/LoginModal.jsx';
 import { useState, useEffect } from 'react';
 import { fetchPhotos, fetchAccounts, fetchStats, addAccount, deleteMedia } from './services/api.js';
@@ -29,6 +30,7 @@ export default function App() {
   const [selectedMedia, setSelectedMedia] = useState(null);
   const [lightboxContext, setLightboxContext] = useState([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
   // Check Auth Session on Load
   useEffect(() => {
@@ -101,6 +103,7 @@ export default function App() {
           setSearchQuery(q);
           if (activeTab !== 'explorer') setActiveTab('explorer');
         }}
+        onOpenUploadModal={() => setIsUploadModalOpen(true)}
         onOpenAddModal={() => setIsAddModalOpen(true)}
         user={user}
         onLogout={handleLogout}
@@ -188,6 +191,15 @@ export default function App() {
         <AddAccountModal
           onClose={() => setIsAddModalOpen(false)}
           onAddAccount={handleAddAccount}
+        />
+      )}
+
+      {/* Upload Media Modal */}
+      {isUploadModalOpen && (
+        <UploadMediaModal
+          accounts={accounts}
+          onClose={() => setIsUploadModalOpen(false)}
+          onUploadSuccess={fetchData}
         />
       )}
     </div>
