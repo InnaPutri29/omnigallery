@@ -124,16 +124,21 @@ export default function FileExplorer({
       {/* Dynamic Subfolder Filter Pills */}
       {showSubfolders && (
         <div className="p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-blue-950/40 border border-blue-500/30 space-y-3 shadow-lg">
-          <p className="text-xs font-extrabold text-amber-400 uppercase tracking-wider flex items-center gap-2">
-            <i className="fa-solid fa-folder-open text-amber-400"></i> Pilih Subfolder di dalam Storage ini:
-          </p>
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-extrabold text-amber-400 uppercase tracking-wider flex items-center gap-2">
+              <i className="fa-solid fa-folder-open text-amber-400"></i> Pilih Subfolder di dalam Storage ini:
+            </p>
+            <span className="text-[10px] text-slate-400 font-mono font-bold bg-slate-950/60 px-2.5 py-1 rounded-lg border border-slate-800">
+              {availableSubfolders.length} Subfolder
+            </span>
+          </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
+          <div className="flex flex-wrap items-center gap-2 max-h-56 overflow-y-auto pr-1">
             <button
               onClick={() => onSelectSubfolder('all')}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${activeSubfolderFilter === 'all' ? 'bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md' : 'bg-slate-950 text-slate-300 border-slate-800 hover:text-white'}`}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-1.5 ${activeSubfolderFilter === 'all' ? 'bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md' : 'bg-slate-950 text-slate-300 border-slate-800 hover:text-white hover:border-slate-700'}`}
             >
-              <i className="fa-solid fa-folder mr-1.5"></i> Semua Subfolder ({itemsInActiveStorage.length})
+              <i className="fa-solid fa-folder"></i> Semua Subfolder ({itemsInActiveStorage.length})
             </button>
 
             {availableSubfolders.map(sf => {
@@ -144,10 +149,12 @@ export default function FileExplorer({
                 <button
                   key={sf}
                   onClick={() => onSelectSubfolder(sf)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${isSelected ? 'bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md' : 'bg-slate-950 text-slate-300 border-slate-800 hover:text-white'}`}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-1.5 max-w-[260px] ${isSelected ? 'bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md' : 'bg-slate-950 text-slate-300 border-slate-800 hover:text-white hover:border-slate-700'}`}
+                  title={sf}
                 >
-                  <i className="fa-solid fa-folder mr-1.5 text-amber-400"></i>
-                  {sf} <span className="ml-1 text-[10px] opacity-75 font-mono">({count})</span>
+                  <i className="fa-solid fa-folder text-amber-400 flex-shrink-0"></i>
+                  <span className="truncate">{sf}</span>
+                  <span className="ml-0.5 text-[10px] opacity-75 font-mono flex-shrink-0">({count})</span>
                 </button>
               );
             })}

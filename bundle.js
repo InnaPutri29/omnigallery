@@ -21848,13 +21848,13 @@
         " ",
         /* @__PURE__ */ import_react6.default.createElement("span", { className: "ml-1 text-[10px] opacity-75 font-mono" }, "(", count, ")")
       );
-    }))), showSubfolders && /* @__PURE__ */ import_react6.default.createElement("div", { className: "p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-blue-950/40 border border-blue-500/30 space-y-3 shadow-lg" }, /* @__PURE__ */ import_react6.default.createElement("p", { className: "text-xs font-extrabold text-amber-400 uppercase tracking-wider flex items-center gap-2" }, /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-folder-open text-amber-400" }), " Pilih Subfolder di dalam Storage ini:"), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center gap-2 overflow-x-auto pb-1", style: { scrollbarWidth: "none" } }, /* @__PURE__ */ import_react6.default.createElement(
+    }))), showSubfolders && /* @__PURE__ */ import_react6.default.createElement("div", { className: "p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-blue-950/40 border border-blue-500/30 space-y-3 shadow-lg" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ import_react6.default.createElement("p", { className: "text-xs font-extrabold text-amber-400 uppercase tracking-wider flex items-center gap-2" }, /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-folder-open text-amber-400" }), " Pilih Subfolder di dalam Storage ini:"), /* @__PURE__ */ import_react6.default.createElement("span", { className: "text-[10px] text-slate-400 font-mono font-bold bg-slate-950/60 px-2.5 py-1 rounded-lg border border-slate-800" }, availableSubfolders.length, " Subfolder")), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex flex-wrap items-center gap-2 max-h-56 overflow-y-auto pr-1" }, /* @__PURE__ */ import_react6.default.createElement(
       "button",
       {
         onClick: () => onSelectSubfolder("all"),
-        className: `px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${activeSubfolderFilter === "all" ? "bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md" : "bg-slate-950 text-slate-300 border-slate-800 hover:text-white"}`
+        className: `px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-1.5 ${activeSubfolderFilter === "all" ? "bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md" : "bg-slate-950 text-slate-300 border-slate-800 hover:text-white hover:border-slate-700"}`
       },
-      /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-folder mr-1.5" }),
+      /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-folder" }),
       " Semua Subfolder (",
       itemsInActiveStorage.length,
       ")"
@@ -21866,12 +21866,12 @@
         {
           key: sf,
           onClick: () => onSelectSubfolder(sf),
-          className: `px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${isSelected ? "bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md" : "bg-slate-950 text-slate-300 border-slate-800 hover:text-white"}`
+          className: `px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-1.5 max-w-[260px] ${isSelected ? "bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md" : "bg-slate-950 text-slate-300 border-slate-800 hover:text-white hover:border-slate-700"}`,
+          title: sf
         },
-        /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-folder mr-1.5 text-amber-400" }),
-        sf,
-        " ",
-        /* @__PURE__ */ import_react6.default.createElement("span", { className: "ml-1 text-[10px] opacity-75 font-mono" }, "(", count, ")")
+        /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-folder text-amber-400 flex-shrink-0" }),
+        /* @__PURE__ */ import_react6.default.createElement("span", { className: "truncate" }, sf),
+        /* @__PURE__ */ import_react6.default.createElement("span", { className: "ml-0.5 text-[10px] opacity-75 font-mono flex-shrink-0" }, "(", count, ")")
       );
     }))), /* @__PURE__ */ import_react6.default.createElement("div", { className: "p-4 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center gap-2 w-full md:w-auto" }, /* @__PURE__ */ import_react6.default.createElement(
       "button",

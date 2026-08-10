@@ -5,7 +5,7 @@
     "email": "local@laptop.storage",
     "type": "local",
     "path": "D:\\FOTO",
-    "usedBytes": 35700000000,
+    "usedBytes": 156197744476,
     "totalBytes": 268435456000,
     "status": "active",
     "color": "from-blue-600 to-indigo-600"
@@ -93,6 +93,17 @@
     "email": "innaputrimeidaa@gmail.com",
     "type": "gdrive",
     "folderId": "1dl5mXHqKKOVHw1ZU4q43PQdYuVKVWjkF",
+    "usedBytes": 1288490188.8,
+    "totalBytes": 16106127360,
+    "status": "active",
+    "color": "from-cyan-500 to-blue-600"
+  },
+  {
+    "id": "acc-gdrive-1786345128186",
+    "name": "PPKO",
+    "email": "innaputri.2023@student.uny.ac.id",
+    "type": "gdrive",
+    "folderId": "1yVsxU3QcMKJ7R2DWQnudqW5CAWtlOTrx",
     "usedBytes": 1288490188.8,
     "totalBytes": 16106127360,
     "status": "active",
