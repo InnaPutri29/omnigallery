@@ -14,6 +14,7 @@ import { fetchPhotos, fetchAccounts, fetchStats, addAccount, deleteMedia } from 
 
 export default function App() {
   const [user, setUser] = useState(null);
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
   const [activeTab, setActiveTab] = useState('dashboard');
   const [viewMode, setViewMode] = useState('grid');
   const [activeCategory, setActiveCategory] = useState('all');
@@ -39,6 +40,18 @@ export default function App() {
       try { setUser(JSON.parse(savedUser)); } catch (e) {}
     }
   }, []);
+
+  // Sync Theme
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
+
+  const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
 
   const fetchData = async () => {
     setLoading(true);
@@ -95,9 +108,11 @@ export default function App() {
   }
 
   return (
-    <div className="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
+    <div className="text-slate-800 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
       {/* Top Navbar */}
       <Navbar
+        theme={theme}
+        toggleTheme={toggleTheme}
         searchQuery={searchQuery}
         onSearchChange={(q) => {
           setSearchQuery(q);
@@ -119,7 +134,7 @@ export default function App() {
         />
 
         {/* Content Area — add bottom padding on mobile for bottom nav */}
-        <main className="flex-1 overflow-y-auto bg-slate-950/60 pb-20 md:pb-8">
+        <main className="flex-1 overflow-y-auto bg-transparent dark:bg-slate-950/60 pb-20 md:pb-8">
           {loading && (
             <div className="flex items-center justify-center py-16 text-slate-400 text-xs font-bold gap-2">
               <i className="fa-solid fa-spinner animate-spin text-blue-400 text-lg"></i> Memuat data galeri...

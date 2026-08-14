@@ -83,6 +83,32 @@ export const renameFolder = async (folderType, oldName, newName, folderIdOrPath 
   }
 };
 
+export const deleteAccount = async (accountId) => {
+  try {
+    const res = await fetch(`/api/accounts/${accountId}`, {
+      method: 'DELETE'
+    });
+    return await res.json();
+  } catch (e) {
+    console.log("deleteAccount Error:", e);
+    return null;
+  }
+};
+
+export const editAccountLink = async (accountId, folderId) => {
+  try {
+    const res = await fetch(`/api/accounts/${accountId}/link`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ folderId })
+    });
+    return await res.json();
+  } catch (e) {
+    console.log("editAccountLink Error:", e);
+    return null;
+  }
+};
+
 window.fetchPhotos = fetchPhotos;
 window.fetchAccounts = fetchAccounts;
 window.fetchStats = fetchStats;
@@ -90,3 +116,5 @@ window.addAccount = addAccount;
 window.deleteMedia = deleteMedia;
 window.uploadMedia = uploadMedia;
 window.renameFolder = renameFolder;
+window.deleteAccount = deleteAccount;
+window.editAccountLink = editAccountLink;

@@ -1,17 +1,39 @@
 import React, { useState } from 'react';
 import { formatBytes } from '../../utils/formatters.js';
-import { renameFolder } from '../../services/api.js';
+import { renameFolder, deleteAccount, editAccountLink } from '../../services/api.js';
 
 export default function AccountsManagement({ accounts = [], allMedia = [], onOpenAddModal, onRefreshData }) {
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [editingName, setEditingName] = useState('');
+  const [editingFolderId, setEditingFolderId] = useState('');
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
 
   const handleOpenDetail = (acc) => {
     setSelectedAccount(acc);
     setEditingName(acc.name);
+    setEditingFolderId(acc.folderId || '');
     setAlert(null);
+  };
+
+  const handleDeleteAccount = async (accId, accName) => {
+    if (accId.startsWith('acc-local')) {
+      window.alert("Akun penyimpanan lokal tidak dapat dihapus.");
+      return;
+    }
+    if (!window.confirm(`Apakah Anda yakin ingin menghapus akun "${accName}"?`)) return;
+
+    try {
+      const res = await deleteAccount(accId);
+      if (res && !res.error) {
+        window.alert(`Akun "${accName}" berhasil dihapus.`);
+        if (onRefreshData) onRefreshData();
+      } else {
+        window.alert("Gagal menghapus akun: " + (res?.error || "Error tidak diketahui"));
+      }
+    } catch (e) {
+      window.alert("Error: " + e.message);
+    }
   };
 
   const handleSaveRename = async (e) => {
@@ -27,22 +49,35 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
     setAlert(null);
 
     try {
-      const res = await renameFolder(
-        selectedAccount.type,
-        selectedAccount.name,
-        editingName.trim(),
-        selectedAccount.type === 'gdrive' ? selectedAccount.folderId : selectedAccount.path
-      );
+      // Update nama folder jika berubah
+      if (editingName.trim() !== selectedAccount.name) {
+        const res = await renameFolder(
+          selectedAccount.type,
+          selectedAccount.name,
+          editingName.trim(),
+          selectedAccount.type === 'gdrive' ? selectedAccount.folderId : selectedAccount.path
+        );
 
-      if (res && !res.error) {
-        setAlert({ type: 'success', text: `Nama folder berhasil diubah menjadi "${editingName.trim()}"!` });
-        if (onRefreshData) onRefreshData();
-        setTimeout(() => {
-          setSelectedAccount(null);
-        }, 1200);
-      } else {
-        setAlert({ type: 'error', text: res?.error || 'Gagal mengubah nama folder' });
+        if (!res || res.error) {
+          setAlert({ type: 'error', text: res?.error || 'Gagal mengubah nama folder' });
+          return;
+        }
       }
+
+      // Update link folder jika berubah (hanya untuk GDrive)
+      if (selectedAccount.type === 'gdrive' && editingFolderId.trim() !== selectedAccount.folderId) {
+        const linkRes = await editAccountLink(selectedAccount.id, editingFolderId.trim());
+        if (!linkRes || linkRes.error) {
+          setAlert({ type: 'error', text: linkRes?.error || 'Gagal mengubah link GDrive' });
+          return;
+        }
+      }
+
+      setAlert({ type: 'success', text: `Perubahan berhasil disimpan!` });
+      if (onRefreshData) onRefreshData();
+      setTimeout(() => {
+        setSelectedAccount(null);
+      }, 1200);
     } catch (err) {
       setAlert({ type: 'error', text: 'Error: ' + err.message });
     } finally {
@@ -78,10 +113,10 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
   return (
     <div className="p-6 md:p-8 space-y-6 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-3xl bg-slate-900 border border-slate-800">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-3xl glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800">
         <div>
-          <h2 className="text-xl font-extrabold text-white">Manajemen Akun Storage</h2>
-          <p className="text-xs text-slate-400 mt-1">Kelola koneksi akun Google Drive, ubah nama folder & subfolder, dan pantau direktori penyimpanan Anda.</p>
+          <h2 className="text-xl font-extrabold text-slate-800 dark:text-white">Manajemen Akun Storage</h2>
+          <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Kelola koneksi akun Google Drive, ubah nama folder & subfolder, dan pantau direktori penyimpanan Anda.</p>
         </div>
         <button
           onClick={onOpenAddModal}
@@ -102,7 +137,7 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
             .filter(Boolean);
 
           return (
-            <div key={acc.id} className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 hover:border-blue-500/40 transition-all shadow-md flex flex-col justify-between">
+            <div key={acc.id} className="p-6 rounded-2xl glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800 space-y-4 hover:border-blue-400 dark:hover:border-blue-500/40 transition-all shadow-md flex flex-col justify-between">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3.5">
@@ -110,10 +145,10 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
                       <i className={isDrive ? 'fa-brands fa-google-drive' : 'fa-solid fa-laptop'}></i>
                     </div>
                     <div>
-                      <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-800 text-slate-300 uppercase tracking-wider">
+                      <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-white/60 dark:bg-slate-800 text-slate-600 dark:text-slate-300 uppercase tracking-wider">
                         {isDrive ? 'Google Drive Cloud' : 'Local Disk'}
                       </span>
-                      <h4 className="font-extrabold text-base text-white mt-0.5">{acc.name}</h4>
+                      <h4 className="font-extrabold text-base text-slate-800 dark:text-white mt-0.5">{acc.name}</h4>
                     </div>
                   </div>
                   <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
@@ -122,7 +157,7 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
                 </div>
 
                 <div>
-                  <p className="text-xs text-slate-400 font-mono">{acc.email}</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 font-mono">{acc.email}</p>
                   {isDrive && folderIds.length > 0 && (
                     <div className="mt-2 space-y-2">
                       <div className="flex flex-wrap gap-2 pt-1">
@@ -147,15 +182,15 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
                   )}
                 </div>
 
-                <div className="space-y-2 pt-2 border-t border-slate-800/80">
+                <div className="space-y-2 pt-2 border-t border-white/40 dark:border-slate-800/80">
                   <div className="flex justify-between text-xs">
-                    <span className="text-slate-400 font-medium">Penggunaan Kapasitas</span>
-                    <span className="font-bold text-blue-400 font-mono">{percent}%</span>
+                    <span className="text-slate-600 dark:text-slate-400 font-medium">Penggunaan Kapasitas</span>
+                    <span className="font-bold text-blue-600 dark:text-blue-400 font-mono">{percent}%</span>
                   </div>
-                  <div className="w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800 p-0.5">
+                  <div className="w-full bg-white/50 dark:bg-slate-950 rounded-full h-2 overflow-hidden border border-white/60 dark:border-slate-800 p-0.5">
                     <div className="bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full transition-all duration-500" style={{ width: `${percent}%` }}></div>
                   </div>
-                  <div className="flex justify-between text-[11px] text-slate-400 font-mono">
+                  <div className="flex justify-between text-[11px] text-slate-600 dark:text-slate-400 font-mono">
                     <span>Terpakai: {formatBytes(acc.usedBytes)}</span>
                     <span>Total: {formatBytes(acc.totalBytes)}</span>
                   </div>
@@ -163,10 +198,21 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
               </div>
 
               {/* Action Buttons: Lihat Detail & Edit Nama */}
-              <div className="pt-3 border-t border-slate-800/80 flex items-center justify-end">
+              <div className="pt-3 border-t border-white/40 dark:border-slate-800/80 flex items-center justify-between">
+                {!acc.id.startsWith('acc-local') ? (
+                  <button
+                    onClick={() => handleDeleteAccount(acc.id, acc.name)}
+                    className="px-3.5 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500 text-rose-500 hover:text-white font-bold text-xs transition-all flex items-center gap-2 cursor-pointer border border-rose-500/20"
+                    title="Hapus Akun Google Drive ini"
+                  >
+                    <i className="fa-solid fa-trash-can"></i> Hapus
+                  </button>
+                ) : (
+                  <div></div>
+                )}
                 <button
                   onClick={() => handleOpenDetail(acc)}
-                  className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-blue-400 hover:text-white font-bold text-xs transition-all flex items-center gap-2 cursor-pointer border border-slate-700/80"
+                  className="px-3.5 py-2 rounded-xl bg-white/50 dark:bg-slate-800 hover:bg-white/80 dark:hover:bg-slate-700 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-white font-bold text-xs transition-all flex items-center gap-2 cursor-pointer border border-white/60 dark:border-slate-700/80"
                 >
                   <i className="fa-solid fa-pen-to-square"></i> Lihat Detail & Edit Nama / Subfolder
                 </button>
@@ -178,8 +224,8 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
 
       {/* Modal Detail & Edit Nama Folder + Subfolders */}
       {selectedAccount && (
-        <div className="fixed inset-0 z-[100] w-screen h-screen min-h-screen bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4 overflow-y-auto">
-          <div className="relative w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+        <div className="fixed inset-0 z-[100] w-screen h-screen min-h-screen glass-overlay flex items-center justify-center p-4 overflow-y-auto">
+          <div className="relative w-full max-w-lg glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
             
             {/* Modal Header */}
             <div className="flex items-center justify-between">
@@ -188,13 +234,13 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
                   <i className={selectedAccount.type === 'gdrive' ? 'fa-brands fa-google-drive' : 'fa-solid fa-laptop'}></i>
                 </div>
                 <div>
-                  <h3 className="text-base font-extrabold text-white">Detail & Edit Penyimpanan</h3>
-                  <p className="text-xs text-slate-400 font-mono truncate max-w-[220px]">{selectedAccount.email}</p>
+                  <h3 className="text-base font-extrabold text-slate-800 dark:text-white">Detail & Edit Penyimpanan</h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 font-mono truncate max-w-[220px]">{selectedAccount.email}</p>
                 </div>
               </div>
               <button 
                 onClick={() => setSelectedAccount(null)}
-                className="w-8 h-8 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                className="w-8 h-8 rounded-xl bg-white/50 dark:bg-slate-800 hover:bg-white/80 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
               >
                 <i className="fa-solid fa-xmark"></i>
               </button>
@@ -209,54 +255,66 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
             )}
 
             {/* Account Info Cards */}
-            <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2 text-xs font-mono">
-              <div className="flex justify-between text-slate-400">
+            <div className="p-4 rounded-2xl bg-white/40 dark:bg-slate-950 border border-white/60 dark:border-slate-800 space-y-2 text-xs font-mono">
+              <div className="flex justify-between text-slate-600 dark:text-slate-400">
                 <span>Tipe Penyimpanan:</span>
-                <span className="text-white font-bold">{selectedAccount.type === 'gdrive' ? 'Google Drive Cloud' : 'Local Disk'}</span>
+                <span className="text-slate-800 dark:text-white font-bold">{selectedAccount.type === 'gdrive' ? 'Google Drive Cloud' : 'Local Disk'}</span>
               </div>
-              <div className="flex justify-between text-slate-400">
+              <div className="flex justify-between text-slate-600 dark:text-slate-400">
                 <span>Email Terhubung:</span>
-                <span className="text-white font-bold truncate max-w-[200px]">{selectedAccount.email}</span>
+                <span className="text-slate-800 dark:text-white font-bold truncate max-w-[200px]">{selectedAccount.email}</span>
               </div>
-              {selectedAccount.type === 'gdrive' ? (
-                <div className="text-slate-400 pt-1">
-                  <span>ID Folder Google Drive:</span>
-                  <p className="text-blue-400 break-all bg-slate-900 p-2 rounded-xl mt-1 border border-slate-800">{selectedAccount.folderId}</p>
-                </div>
-              ) : (
-                <div className="text-slate-400 pt-1">
+              {selectedAccount.type !== 'gdrive' && (
+                <div className="text-slate-600 dark:text-slate-400 pt-1">
                   <span>Path Folder Disk:</span>
-                  <p className="text-amber-400 break-all bg-slate-900 p-2 rounded-xl mt-1 border border-slate-800">{selectedAccount.path}</p>
+                  <p className="text-amber-600 dark:text-amber-400 break-all bg-white/50 dark:bg-slate-900 p-2 rounded-xl mt-1 border border-white/60 dark:border-slate-800">{selectedAccount.path}</p>
                 </div>
               )}
             </div>
 
-            {/* Section 1: Form Edit Nama Main Folder */}
-            <form onSubmit={handleSaveRename} className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5">Nama Folder Utama / Penyimpanan</label>
-                <div className="relative">
-                  <i className="fa-solid fa-folder-pen absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
-                  <input
-                    type="text"
-                    value={editingName}
-                    onChange={(e) => setEditingName(e.target.value)}
-                    required
-                    placeholder="Masukkan nama folder baru..."
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all font-semibold"
-                  />
+              {/* Section 1: Form Edit Nama Main Folder */}
+              <form onSubmit={handleSaveRename} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Nama Folder Utama / Penyimpanan</label>
+                  <div className="relative">
+                    <i className="fa-solid fa-folder-pen absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+                    <input
+                      type="text"
+                      value={editingName}
+                      onChange={(e) => setEditingName(e.target.value)}
+                      required
+                      placeholder="Masukkan nama folder baru..."
+                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/50 dark:bg-slate-950 border border-white/60 dark:border-slate-800 text-xs text-slate-800 dark:text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all font-semibold"
+                    />
+                  </div>
                 </div>
-              </div>
+
+                {selectedAccount.type === 'gdrive' && (
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">ID / Link Folder Google Drive</label>
+                    <div className="relative">
+                      <i className="fa-solid fa-link absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+                      <input
+                        type="text"
+                        value={editingFolderId}
+                        onChange={(e) => setEditingFolderId(e.target.value)}
+                        required
+                        placeholder="Masukkan Link atau ID GDrive..."
+                        className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/50 dark:bg-slate-950 border border-white/60 dark:border-slate-800 text-xs text-slate-800 dark:text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all font-semibold"
+                      />
+                    </div>
+                  </div>
+                )}
 
               {/* Section 2: Subfolders List & Rename */}
-              <div className="space-y-2 pt-3 border-t border-slate-800">
+              <div className="space-y-2 pt-3 border-t border-white/40 dark:border-slate-800">
                 <div className="flex items-center justify-between">
-                  <label className="block text-xs font-bold text-slate-300">Daftar Subfolder di Penyimpanan Ini</label>
-                  <span className="text-[10px] text-amber-400 font-mono font-bold">{subfolders.length} Subfolder</span>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">Daftar Subfolder di Penyimpanan Ini</label>
+                  <span className="text-[10px] text-amber-600 dark:text-amber-400 font-mono font-bold">{subfolders.length} Subfolder</span>
                 </div>
 
                 {subfolders.length === 0 ? (
-                  <p className="text-xs text-slate-500 italic p-3 rounded-xl bg-slate-950 border border-slate-800 text-center">
+                  <p className="text-xs text-slate-600 dark:text-slate-500 italic p-3 rounded-xl bg-white/40 dark:bg-slate-950 border border-white/60 dark:border-slate-800 text-center">
                     Tidak ada subfolder di penyimpanan ini.
                   </p>
                 ) : (
@@ -264,11 +322,11 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
                     {subfolders.map(sf => {
                       const count = accountMedia.filter(m => m.subfolder === sf).length;
                       return (
-                        <div key={sf} className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                        <div key={sf} className="flex items-center justify-between p-2.5 rounded-xl bg-white/40 dark:bg-slate-950 border border-white/60 dark:border-slate-800 text-xs">
                           <div className="flex items-center gap-2 truncate">
-                            <i className="fa-solid fa-folder text-amber-400"></i>
-                            <span className="text-white font-semibold truncate">{sf}</span>
-                            <span className="text-[10px] text-slate-500 font-mono">({count} file)</span>
+                            <i className="fa-solid fa-folder text-amber-500 dark:text-amber-400"></i>
+                            <span className="text-slate-800 dark:text-white font-semibold truncate">{sf}</span>
+                            <span className="text-[10px] text-slate-600 dark:text-slate-500 font-mono">({count} file)</span>
                           </div>
                           <button
                             type="button"
@@ -286,12 +344,12 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/40 dark:border-slate-800">
                 <button 
                   type="button" 
                   onClick={() => setSelectedAccount(null)} 
                   disabled={loading}
-                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs transition-all cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-slate-300 dark:bg-slate-800 hover:bg-slate-400 dark:hover:bg-slate-700 text-slate-800 dark:text-white font-semibold text-xs transition-all cursor-pointer"
                 >
                   Batal
                 </button>
@@ -306,7 +364,7 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
                     </>
                   ) : (
                     <>
-                      <i className="fa-solid fa-check"></i> Simpan Nama Utama
+                      <i className="fa-solid fa-check"></i> Simpan Perubahan
                     </>
                   )}
                 </button>

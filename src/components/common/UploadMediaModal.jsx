@@ -63,8 +63,8 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
   };
 
   return (
-    <div className="fixed inset-0 z-[100] w-screen h-screen min-h-screen bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4 overflow-y-auto">
-      <div className="relative w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+    <div className="fixed inset-0 z-[100] w-screen h-screen min-h-screen glass-overlay flex items-center justify-center p-4 overflow-y-auto">
+      <div className="relative w-full max-w-lg glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
         
         {/* Modal Header */}
         <div className="flex items-center justify-between">
@@ -73,13 +73,13 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
               <i className="fa-solid fa-cloud-arrow-up"></i>
             </div>
             <div>
-              <h3 className="text-lg font-extrabold text-white">Unggah Media Baru</h3>
-              <p className="text-xs text-slate-400">Simpan langsung ke Google Drive atau Folder Lokal</p>
+              <h3 className="text-lg font-extrabold text-slate-800 dark:text-white">Unggah Media Baru</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400">Simpan langsung ke Google Drive atau Folder Lokal</p>
             </div>
           </div>
           <button 
             onClick={onClose}
-            className="w-8 h-8 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-all cursor-pointer"
+            className="w-8 h-8 rounded-xl bg-white/50 dark:bg-slate-800 hover:bg-white/80 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
           >
             <i className="fa-solid fa-xmark"></i>
           </button>
@@ -97,11 +97,11 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
           
           {/* Target Destination Dropdown */}
           <div>
-            <label className="block text-xs font-bold text-slate-300 mb-1.5">Tujuan Penyimpanan</label>
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Tujuan Penyimpanan</label>
             <select
               value={selectedAccountId}
               onChange={(e) => setSelectedAccountId(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:border-blue-500 focus:outline-none transition-all cursor-pointer font-medium"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-white/50 dark:bg-slate-950 border border-white/60 dark:border-slate-800 text-xs text-slate-800 dark:text-white focus:border-blue-500 focus:outline-none transition-all cursor-pointer font-medium"
             >
               <optgroup label="☁️ Google Drive Cloud">
                 {accounts.filter(a => a.type === 'gdrive').map(a => (
@@ -125,11 +125,11 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
 
           {/* File Drag & Drop Dropzone */}
           <div>
-            <label className="block text-xs font-bold text-slate-300 mb-1.5">Pilih Foto atau Video</label>
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Pilih Foto atau Video</label>
             <div
               onDragOver={(e) => e.preventDefault()}
               onDrop={handleDrop}
-              className="border-2 border-dashed border-slate-800 hover:border-blue-500/50 rounded-2xl p-6 text-center bg-slate-950/50 hover:bg-slate-950 transition-all cursor-pointer group"
+              className="border-2 border-dashed border-slate-400 dark:border-slate-800 hover:border-blue-500/50 rounded-2xl p-6 text-center bg-white/30 dark:bg-slate-950/50 hover:bg-white/50 dark:hover:bg-slate-950 transition-all cursor-pointer group"
               onClick={() => document.getElementById('file-input-modal').click()}
             >
               <input 
@@ -143,34 +143,34 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
               <div className="w-12 h-12 rounded-2xl bg-blue-600/10 text-blue-400 group-hover:scale-110 flex items-center justify-center mx-auto mb-2 transition-all">
                 <i className="fa-solid fa-file-arrow-up text-xl"></i>
               </div>
-              <p className="text-xs font-bold text-white">Klik atau Tarik File ke Sini</p>
-              <p className="text-[10px] text-slate-400 mt-1">Mendukung format JPG, PNG, WEBP, MP4, MOV, dll (Maks 10 file sekaligus)</p>
+              <p className="text-xs font-bold text-slate-800 dark:text-white">Klik atau Tarik File ke Sini</p>
+              <p className="text-[10px] text-slate-600 dark:text-slate-400 mt-1">Mendukung format JPG, PNG, WEBP, MP4, MOV, dll (Maks 10 file sekaligus)</p>
             </div>
           </div>
 
           {/* Selected Files Preview List */}
           {files.length > 0 && (
             <div className="space-y-2 max-h-36 overflow-y-auto pr-1">
-              <p className="text-[11px] font-bold text-slate-400">{files.length} file dipilih:</p>
+              <p className="text-[11px] font-bold text-slate-600 dark:text-slate-400">{files.length} file dipilih:</p>
               {files.map((f, idx) => (
-                <div key={idx} className="flex items-center justify-between p-2 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <div key={idx} className="flex items-center justify-between p-2 rounded-xl bg-white/50 dark:bg-slate-950 border border-white/60 dark:border-slate-800 text-xs">
                   <div className="flex items-center gap-2 truncate">
-                    <i className={f.type.startsWith('video/') ? 'fa-solid fa-film text-purple-400' : 'fa-solid fa-image text-blue-400'}></i>
-                    <span className="text-slate-200 font-medium truncate">{f.name}</span>
+                    <i className={f.type.startsWith('video/') ? 'fa-solid fa-film text-purple-600 dark:text-purple-400' : 'fa-solid fa-image text-blue-600 dark:text-blue-400'}></i>
+                    <span className="text-slate-800 dark:text-slate-200 font-medium truncate">{f.name}</span>
                   </div>
-                  <span className="text-[10px] font-mono text-slate-500">{(f.size / (1024 * 1024)).toFixed(1)} MB</span>
+                  <span className="text-[10px] font-mono text-slate-600 dark:text-slate-500">{(f.size / (1024 * 1024)).toFixed(1)} MB</span>
                 </div>
               ))}
             </div>
           )}
 
           {/* Buttons */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/40 dark:border-slate-800">
             <button 
               type="button" 
               onClick={onClose} 
               disabled={loading}
-              className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs transition-all cursor-pointer"
+              className="px-4 py-2 rounded-xl bg-slate-300 dark:bg-slate-800 hover:bg-slate-400 dark:hover:bg-slate-700 text-slate-800 dark:text-white font-semibold text-xs transition-all cursor-pointer"
             >
               Batal
             </button>

@@ -22,9 +22,9 @@ export default function MediaCard({ item, onOpenLightbox }) {
     return (
       <div
         onClick={handleClick}
-        className="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-md hover:shadow-2xl hover:border-blue-500/50 transition-all duration-300 cursor-pointer"
+        className="group relative rounded-2xl overflow-hidden glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800 shadow-md hover:shadow-2xl hover:border-blue-400 dark:hover:border-blue-500/50 transition-all duration-300 cursor-pointer"
       >
-        <div className="aspect-video bg-slate-950 overflow-hidden relative flex items-center justify-center">
+        <div className="aspect-video bg-white/40 dark:bg-slate-950 overflow-hidden relative flex items-center justify-center">
           <img
             src={thumbUrl}
             alt={item.title}
@@ -47,8 +47,8 @@ export default function MediaCard({ item, onOpenLightbox }) {
         </div>
 
         <div className="p-3.5 space-y-1">
-          <h4 className="font-bold text-xs text-white truncate" title={item.title}>{item.title}</h4>
-          <p className="text-[11px] text-slate-400 flex items-center justify-between">
+          <h4 className="font-bold text-xs text-slate-800 dark:text-white truncate" title={item.title}>{item.title}</h4>
+          <p className="text-[11px] text-slate-600 dark:text-slate-400 flex items-center justify-between">
             <span className="truncate max-w-[130px]">{item.accountName || 'Storage Gateway'}</span>
             <span className="font-mono">{item.sizeFormatted || ''}</span>
           </p>
@@ -59,9 +59,9 @@ export default function MediaCard({ item, onOpenLightbox }) {
     return (
       <div
         onClick={handleClick}
-        className="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-md hover:shadow-2xl hover:border-blue-500/50 transition-all duration-300 cursor-pointer"
+        className="group relative rounded-2xl overflow-hidden glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800 shadow-md hover:shadow-2xl hover:border-blue-400 dark:hover:border-blue-500/50 transition-all duration-300 cursor-pointer"
       >
-        <div className="aspect-video bg-slate-950 overflow-hidden relative">
+        <div className="aspect-video bg-white/40 dark:bg-slate-950 overflow-hidden relative">
           <img
             src={thumbUrl}
             alt={item.title}
@@ -87,8 +87,8 @@ export default function MediaCard({ item, onOpenLightbox }) {
         </div>
 
         <div className="p-3.5 space-y-1">
-          <h4 className="font-bold text-xs text-white truncate" title={item.title}>{item.title}</h4>
-          <p className="text-[11px] text-slate-400 flex items-center justify-between">
+          <h4 className="font-bold text-xs text-slate-800 dark:text-white truncate" title={item.title}>{item.title}</h4>
+          <p className="text-[11px] text-slate-600 dark:text-slate-400 flex items-center justify-between">
             <span className="truncate max-w-[130px]">{item.accountName || 'Storage Gateway'}</span>
             <span className="font-mono">{item.sizeFormatted || ''}</span>
           </p>

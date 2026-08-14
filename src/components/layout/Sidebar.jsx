@@ -7,11 +7,11 @@ export default function Sidebar({ activeTab, onSwitchTab, stats }) {
   const percent = Math.min(100, Math.round((totalUsed / totalCapacity) * 100));
 
   return (
-    <aside className="w-64 border-r border-slate-800/80 bg-slate-900/50 flex-shrink-0 flex flex-col justify-between hidden md:flex transition-all">
+    <aside className="w-64 border-r border-white/40 dark:border-slate-800/80 glass-panel dark:glass-panel flex-shrink-0 flex flex-col justify-between hidden md:flex transition-all">
       <div className="p-4 space-y-6">
         {/* Navigation Menu */}
         <div className="space-y-1">
-          <p className="px-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Navigasi Utama</p>
+          <p className="px-3 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Navigasi Utama</p>
           
           <button 
             onClick={() => onSwitchTab('dashboard')}
@@ -39,18 +39,18 @@ export default function Sidebar({ activeTab, onSwitchTab, stats }) {
         </div>
 
         {/* Storage Gauge Widget */}
-        <div className="p-4 rounded-2xl bg-gradient-to-b from-slate-800/80 to-slate-900/90 border border-slate-700/60 space-y-3">
+        <div className="p-4 rounded-2xl glass-panel dark:bg-gradient-to-b dark:from-slate-800/80 dark:to-slate-900/90 border border-white/60 dark:border-slate-700/60 space-y-3">
           <div className="flex items-center justify-between text-xs">
-            <span className="font-bold text-slate-300">Total Kapasitas</span>
-            <span className="font-extrabold text-blue-400">{percent}%</span>
+            <span className="font-bold text-slate-700 dark:text-slate-300">Total Kapasitas</span>
+            <span className="font-extrabold text-blue-600 dark:text-blue-400">{percent}%</span>
           </div>
-          <div className="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-slate-800 p-0.5">
+          <div className="w-full bg-white/50 dark:bg-slate-950 rounded-full h-2.5 overflow-hidden border border-white/60 dark:border-slate-800 p-0.5">
             <div 
-              className="bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full transition-all duration-500" 
+              className="bg-gradient-to-r from-blue-400 to-indigo-500 dark:from-blue-500 dark:to-indigo-500 h-full rounded-full transition-all duration-500" 
               style={{ width: `${percent}%` }}
             ></div>
           </div>
-          <div className="flex justify-between text-[11px] text-slate-400 font-medium">
+          <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 font-medium">
             <span>{formatBytes(totalUsed)} Terpakai</span>
             <span>{formatBytes(totalCapacity)} Total</span>
           </div>
@@ -58,14 +58,14 @@ export default function Sidebar({ activeTab, onSwitchTab, stats }) {
       </div>
 
       {/* Gateway System Info */}
-      <div className="p-4 border-t border-slate-800/80">
-        <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">
+      <div className="p-4 border-t border-white/40 dark:border-slate-800/80">
+        <div className="p-3 rounded-xl glass-panel dark:bg-slate-950/60 border border-white/60 dark:border-slate-800 flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-xs">
             <i className="fa-solid fa-server"></i>
           </div>
           <div>
-            <h5 className="text-xs font-bold text-white">OmniGateway v2.0</h5>
-            <p className="text-[10px] text-emerald-400 font-medium flex items-center gap-1">
+            <h5 className="text-xs font-bold text-slate-800 dark:text-white">OmniGateway v2.0</h5>
+            <p className="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse"></span> Connected
             </p>
           </div>
