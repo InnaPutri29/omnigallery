@@ -53,38 +53,32 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
 
   return (
     <div
-      className="fixed inset-0 z-50 flex flex-col"
-      style={{ background: 'rgba(2, 6, 23, 0.82)', backdropFilter: 'blur(18px)' }}
+      className="fixed inset-0 z-50 flex flex-col bg-slate-100/90 dark:bg-[rgba(2,6,23,0.82)] backdrop-blur-md"
     >
       {/* Top bar: counter + buttons */}
       <div className="flex items-center justify-between px-3 py-2 flex-shrink-0">
-        <div className="px-3 py-1.5 rounded-xl bg-black/50 border border-white/10 text-white text-xs font-bold backdrop-blur-sm">
+        <div className="px-3 py-1.5 rounded-xl bg-white/50 dark:bg-black/50 border border-slate-300/50 dark:border-white/10 text-slate-800 dark:text-white text-xs font-bold backdrop-blur-sm">
           {currentIndex + 1} / {allMedia.length}
         </div>
         <div className="flex items-center gap-2">
-          <a
-            href={viewUrl}
-            target="_blank"
-            rel="noreferrer"
-            title="Buka Tab Baru"
-            className="w-9 h-9 rounded-xl bg-white/10 hover:bg-blue-600 text-white flex items-center justify-center transition-all border border-white/10 cursor-pointer"
-          >
-            <i className="fa-solid fa-up-right-from-square text-xs"></i>
-          </a>
           <button
-            onClick={() => {
-              const sourceLabel = item.source === 'local' ? 'file dari laptop' : 'file dari tampilan galeri';
-              setConfirmDeleteConfig({ isOpen: true, item, sourceLabel });
-            }}
-            title="Hapus Media"
-            className="w-9 h-9 rounded-xl bg-rose-500/20 hover:bg-rose-600 text-rose-300 hover:text-white flex items-center justify-center transition-all border border-rose-500/30 cursor-pointer"
+            onClick={() => window.open(viewUrl, '_blank')}
+            title="Buka File Asli"
+            className="w-9 h-9 rounded-xl bg-white/50 dark:bg-white/10 hover:bg-blue-600 dark:hover:bg-blue-600 text-slate-700 dark:text-white hover:text-white flex items-center justify-center transition-all border border-slate-300/50 dark:border-white/10 cursor-pointer"
           >
-            <i className="fa-solid fa-trash-can text-xs"></i>
+            <i className="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
+          </button>
+          <button
+            onClick={() => setConfirmDeleteConfig({ isOpen: true, item, sourceLabel: item.source === 'gdrive' ? 'Google Drive' : 'Local Disk' })}
+            title="Hapus File"
+            className="w-9 h-9 rounded-xl bg-rose-500/10 dark:bg-rose-500/20 hover:bg-rose-600 text-rose-500 dark:text-rose-300 hover:text-white flex items-center justify-center transition-all border border-rose-500/30 cursor-pointer"
+          >
+            <i className="fa-solid fa-trash-can text-[11px]"></i>
           </button>
           <button
             onClick={onClose}
             title="Tutup (Esc)"
-            className="w-9 h-9 rounded-xl bg-white/10 hover:bg-rose-600 text-white flex items-center justify-center transition-all border border-white/10 cursor-pointer"
+            className="w-9 h-9 rounded-xl bg-white/50 dark:bg-white/10 hover:bg-rose-600 dark:hover:bg-rose-600 text-slate-700 dark:text-white hover:text-white flex items-center justify-center transition-all border border-slate-300/50 dark:border-white/10 cursor-pointer"
           >
             <i className="fa-solid fa-xmark"></i>
           </button>
@@ -104,7 +98,7 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
           />
         )}
 
-        {/* Google Drive Video — terpaksa pakai iframe agar loading instan (Google's adaptive streaming) */}
+        {/* Google Drive Video */}
         {isGDriveVideo && (
           <div className="relative flex items-center justify-center w-full h-full">
             <iframe
@@ -121,10 +115,9 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
           </div>
         )}
 
-        {/* Local Video — transparan bg, loading cerdas */}
+        {/* Local Video */}
         {isLocalVideo && (
           <div className="relative flex items-center justify-center w-full h-full">
-            {/* Loading indicator kecil di tengah, muncul hanya saat buffering */}
             {isVideoLoading && (
               <div className="absolute z-10 flex flex-col items-center gap-2 pointer-events-none">
                 <div className="w-10 h-10 rounded-full border-2 border-blue-500/30 border-t-blue-400 animate-spin"></div>
@@ -155,43 +148,45 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
         {/* Prev Arrow — Desktop only */}
         {hasPrev && (
           <button
-            onClick={goPrev}
-            className="hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-2xl bg-black/60 hover:bg-blue-600/90 text-white items-center justify-center transition-all border border-white/10 cursor-pointer"
+            onClick={(e) => { e.stopPropagation(); goPrev(); }}
+            className="hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-2xl bg-white/60 dark:bg-black/60 hover:bg-blue-600/90 dark:hover:bg-blue-600/90 text-slate-800 dark:text-white hover:text-white items-center justify-center transition-all border border-slate-300/50 dark:border-white/10 cursor-pointer shadow-lg"
           >
-            <i className="fa-solid fa-chevron-left"></i>
+            <i className="fa-solid fa-chevron-left text-lg"></i>
           </button>
         )}
         {hasNext && (
           <button
-            onClick={goNext}
-            className="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-2xl bg-black/60 hover:bg-blue-600/90 text-white items-center justify-center transition-all border border-white/10 cursor-pointer"
+            onClick={(e) => { e.stopPropagation(); goNext(); }}
+            className="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-2xl bg-white/60 dark:bg-black/60 hover:bg-blue-600/90 dark:hover:bg-blue-600/90 text-slate-800 dark:text-white hover:text-white items-center justify-center transition-all border border-slate-300/50 dark:border-white/10 cursor-pointer shadow-lg"
           >
-            <i className="fa-solid fa-chevron-right"></i>
+            <i className="fa-solid fa-chevron-right text-lg"></i>
           </button>
         )}
       </div>
 
       {/* Bottom bar: caption + mobile prev/next */}
-      <div className="flex items-center justify-between px-3 py-2 flex-shrink-0 gap-2">
+      <div className="flex items-center justify-between gap-4 max-w-4xl mx-auto w-full px-4 pt-1 border-t border-slate-300/30 dark:border-white/10 mt-auto">
         <button
           onClick={goPrev}
-          disabled={!hasPrev}
-          className={`md:hidden w-10 h-10 rounded-xl flex items-center justify-center text-white border transition-all cursor-pointer flex-shrink-0 ${hasPrev ? 'bg-white/10 border-white/10 hover:bg-blue-600' : 'opacity-20 border-transparent bg-transparent cursor-default'}`}
+          className={`md:hidden w-10 h-10 rounded-xl flex items-center justify-center border transition-all cursor-pointer flex-shrink-0 ${hasPrev ? 'bg-white/50 dark:bg-white/10 text-slate-700 dark:text-white border-slate-300/50 dark:border-white/10 hover:bg-blue-600 hover:text-white' : 'opacity-20 border-transparent bg-transparent cursor-default text-slate-700 dark:text-white'}`}
         >
-          <i className="fa-solid fa-chevron-left text-sm"></i>
+          <i className="fa-solid fa-chevron-left"></i>
         </button>
 
-        <div className="flex-1 text-center min-w-0">
-          <p className="text-white font-bold text-xs truncate">{item.title}</p>
-          <p className="text-slate-400 text-[10px] truncate">{item.accountName || 'Storage Gateway'}</p>
+        <div className="flex-1 text-center min-w-0 pb-3">
+          <div className="text-slate-800 dark:text-white text-sm font-bold truncate" title={item.title || 'Media File'}>
+            {item.title || 'Media File'}
+          </div>
+          <div className="text-slate-500 dark:text-slate-400 text-[10px] uppercase tracking-wider font-extrabold truncate mt-0.5">
+            {item.subfolder || item.accountName || 'Unknown Storage'}
+          </div>
         </div>
 
         <button
           onClick={goNext}
-          disabled={!hasNext}
-          className={`md:hidden w-10 h-10 rounded-xl flex items-center justify-center text-white border transition-all cursor-pointer flex-shrink-0 ${hasNext ? 'bg-white/10 border-white/10 hover:bg-blue-600' : 'opacity-20 border-transparent bg-transparent cursor-default'}`}
+          className={`md:hidden w-10 h-10 rounded-xl flex items-center justify-center border transition-all cursor-pointer flex-shrink-0 ${hasNext ? 'bg-white/50 dark:bg-white/10 text-slate-700 dark:text-white border-slate-300/50 dark:border-white/10 hover:bg-blue-600 hover:text-white' : 'opacity-20 border-transparent bg-transparent cursor-default text-slate-700 dark:text-white'}`}
         >
-          <i className="fa-solid fa-chevron-right text-sm"></i>
+          <i className="fa-solid fa-chevron-right"></i>
         </button>
       </div>
 

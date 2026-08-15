@@ -64,7 +64,8 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
 
   return (
     <div className="fixed inset-0 z-[100] w-screen h-screen min-h-screen glass-overlay flex items-center justify-center p-4 overflow-y-auto">
-      <div className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+      <div className="relative w-full max-w-lg max-h-[90vh] flex flex-col glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden">
+        <div className="p-6 sm:p-8 overflow-y-auto space-y-6 flex-1 w-full custom-scrollbar-container">
         
         {/* Modal Header */}
         <div className="flex items-center justify-between">
@@ -191,6 +192,7 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
             </button>
           </div>
         </form>
+        </div>
       </div>
     </div>
   );

@@ -25,19 +25,19 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
     setAlert(null);
   };
 
-  const handleDeleteAccountConfirm = (accName) => {
-    setConfirmDeleteConfig({ isOpen: true, accName });
+  const handleDeleteAccountConfirm = (accId, accName) => {
+    setConfirmDeleteConfig({ isOpen: true, accId, accName });
   };
 
   const executeDeleteAccount = async () => {
-    const accName = confirmDeleteConfig.accName;
-    setConfirmDeleteConfig({ isOpen: false, accName: null });
-    if (!accName) return;
+    const { accId, accName } = confirmDeleteConfig;
+    setConfirmDeleteConfig({ isOpen: false, accId: null, accName: null });
+    if (!accId) return;
 
     try {
-      const res = await deleteAccount(accName);
+      const res = await deleteAccount(accId);
       if (res && !res.error) {
-        if (selectedAccount && selectedAccount.name === accName) {
+        if (selectedAccount && selectedAccount.id === accId) {
           setSelectedAccount(null);
         }
         if (onRefreshData) onRefreshData();
@@ -260,7 +260,6 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
 
               {/* Action Buttons: Lihat Detail & Edit Nama */}
               <div className="pt-3 border-t border-white/40 dark:border-slate-800/80 flex items-center justify-between">
-                {!acc.id.startsWith('acc-local') ? (
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleOpenDetail(acc)}
@@ -269,20 +268,12 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
                       <i className="fa-solid fa-gear"></i> Detail & Edit
                     </button>
                     <button 
-                      onClick={() => handleDeleteAccountConfirm(acc.name)}
+                      onClick={() => handleDeleteAccountConfirm(acc.id, acc.name)}
                       className="px-3 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500 hover:text-white text-rose-500 dark:text-rose-400 font-bold text-xs transition-all flex items-center gap-1.5 cursor-pointer border border-rose-500/20"
                     >
                       <i className="fa-solid fa-trash-can"></i> Hapus Akun
                     </button>
                   </div>
-                ) : (
-                  <button
-                    onClick={() => handleOpenDetail(acc)}
-                    className="w-full px-3.5 py-2 rounded-xl bg-white/50 dark:bg-slate-800 hover:bg-white/80 dark:hover:bg-slate-700 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-white font-bold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer border border-white/60 dark:border-slate-700/80"
-                  >
-                    <i className="fa-solid fa-pen-to-square"></i> Lihat Detail & Edit Nama / Subfolder
-                  </button>
-                )}
               </div>
             </div>
           );
@@ -292,8 +283,8 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
       {/* Modal Detail & Edit Nama Folder + Subfolders */}
       {selectedAccount && (
         <div className="fixed inset-0 z-[100] w-screen h-screen min-h-screen glass-overlay flex items-center justify-center p-4 overflow-y-auto">
-          <div className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
-            
+          <div className="relative w-full max-w-lg max-h-[90vh] flex flex-col glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden">
+            <div className="p-5 sm:p-6 overflow-y-auto space-y-5 flex-1 w-full custom-scrollbar-container">
             {/* Modal Header */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -437,6 +428,7 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
                 </button>
               </div>
             </form>
+            </div>
           </div>
         </div>
       )}

@@ -656,9 +656,16 @@ async function refreshCache() {
     let videoCount = 0;
     let docCount = 0;
 
-    // 1. Pemindaian Folder Lokal
-    for (const dir of LOCAL_DIRS) {
+    // 1. Pemindaian Folder Lokal (termasuk yang ditambahkan user)
+    const localAccounts = accounts.filter(acc => acc.type === 'local' && acc.path);
+    const allLocalDirs = [...new Set([...LOCAL_DIRS, ...localAccounts.map(a => a.path)])];
+
+    for (const dir of allLocalDirs) {
         const rootDirName = path.basename(dir);
+        // Cek jika akun spesifik ada untuk direktori ini
+        const userAcc = localAccounts.find(a => a.path === dir);
+        const accountLabel = userAcc ? userAcc.name : dir;
+
         const files = await getAllFilesRecursively(dir);
         files.forEach(({ filePath, stat }) => {
             localUsed += stat.size;
@@ -684,8 +691,8 @@ async function refreshCache() {
                     modified: stat.mtime || new Date(),
                     source: 'local',
                     url: `/media-file?path=${encodeURIComponent(filePath)}`,
-                    accountId: `acc-local-${rootDirName.toLowerCase().replace(/\s+/g, '')}`,
-                    accountName: dir,
+                    accountId: userAcc ? userAcc.id : `acc-local-${rootDirName.toLowerCase().replace(/\s+/g, '')}`,
+                    accountName: accountLabel,
                     subfolder: subfolder
                 });
             }
@@ -868,7 +875,41 @@ function extractFolderId(input) {
 
 // API: Tambah Akun Google Drive Baru
 app.post('/api/accounts', async (req, res) => {
-    const { name, email, folderId } = req.body;
+    const { name, email, folderId, type, path: localPath } = req.body;
+    
+    if (type === 'local') {
+        if (!name || !localPath) {
+            return res.status(400).json({ error: 'Nama Akun dan Path Folder Lokal wajib diisi' });
+        }
+        
+        // Pastikan folder ada
+        if (!fs.existsSync(localPath)) {
+            try { 
+                fs.mkdirSync(localPath, { recursive: true }); 
+            } catch(e) {
+                return res.status(500).json({ error: 'Gagal mengakses atau membuat folder lokal tersebut. Pastikan Path valid.' });
+            }
+        }
+        
+        const newAcc = {
+            id: 'acc-local-' + Date.now(),
+            name,
+            email: email || 'local@laptop.storage',
+            type: 'local',
+            path: localPath,
+            usedBytes: 0,
+            totalBytes: 500 * 1024 * 1024 * 1024, // 500GB dummy
+            status: 'active',
+            color: 'from-amber-500 to-orange-600'
+        };
+        accounts.push(newAcc);
+        saveAccounts();
+        res.json({ message: 'Akun Local Disk berhasil ditambahkan', account: newAcc });
+        getOrUpdateCache(true).catch(e => console.error("Cache refresh error:", e));
+        return;
+    }
+
+    // Default ke gdrive
     if (!name || !folderId) {
         return res.status(400).json({ error: 'Nama Akun dan Folder ID wajib diisi' });
     }
@@ -888,7 +929,7 @@ app.post('/api/accounts', async (req, res) => {
     saveAccounts();
 
     // Berikan respons instan ke UI
-    res.json({ message: 'Akun berhasil ditambahkan', account: newAcc });
+    res.json({ message: 'Akun Google Drive berhasil ditambahkan', account: newAcc });
     
     // Trigger cache refresh di background tanpa memblokir response
     getOrUpdateCache(true).catch(e => console.error("Cache refresh error:", e));
@@ -897,9 +938,6 @@ app.post('/api/accounts', async (req, res) => {
 // API: Hapus Akun Storage
 app.delete('/api/accounts/:id', async (req, res) => {
     const { id } = req.params;
-    if (id.startsWith('acc-local')) {
-        return res.status(400).json({ error: 'Akun penyimpanan lokal tidak dapat dihapus' });
-    }
     accounts = accounts.filter(acc => acc.id !== id);
     saveAccounts();
     
