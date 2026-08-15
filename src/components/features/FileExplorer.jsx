@@ -22,6 +22,8 @@ export default function FileExplorer({
   onRefreshData,
   contentMode
 }) {
+  const [sortBy, setSortBy] = useState('time'); // 'time', 'name', 'size'
+  const [sortOrder, setSortOrder] = useState('desc'); // 'asc', 'desc'
   const [draggedAcc, setDraggedAcc] = useState(null);
   const [showAllStorageBtn, setShowAllStorageBtn] = useState(() => {
     try {
@@ -102,7 +104,25 @@ export default function FileExplorer({
   else if (activeCategory === 'video') categoryLabel = 'Video';
   else if (activeCategory === 'doc') categoryLabel = 'Dokumen';
 
-  const displayedItems = filteredMedia.slice(0, displayLimit);
+  const sortedMedia = [...filteredMedia].sort((a, b) => {
+    let valA, valB;
+    if (sortBy === 'name') {
+      valA = (a.title || '').toLowerCase();
+      valB = (b.title || '').toLowerCase();
+    } else if (sortBy === 'size') {
+      valA = a.size || 0;
+      valB = b.size || 0;
+    } else { // 'time'
+      valA = a.modified ? new Date(a.modified).getTime() : 0;
+      valB = b.modified ? new Date(b.modified).getTime() : 0;
+    }
+
+    if (valA < valB) return sortOrder === 'asc' ? -1 : 1;
+    if (valA > valB) return sortOrder === 'asc' ? 1 : -1;
+    return 0;
+  });
+
+  const displayedItems = sortedMedia.slice(0, displayLimit);
 
   const videoCountInSubfolder = activeCategory === 'image' ? allMedia.filter(m => 
     (activeStorageFilter === 'all' || m.accountName === activeStorageFilter) &&
@@ -281,6 +301,25 @@ export default function FileExplorer({
               placeholder="Cari file di sini..."
               className="w-full pl-9 pr-3 py-1.5 rounded-xl bg-white/50 dark:bg-slate-950 border border-white/60 dark:border-slate-800 text-xs text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-all"
             />
+          </div>
+
+          <div className="flex items-center gap-2 bg-white/50 dark:bg-slate-950 px-2 py-1.5 rounded-xl border border-white/60 dark:border-slate-800">
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="bg-transparent text-xs text-slate-700 dark:text-slate-300 font-bold focus:outline-none cursor-pointer"
+            >
+              <option value="time">Waktu</option>
+              <option value="name">Nama</option>
+              <option value="size">Ukuran</option>
+            </select>
+            <button
+              onClick={() => setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc')}
+              title={`Urutkan: ${sortOrder === 'asc' ? 'Menaik' : 'Menurun'}`}
+              className="ml-1 w-6 h-6 flex items-center justify-center rounded-md hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors cursor-pointer"
+            >
+              <i className={`fa-solid ${sortOrder === 'asc' ? 'fa-arrow-up' : 'fa-arrow-down'} text-[10px]`}></i>
+            </button>
           </div>
 
           <div className="flex items-center bg-white/50 dark:bg-slate-950 rounded-xl p-1 border border-white/60 dark:border-slate-800">

@@ -9,6 +9,7 @@ import LightboxModal from './components/common/LightboxModal.jsx';
 import AddAccountModal from './components/common/AddAccountModal.jsx';
 import UploadMediaModal from './components/common/UploadMediaModal.jsx';
 import LoginModal from './components/common/LoginModal.jsx';
+import ConfirmModal from './components/common/ConfirmModal.jsx';
 import { useState, useEffect } from 'react';
 import { fetchPhotos, fetchAccounts, fetchStats, addAccount, deleteMedia } from './services/api.js';
 
@@ -33,6 +34,7 @@ export default function App() {
   const [lightboxContext, setLightboxContext] = useState([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   // Check Auth Session on Load
   useEffect(() => {
@@ -96,10 +98,13 @@ export default function App() {
   };
 
   const handleLogout = () => {
-    if (window.confirm("Apakah Anda yakin ingin keluar dari OmniGallery Dashboard?")) {
-      localStorage.removeItem('gdgate_user');
-      setUser(null);
-    }
+    setIsLogoutModalOpen(true);
+  };
+
+  const executeLogout = () => {
+    setIsLogoutModalOpen(false);
+    localStorage.removeItem('gdgate_user');
+    setUser(null);
   };
 
   const handleAddAccount = async (newAccountData) => {
@@ -235,6 +240,19 @@ export default function App() {
           onUploadSuccess={fetchData}
         />
       )}
+
+      {/* Logout Confirm Modal */}
+      <ConfirmModal
+        isOpen={isLogoutModalOpen}
+        title="Keluar dari Dashboard?"
+        message="Apakah Anda yakin ingin keluar dari sesi saat ini? Anda harus login kembali untuk masuk."
+        confirmText="Ya, Keluar"
+        cancelText="Batal"
+        confirmColor="danger"
+        icon="fa-right-from-bracket"
+        onClose={() => setIsLogoutModalOpen(false)}
+        onConfirm={executeLogout}
+      />
     </div>
   );
 }

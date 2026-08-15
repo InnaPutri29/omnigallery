@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { formatBytes } from '../../utils/formatters.js';
 import { renameFolder, deleteAccount, editAccountLink } from '../../services/api.js';
+import RenameModal from '../common/RenameModal.jsx';
+import ConfirmModal from '../common/ConfirmModal.jsx';
+
 
 export default function AccountsManagement({ accounts = [], allMedia = [], onOpenAddModal, onRefreshData }) {
   const [selectedAccount, setSelectedAccount] = useState(null);
@@ -8,6 +11,12 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
   const [editingFolderId, setEditingFolderId] = useState('');
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
+  const [renameModalConfig, setRenameModalConfig] = useState({ isOpen: false, oldName: '' });
+  const [confirmDeleteConfig, setConfirmDeleteConfig] = useState({ isOpen: false, accName: null });
+  
+  // Sort state
+  const [sortBy, setSortBy] = useState('time'); // 'time', 'name', 'size'
+  const [sortOrder, setSortOrder] = useState('desc'); // 'asc', 'desc'
 
   const handleOpenDetail = (acc) => {
     setSelectedAccount(acc);
@@ -16,23 +25,27 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
     setAlert(null);
   };
 
-  const handleDeleteAccount = async (accId, accName) => {
-    if (accId.startsWith('acc-local')) {
-      window.alert("Akun penyimpanan lokal tidak dapat dihapus.");
-      return;
-    }
-    if (!window.confirm(`Apakah Anda yakin ingin menghapus akun "${accName}"?`)) return;
+  const handleDeleteAccountConfirm = (accName) => {
+    setConfirmDeleteConfig({ isOpen: true, accName });
+  };
+
+  const executeDeleteAccount = async () => {
+    const accName = confirmDeleteConfig.accName;
+    setConfirmDeleteConfig({ isOpen: false, accName: null });
+    if (!accName) return;
 
     try {
-      const res = await deleteAccount(accId);
+      const res = await deleteAccount(accName);
       if (res && !res.error) {
-        window.alert(`Akun "${accName}" berhasil dihapus.`);
+        if (selectedAccount && selectedAccount.name === accName) {
+          setSelectedAccount(null);
+        }
         if (onRefreshData) onRefreshData();
       } else {
-        window.alert("Gagal menghapus akun: " + (res?.error || "Error tidak diketahui"));
+        setAlert({ type: 'error', text: res?.error || 'Gagal menghapus akun' });
       }
     } catch (e) {
-      window.alert("Error: " + e.message);
+      setAlert({ type: 'error', text: 'Error: ' + e.message });
     }
   };
 
@@ -85,17 +98,21 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
     }
   };
 
-  const handleRenameSubfolderItem = async (oldSubfolderName) => {
-    const newSubName = window.prompt(`Ubah nama subfolder "${oldSubfolderName}" di Google Drive / Hardisk:`, oldSubfolderName);
-    if (!newSubName || !newSubName.trim() || newSubName.trim() === oldSubfolderName) return;
+  const handleRenameSubfolderItem = (oldSubfolderName) => {
+    setRenameModalConfig({ isOpen: true, oldName: oldSubfolderName });
+  };
 
+  const executeRenameSubfolder = async (newSubName) => {
+    setRenameModalConfig({ isOpen: false, oldName: '' });
+    const oldSubfolderName = renameModalConfig.oldName;
+    
     setLoading(true);
     setAlert(null);
 
     try {
-      const res = await renameFolder(selectedAccount.type, oldSubfolderName, newSubName.trim());
+      const res = await renameFolder(selectedAccount.type, oldSubfolderName, newSubName);
       if (res && !res.error) {
-        setAlert({ type: 'success', text: `Subfolder "${oldSubfolderName}" berhasil diubah menjadi "${newSubName.trim()}"!` });
+        setAlert({ type: 'success', text: `Subfolder "${oldSubfolderName}" berhasil diubah menjadi "${newSubName}"!` });
         if (onRefreshData) onRefreshData();
       } else {
         setAlert({ type: 'error', text: res?.error || 'Gagal mengubah nama subfolder' });
@@ -112,23 +129,67 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
 
   return (
     <div className="p-6 md:p-8 space-y-6 max-w-7xl mx-auto">
-      {/* Header */}
+      {/* Header and Controls */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-3xl glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800">
-        <div>
+        <div className="flex-1">
           <h2 className="text-xl font-extrabold text-slate-800 dark:text-white">Manajemen Akun Storage</h2>
           <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Kelola koneksi akun Google Drive, ubah nama folder & subfolder, dan pantau direktori penyimpanan Anda.</p>
         </div>
-        <button
-          onClick={onOpenAddModal}
-          className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-lg shadow-blue-600/30 transition-all flex items-center gap-2 cursor-pointer"
-        >
-          <i className="fa-solid fa-plus"></i> Hubungkan Akun Baru
-        </button>
+        
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+          {/* Sort Control */}
+          <div className="flex items-center gap-2 bg-white/50 dark:bg-slate-950 px-3 py-2 rounded-xl border border-white/60 dark:border-slate-800">
+            <i className="fa-solid fa-arrow-down-a-z text-slate-500 dark:text-slate-400 text-xs"></i>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="bg-transparent text-xs text-slate-700 dark:text-slate-300 font-bold focus:outline-none cursor-pointer"
+            >
+              <option value="time">Waktu Ditambahkan</option>
+              <option value="name">Nama Akun</option>
+              <option value="size">Ukuran Terpakai</option>
+            </select>
+            <button
+              onClick={() => setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc')}
+              title={`Urutkan: ${sortOrder === 'asc' ? 'Menaik' : 'Menurun'}`}
+              className="ml-1 w-6 h-6 flex items-center justify-center rounded-md hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors"
+            >
+              <i className={`fa-solid ${sortOrder === 'asc' ? 'fa-arrow-up' : 'fa-arrow-down'} text-[10px]`}></i>
+            </button>
+          </div>
+
+          <button
+            onClick={onOpenAddModal}
+            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <i className="fa-solid fa-plus"></i> Hubungkan Akun Baru
+          </button>
+        </div>
       </div>
 
       {/* Grid Accounts */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {accounts.map(acc => {
+        {[...accounts].sort((a, b) => {
+          let valA, valB;
+          
+          if (sortBy === 'name') {
+            valA = (a.name || '').toLowerCase();
+            valB = (b.name || '').toLowerCase();
+          } else if (sortBy === 'size') {
+            valA = a.usedBytes || 0;
+            valB = b.usedBytes || 0;
+          } else { // 'time'
+            // Extract timestamp from ID if possible (e.g. acc-gdrive-1786676309508)
+            const timeA = a.id.includes('-') ? parseInt(a.id.split('-').pop()) || 0 : 0;
+            const timeB = b.id.includes('-') ? parseInt(b.id.split('-').pop()) || 0 : 0;
+            valA = timeA;
+            valB = timeB;
+          }
+
+          if (valA < valB) return sortOrder === 'asc' ? -1 : 1;
+          if (valA > valB) return sortOrder === 'asc' ? 1 : -1;
+          return 0;
+        }).map(acc => {
           const percent = Math.min(100, Math.round((acc.usedBytes / (acc.totalBytes || 1)) * 100));
           const isDrive = acc.type === 'gdrive';
           const folderIds = (acc.folderId || '')
@@ -200,22 +261,28 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
               {/* Action Buttons: Lihat Detail & Edit Nama */}
               <div className="pt-3 border-t border-white/40 dark:border-slate-800/80 flex items-center justify-between">
                 {!acc.id.startsWith('acc-local') ? (
-                  <button
-                    onClick={() => handleDeleteAccount(acc.id, acc.name)}
-                    className="px-3.5 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500 text-rose-500 hover:text-white font-bold text-xs transition-all flex items-center gap-2 cursor-pointer border border-rose-500/20"
-                    title="Hapus Akun Google Drive ini"
-                  >
-                    <i className="fa-solid fa-trash-can"></i> Hapus
-                  </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleOpenDetail(acc)}
+                      className="px-3 py-2 rounded-xl bg-white/50 dark:bg-slate-800 hover:bg-white/80 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 hover:text-blue-600 font-bold text-xs transition-all flex items-center gap-1.5 cursor-pointer border border-white/60 dark:border-slate-700/80"
+                    >
+                      <i className="fa-solid fa-gear"></i> Detail & Edit
+                    </button>
+                    <button 
+                      onClick={() => handleDeleteAccountConfirm(acc.name)}
+                      className="px-3 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500 hover:text-white text-rose-500 dark:text-rose-400 font-bold text-xs transition-all flex items-center gap-1.5 cursor-pointer border border-rose-500/20"
+                    >
+                      <i className="fa-solid fa-trash-can"></i> Hapus Akun
+                    </button>
+                  </div>
                 ) : (
-                  <div></div>
+                  <button
+                    onClick={() => handleOpenDetail(acc)}
+                    className="w-full px-3.5 py-2 rounded-xl bg-white/50 dark:bg-slate-800 hover:bg-white/80 dark:hover:bg-slate-700 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-white font-bold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer border border-white/60 dark:border-slate-700/80"
+                  >
+                    <i className="fa-solid fa-pen-to-square"></i> Lihat Detail & Edit Nama / Subfolder
+                  </button>
                 )}
-                <button
-                  onClick={() => handleOpenDetail(acc)}
-                  className="px-3.5 py-2 rounded-xl bg-white/50 dark:bg-slate-800 hover:bg-white/80 dark:hover:bg-slate-700 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-white font-bold text-xs transition-all flex items-center gap-2 cursor-pointer border border-white/60 dark:border-slate-700/80"
-                >
-                  <i className="fa-solid fa-pen-to-square"></i> Lihat Detail & Edit Nama / Subfolder
-                </button>
               </div>
             </div>
           );
@@ -225,7 +292,7 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
       {/* Modal Detail & Edit Nama Folder + Subfolders */}
       {selectedAccount && (
         <div className="fixed inset-0 z-[100] w-screen h-screen min-h-screen glass-overlay flex items-center justify-center p-4 overflow-y-auto">
-          <div className="relative w-full max-w-lg glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+          <div className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
             
             {/* Modal Header */}
             <div className="flex items-center justify-between">
@@ -373,6 +440,28 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
           </div>
         </div>
       )}
+
+      {/* Rename Modal */}
+      <RenameModal
+        isOpen={renameModalConfig.isOpen}
+        initialName={renameModalConfig.oldName}
+        title={`Mengubah nama subfolder di akun ${selectedAccount ? selectedAccount.name : ''}`}
+        onClose={() => setRenameModalConfig({ isOpen: false, oldName: '' })}
+        onConfirm={executeRenameSubfolder}
+      />
+
+      {/* Delete Account Confirm Modal */}
+      <ConfirmModal
+        isOpen={confirmDeleteConfig.isOpen}
+        title="Hapus Penyimpanan?"
+        message={`Apakah Anda yakin ingin menghapus akun "${confirmDeleteConfig.accName}"? Semua cache dari penyimpanan ini akan dihapus.`}
+        confirmText="Ya, Hapus Akun"
+        cancelText="Batal"
+        confirmColor="danger"
+        icon="fa-trash-can"
+        onClose={() => setConfirmDeleteConfig({ isOpen: false, accName: null })}
+        onConfirm={executeDeleteAccount}
+      />
     </div>
   );
 }

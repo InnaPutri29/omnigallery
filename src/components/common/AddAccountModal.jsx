@@ -25,68 +25,68 @@ export default function AddAccountModal({ onClose, onAddAccount }) {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="relative w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-6">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+      <div className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl space-y-6">
+        <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-lg font-bold">
+            <div className="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg font-bold">
               <i className="fa-brands fa-google-drive"></i>
             </div>
             <div>
-              <h3 className="font-extrabold text-base text-white">Hubungkan Akun Google Drive Baru</h3>
-              <p className="text-xs text-slate-400">Masukkan tautan atau ID folder Google Drive yang ingin ditambahkan</p>
+              <h3 className="font-extrabold text-base text-slate-800 dark:text-white">Hubungkan Akun Google Drive Baru</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Masukkan tautan atau ID folder Google Drive yang ingin ditambahkan</p>
             </div>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-white p-1 cursor-pointer">
+          <button onClick={onClose} className="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white p-1 cursor-pointer transition-colors">
             <i className="fa-solid fa-xmark text-xl"></i>
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-bold text-slate-300 mb-1.5">Nama Label Akun</label>
+            <label className="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1.5">Nama Label Akun</label>
             <input 
               type="text" 
               value={name} 
               onChange={(e) => setName(e.target.value)} 
               required 
               placeholder="Contoh: Drive Utama / Dokumentasi Acara" 
-              className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all"
+              className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-300 mb-1.5">Alamat Email (Opsional)</label>
+            <label className="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1.5">Alamat Email (Opsional)</label>
             <input 
               type="email" 
               value={email} 
               onChange={(e) => setEmail(e.target.value)} 
               placeholder="contoh@gmail.com" 
-              className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all"
+              className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-300 mb-1.5">Tautan (URL) atau ID Folder Google Drive Publik</label>
+            <label className="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1.5">Tautan (URL) atau ID Folder Google Drive Publik</label>
             <input 
               type="text" 
               value={folderId} 
               onChange={(e) => setFolderId(e.target.value)} 
               required 
               placeholder="https://drive.google.com/drive/folders/1MHI_3pZLMewn3wcpgQAXrzIuJpE9_GMe" 
-              className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all font-mono"
+              className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all font-mono"
             />
-            <p className="text-[10px] text-slate-400 mt-1">
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">
               *Pastikan status akses folder di Google Drive disetel ke <b>"Siapa saja yang memiliki link" (Public View)</b>.
             </p>
           </div>
 
 
 
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
             <button 
               type="button" 
               onClick={onClose} 
-              className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition-all cursor-pointer"
+              className="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs transition-all cursor-pointer"
             >
               Batal
             </button>

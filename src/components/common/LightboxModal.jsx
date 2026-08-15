@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useMemo, useState } from 'react';
+import ConfirmModal from './ConfirmModal.jsx';
 
 export default function LightboxModal({ item, allMedia = [], onNavigate, onClose, onDelete }) {
   const videoRef = useRef(null);
   const [isVideoLoading, setIsVideoLoading] = useState(true);
+  const [confirmDeleteConfig, setConfirmDeleteConfig] = useState({ isOpen: false, item: null, sourceLabel: '' });
 
   const currentIndex = useMemo(() =>
     allMedia.findIndex(m => m.id === item.id), [allMedia, item]);
@@ -72,9 +74,7 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
           <button
             onClick={() => {
               const sourceLabel = item.source === 'local' ? 'file dari laptop' : 'file dari tampilan galeri';
-              if (window.confirm(`Apakah Anda yakin ingin menghapus "${item.title}" (${sourceLabel})?`)) {
-                if (onDelete) onDelete(item);
-              }
+              setConfirmDeleteConfig({ isOpen: true, item, sourceLabel });
             }}
             title="Hapus Media"
             className="w-9 h-9 rounded-xl bg-rose-500/20 hover:bg-rose-600 text-rose-300 hover:text-white flex items-center justify-center transition-all border border-rose-500/30 cursor-pointer"
@@ -194,6 +194,22 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
           <i className="fa-solid fa-chevron-right text-sm"></i>
         </button>
       </div>
+
+      {/* Delete Media Confirm Modal */}
+      <ConfirmModal
+        isOpen={confirmDeleteConfig.isOpen}
+        title="Hapus Media?"
+        message={`Apakah Anda yakin ingin menghapus "${confirmDeleteConfig.item?.title}" (${confirmDeleteConfig.sourceLabel})?`}
+        confirmText="Ya, Hapus Media"
+        cancelText="Batal"
+        confirmColor="danger"
+        icon="fa-trash-can"
+        onClose={() => setConfirmDeleteConfig({ isOpen: false, item: null, sourceLabel: '' })}
+        onConfirm={() => {
+          if (onDelete && confirmDeleteConfig.item) onDelete(confirmDeleteConfig.item);
+          setConfirmDeleteConfig({ isOpen: false, item: null, sourceLabel: '' });
+        }}
+      />
     </div>
   );
 }

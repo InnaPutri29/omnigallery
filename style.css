@@ -2,23 +2,44 @@ body {
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - Light Mode (Liquid Glass) */
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 10px;
+    height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #020617;
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #1e293b;
+    background: rgba(148, 163, 184, 0.3);
     border-radius: 9999px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #334155;
+    background: rgba(148, 163, 184, 0.5);
+    border: 3px solid transparent;
+    background-clip: padding-box;
+}
+
+/* Custom Scrollbar - Dark Mode */
+.dark ::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border: 3px solid transparent;
+    background-clip: padding-box;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border: 3px solid transparent;
+    background-clip: padding-box;
 }
 
 /* Lightbox Modal Transitions */
