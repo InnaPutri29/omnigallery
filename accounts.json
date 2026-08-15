@@ -489,9 +489,20 @@
     "email": "local@laptop.storage",
     "type": "local",
     "path": "C:\\Users\\HP\\Pictures\\iCloud Photos",
-    "usedBytes": 0,
-    "totalBytes": 536870912000,
+    "usedBytes": 71256462637,
+    "totalBytes": 71256462637,
     "status": "active",
     "color": "from-amber-500 to-orange-600"
+  },
+  {
+    "id": "acc-gdrive-1786776454034",
+    "name": "TKD",
+    "email": "innaputrimeida@gmail.com",
+    "type": "gdrive",
+    "folderId": "1nW3SXBjQUQTbrnC2UG5pNoDwtZnZTapo",
+    "usedBytes": 1288490188.8,
+    "totalBytes": 16106127360,
+    "status": "active",
+    "color": "from-cyan-500 to-blue-600"
   }
 ]

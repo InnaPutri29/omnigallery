@@ -313,7 +313,7 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
             {/* Modal Header */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-2xl bg-gradient-to-br ${selectedAccount.color || 'from-blue-600 to-indigo-600'} text-white flex items-center justify-center font-bold text-lg shadow-md`}>
+                <div className={`w-10 h-10 rounded-2xl bg-gradient-to-br ${selectedAccount.type === 'local' ? 'from-teal-500 to-emerald-600' : 'from-blue-600 to-indigo-600'} text-white flex items-center justify-center font-bold text-lg shadow-md`}>
                   <i className={selectedAccount.type === 'gdrive' ? 'fa-brands fa-google-drive' : 'fa-solid fa-laptop'}></i>
                 </div>
                 <div>
@@ -350,7 +350,7 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
               {selectedAccount.type !== 'gdrive' && (
                 <div className="text-slate-600 dark:text-slate-400 pt-1">
                   <span>Path Folder Disk:</span>
-                  <p className="text-amber-600 dark:text-amber-400 break-all bg-slate-50 dark:bg-slate-900 p-2 rounded-xl mt-1 border border-slate-200 dark:border-slate-800">{selectedAccount.path}</p>
+                  <p className="text-teal-600 dark:text-teal-400 break-all bg-slate-50 dark:bg-slate-900 p-2 rounded-xl mt-1 border border-slate-200 dark:border-slate-800">{selectedAccount.path}</p>
                 </div>
               )}
             </div>
