@@ -24,6 +24,7 @@ export default function FileExplorer({
 }) {
   const [sortBy, setSortBy] = useState('time'); // 'time', 'name', 'size'
   const [sortOrder, setSortOrder] = useState('desc'); // 'asc', 'desc'
+  const [showSortMenu, setShowSortMenu] = useState(false);
   const [draggedAcc, setDraggedAcc] = useState(null);
   const [showAllStorageBtn, setShowAllStorageBtn] = useState(() => {
     try {
@@ -304,15 +305,38 @@ export default function FileExplorer({
           </div>
 
           <div className="flex items-center gap-2 bg-white/50 dark:bg-slate-950 px-2 py-1.5 rounded-xl border border-white/60 dark:border-slate-800">
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="bg-transparent text-xs text-slate-700 dark:text-slate-300 font-bold focus:outline-none cursor-pointer"
-            >
-              <option value="time">Waktu</option>
-              <option value="name">Nama</option>
-              <option value="size">Ukuran</option>
-            </select>
+            <div className="relative">
+              <button 
+                onClick={() => setShowSortMenu(!showSortMenu)}
+                className="flex items-center gap-1.5 bg-transparent text-xs text-slate-700 dark:text-slate-300 font-bold focus:outline-none cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors"
+              >
+                {sortBy === 'time' ? 'Waktu' : sortBy === 'name' ? 'Nama' : 'Ukuran'}
+                <i className={`fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform ${showSortMenu ? 'rotate-180' : ''}`}></i>
+              </button>
+              
+              {showSortMenu && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setShowSortMenu(false)}></div>
+                  <div className="absolute right-0 mt-4 w-32 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl z-50 overflow-hidden py-1 animate-in fade-in slide-in-from-top-2 duration-200">
+                    {[
+                      { val: 'time', label: 'Waktu', icon: 'fa-clock' },
+                      { val: 'name', label: 'Nama', icon: 'fa-font' },
+                      { val: 'size', label: 'Ukuran', icon: 'fa-hard-drive' }
+                    ].map(opt => (
+                      <button 
+                        key={opt.val}
+                        onClick={() => { setSortBy(opt.val); setShowSortMenu(false); }}
+                        className={`w-full text-left px-3 py-2.5 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors flex items-center gap-2 ${sortBy === opt.val ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20' : 'text-slate-700 dark:text-slate-300'}`}
+                      >
+                        <i className={`fa-solid ${opt.icon} w-3 text-center opacity-70`}></i>
+                        {opt.label}
+                        {sortBy === opt.val && <i className="fa-solid fa-check ml-auto text-blue-500"></i>}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
             <button
               onClick={() => setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc')}
               title={`Urutkan: ${sortOrder === 'asc' ? 'Menaik' : 'Menurun'}`}

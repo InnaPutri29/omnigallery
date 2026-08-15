@@ -5,6 +5,7 @@ export default function BottomNav({ activeTab, onSwitchTab }) {
     { id: 'dashboard', icon: 'fa-chart-pie', label: 'Dashboard' },
     { id: 'explorer', icon: 'fa-folder-tree', label: 'Explorer' },
     { id: 'accounts', icon: 'fa-users-gear', label: 'Akun' },
+    { id: 'settings', icon: 'fa-gear', label: 'Setelan' },
   ];
 
   return (
@@ -23,7 +24,7 @@ export default function BottomNav({ activeTab, onSwitchTab }) {
               }`}
             >
               <i className={`fa-solid ${tab.icon} text-lg ${isActive ? 'text-blue-600 dark:text-blue-400' : ''}`}></i>
-              <span className="text-[10px] font-bold">{tab.label}</span>
+              <span className="text-[10px] font-bold mt-0.5">{tab.label}</span>
               {isActive && (
                 <span className="w-1 h-1 rounded-full bg-blue-600 dark:bg-blue-400"></span>
               )}

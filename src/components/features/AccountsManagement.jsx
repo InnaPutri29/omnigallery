@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { formatBytes } from '../../utils/formatters.js';
 import { renameFolder, deleteAccount, editAccountLink } from '../../services/api.js';
 import RenameModal from '../common/RenameModal.jsx';
@@ -9,14 +10,15 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [editingName, setEditingName] = useState('');
   const [editingFolderId, setEditingFolderId] = useState('');
+  const [sortBy, setSortBy] = useState('time');
+  const [sortOrder, setSortOrder] = useState('desc');
+  const [showSortMenu, setShowSortMenu] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
   const [renameModalConfig, setRenameModalConfig] = useState({ isOpen: false, oldName: '' });
   const [confirmDeleteConfig, setConfirmDeleteConfig] = useState({ isOpen: false, accName: null });
   
-  // Sort state
-  const [sortBy, setSortBy] = useState('time'); // 'time', 'name', 'size'
-  const [sortOrder, setSortOrder] = useState('desc'); // 'asc', 'desc'
+
 
   const handleOpenDetail = (acc) => {
     setSelectedAccount(acc);
@@ -140,15 +142,38 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
           {/* Sort Control */}
           <div className="flex items-center gap-2 bg-white/50 dark:bg-slate-950 px-3 py-2 rounded-xl border border-white/60 dark:border-slate-800">
             <i className="fa-solid fa-arrow-down-a-z text-slate-500 dark:text-slate-400 text-xs"></i>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="bg-transparent text-xs text-slate-700 dark:text-slate-300 font-bold focus:outline-none cursor-pointer"
-            >
-              <option value="time">Waktu Ditambahkan</option>
-              <option value="name">Nama Akun</option>
-              <option value="size">Ukuran Terpakai</option>
-            </select>
+            <div className="relative">
+              <button 
+                onClick={() => setShowSortMenu(!showSortMenu)}
+                className="flex items-center gap-1.5 bg-transparent text-xs text-slate-700 dark:text-slate-300 font-bold focus:outline-none cursor-pointer hover:text-slate-900 dark:hover:text-white transition-colors"
+              >
+                {sortBy === 'time' ? 'Waktu Ditambahkan' : sortBy === 'name' ? 'Nama Akun' : 'Ukuran Terpakai'}
+                <i className={`fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform ${showSortMenu ? 'rotate-180' : ''}`}></i>
+              </button>
+              
+              {showSortMenu && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setShowSortMenu(false)}></div>
+                  <div className="absolute right-0 mt-4 w-44 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl z-50 overflow-hidden py-1 animate-in fade-in slide-in-from-top-2 duration-200">
+                    {[
+                      { val: 'time', label: 'Waktu Ditambahkan', icon: 'fa-clock' },
+                      { val: 'name', label: 'Nama Akun', icon: 'fa-font' },
+                      { val: 'size', label: 'Ukuran Terpakai', icon: 'fa-hard-drive' }
+                    ].map(opt => (
+                      <button 
+                        key={opt.val}
+                        onClick={() => { setSortBy(opt.val); setShowSortMenu(false); }}
+                        className={`w-full text-left px-4 py-2.5 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors flex items-center gap-2 ${sortBy === opt.val ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20' : 'text-slate-700 dark:text-slate-300'}`}
+                      >
+                        <i className={`fa-solid ${opt.icon} w-4 text-center opacity-70`}></i>
+                        {opt.label}
+                        {sortBy === opt.val && <i className="fa-solid fa-check ml-auto text-blue-500"></i>}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
             <button
               onClick={() => setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc')}
               title={`Urutkan: ${sortOrder === 'asc' ? 'Menaik' : 'Menurun'}`}
@@ -281,9 +306,9 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
       </div>
 
       {/* Modal Detail & Edit Nama Folder + Subfolders */}
-      {selectedAccount && (
-        <div className="fixed inset-0 z-[100] w-screen h-screen min-h-screen glass-overlay flex items-center justify-center p-4 overflow-y-auto">
-          <div className="relative w-full max-w-lg max-h-[90vh] flex flex-col glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden">
+      {selectedAccount && ReactDOM.createPortal(
+        <div className="fixed inset-0 z-[100] bg-slate-900/40 dark:bg-black/60 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+          <div className="relative w-full max-w-lg max-h-[90vh] flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden">
             <div className="p-5 sm:p-6 overflow-y-auto space-y-5 flex-1 w-full custom-scrollbar-container">
             {/* Modal Header */}
             <div className="flex items-center justify-between">
@@ -298,7 +323,7 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
               </div>
               <button 
                 onClick={() => setSelectedAccount(null)}
-                className="w-8 h-8 rounded-xl bg-white/50 dark:bg-slate-800 hover:bg-white/80 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
               >
                 <i className="fa-solid fa-xmark"></i>
               </button>
@@ -313,7 +338,7 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
             )}
 
             {/* Account Info Cards */}
-            <div className="p-4 rounded-2xl bg-white/40 dark:bg-slate-950 border border-white/60 dark:border-slate-800 space-y-2 text-xs font-mono">
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2 text-xs font-mono">
               <div className="flex justify-between text-slate-600 dark:text-slate-400">
                 <span>Tipe Penyimpanan:</span>
                 <span className="text-slate-800 dark:text-white font-bold">{selectedAccount.type === 'gdrive' ? 'Google Drive Cloud' : 'Local Disk'}</span>
@@ -325,7 +350,7 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
               {selectedAccount.type !== 'gdrive' && (
                 <div className="text-slate-600 dark:text-slate-400 pt-1">
                   <span>Path Folder Disk:</span>
-                  <p className="text-amber-600 dark:text-amber-400 break-all bg-white/50 dark:bg-slate-900 p-2 rounded-xl mt-1 border border-white/60 dark:border-slate-800">{selectedAccount.path}</p>
+                  <p className="text-amber-600 dark:text-amber-400 break-all bg-slate-50 dark:bg-slate-900 p-2 rounded-xl mt-1 border border-slate-200 dark:border-slate-800">{selectedAccount.path}</p>
                 </div>
               )}
             </div>
@@ -342,7 +367,7 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
                       onChange={(e) => setEditingName(e.target.value)}
                       required
                       placeholder="Masukkan nama folder baru..."
-                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/50 dark:bg-slate-950 border border-white/60 dark:border-slate-800 text-xs text-slate-800 dark:text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all font-semibold"
+                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-800 dark:text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all font-semibold"
                     />
                   </div>
                 </div>
@@ -358,21 +383,21 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
                         onChange={(e) => setEditingFolderId(e.target.value)}
                         required
                         placeholder="Masukkan Link atau ID GDrive..."
-                        className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/50 dark:bg-slate-950 border border-white/60 dark:border-slate-800 text-xs text-slate-800 dark:text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all font-semibold"
+                        className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-800 dark:text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all font-semibold"
                       />
                     </div>
                   </div>
                 )}
 
               {/* Section 2: Subfolders List & Rename */}
-              <div className="space-y-2 pt-3 border-t border-white/40 dark:border-slate-800">
+              <div className="space-y-2 pt-3 border-t border-slate-200 dark:border-slate-800">
                 <div className="flex items-center justify-between">
                   <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">Daftar Subfolder di Penyimpanan Ini</label>
                   <span className="text-[10px] text-amber-600 dark:text-amber-400 font-mono font-bold">{subfolders.length} Subfolder</span>
                 </div>
 
                 {subfolders.length === 0 ? (
-                  <p className="text-xs text-slate-600 dark:text-slate-500 italic p-3 rounded-xl bg-white/40 dark:bg-slate-950 border border-white/60 dark:border-slate-800 text-center">
+                  <p className="text-xs text-slate-600 dark:text-slate-500 italic p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center">
                     Tidak ada subfolder di penyimpanan ini.
                   </p>
                 ) : (
@@ -380,7 +405,7 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
                     {subfolders.map(sf => {
                       const count = accountMedia.filter(m => m.subfolder === sf).length;
                       return (
-                        <div key={sf} className="flex items-center justify-between p-2.5 rounded-xl bg-white/40 dark:bg-slate-950 border border-white/60 dark:border-slate-800 text-xs">
+                        <div key={sf} className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs">
                           <div className="flex items-center gap-2 truncate">
                             <i className="fa-solid fa-folder text-amber-500 dark:text-amber-400"></i>
                             <span className="text-slate-800 dark:text-white font-semibold truncate">{sf}</span>
@@ -402,7 +427,7 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/40 dark:border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
                 <button 
                   type="button" 
                   onClick={() => setSelectedAccount(null)} 
@@ -430,7 +455,8 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
             </form>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Rename Modal */}

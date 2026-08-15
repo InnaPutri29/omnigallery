@@ -3,6 +3,7 @@ import { uploadMedia } from '../../services/api.js';
 
 export default function UploadMediaModal({ accounts = [], onClose, onUploadSuccess }) {
   const [selectedAccountId, setSelectedAccountId] = useState(accounts[0]?.id || '');
+  const [showDropdown, setShowDropdown] = useState(false);
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
@@ -97,31 +98,69 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
         <form onSubmit={handleSubmit} className="space-y-4">
           
           {/* Target Destination Dropdown */}
-          <div>
+          <div className="relative">
             <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Tujuan Penyimpanan</label>
-            <select
-              value={selectedAccountId}
-              onChange={(e) => setSelectedAccountId(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-white/50 dark:bg-slate-950 border border-white/60 dark:border-slate-800 text-xs text-slate-800 dark:text-white focus:border-blue-500 focus:outline-none transition-all cursor-pointer font-medium"
+            <div 
+              onClick={() => setShowDropdown(!showDropdown)}
+              className="w-full px-3.5 py-2.5 rounded-xl bg-white/50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-800 dark:text-white transition-all cursor-pointer font-medium flex items-center justify-between shadow-sm hover:bg-white dark:hover:bg-slate-900"
             >
-              <optgroup label="☁️ Google Drive Cloud">
-                {accounts.filter(a => a.type === 'gdrive').map(a => (
-                  <option key={a.id} value={a.id}>
-                    {a.name} ({a.email})
-                  </option>
-                ))}
-              </optgroup>
-              <optgroup label="💻 Penyimpanan Lokal">
-                {accounts.filter(a => a.type === 'local').map(a => {
-                  const label = a.name === a.path ? a.name : `${a.name} (${a.path})`;
-                  return (
-                    <option key={a.id} value={a.id}>
-                      {label}
-                    </option>
-                  );
-                })}
-              </optgroup>
-            </select>
+              <div className="truncate">
+                {selectedAccount ? (
+                  <>
+                    <i className={selectedAccount.type === 'gdrive' ? 'fa-brands fa-google-drive text-emerald-500 mr-2' : 'fa-solid fa-laptop text-amber-500 mr-2'}></i>
+                    {selectedAccount.type === 'gdrive' ? `${selectedAccount.name} (${selectedAccount.email})` : (selectedAccount.name === selectedAccount.path ? selectedAccount.name : `${selectedAccount.name} (${selectedAccount.path})`)}
+                  </>
+                ) : 'Pilih Penyimpanan'}
+              </div>
+              <i className={`fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform ${showDropdown ? 'rotate-180' : ''}`}></i>
+            </div>
+
+            {showDropdown && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowDropdown(false)}></div>
+                <div className="absolute left-0 right-0 top-full mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl z-50 overflow-y-auto max-h-60 py-2 animate-in fade-in slide-in-from-top-2 duration-200 custom-scrollbar-container">
+                  {/* GDrive Group */}
+                  {accounts.filter(a => a.type === 'gdrive').length > 0 && (
+                    <div className="mb-2">
+                      <div className="px-3 py-1.5 text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                        <i className="fa-brands fa-google-drive text-emerald-500"></i> Google Drive Cloud
+                      </div>
+                      {accounts.filter(a => a.type === 'gdrive').map(a => (
+                        <button
+                          key={a.id}
+                          type="button"
+                          onClick={() => { setSelectedAccountId(a.id); setShowDropdown(false); }}
+                          className={`w-full text-left px-4 py-2 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors flex items-center gap-2 ${selectedAccountId === a.id ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20' : 'text-slate-700 dark:text-slate-300'}`}
+                        >
+                          <span className="truncate flex-1">{a.name} <span className="opacity-60">({a.email})</span></span>
+                          {selectedAccountId === a.id && <i className="fa-solid fa-check text-blue-500"></i>}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Local Group */}
+                  {accounts.filter(a => a.type === 'local').length > 0 && (
+                    <div>
+                      <div className="px-3 py-1.5 text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider flex items-center gap-1.5 border-t border-slate-100 dark:border-slate-800 pt-2">
+                        <i className="fa-solid fa-laptop text-amber-500"></i> Penyimpanan Lokal
+                      </div>
+                      {accounts.filter(a => a.type === 'local').map(a => (
+                        <button
+                          key={a.id}
+                          type="button"
+                          onClick={() => { setSelectedAccountId(a.id); setShowDropdown(false); }}
+                          className={`w-full text-left px-4 py-2 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors flex items-center gap-2 ${selectedAccountId === a.id ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20' : 'text-slate-700 dark:text-slate-300'}`}
+                        >
+                          <span className="truncate flex-1">{a.name === a.path ? a.name : `${a.name} (${a.path})`}</span>
+                          {selectedAccountId === a.id && <i className="fa-solid fa-check text-blue-500"></i>}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
           </div>
 
           {/* File Drag & Drop Dropzone */}

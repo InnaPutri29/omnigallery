@@ -748,6 +748,7 @@ async function refreshCache() {
         });
     });
 
+    mediaList.sort((a, b) => new Date(b.modified).getTime() - new Date(a.modified).getTime());
     cachedMediaList = mediaList;
     accounts[0].usedBytes = localUsed;
     cachedStats = { localUsed, imageCount, videoCount, docCount };

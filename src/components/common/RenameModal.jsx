@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
 
 export default function RenameModal({ isOpen, initialName, title, onClose, onConfirm }) {
   const [newName, setNewName] = useState(initialName || '');
@@ -24,8 +25,8 @@ export default function RenameModal({ isOpen, initialName, title, onClose, onCon
     onConfirm(newName.trim());
   };
 
-  return (
-    <div className="fixed inset-0 z-[200] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+  return ReactDOM.createPortal(
+    <div className="fixed inset-0 z-[200] bg-slate-900/40 dark:bg-black/60 backdrop-blur-md flex items-center justify-center p-4">
       <div className="relative w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in duration-200">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center text-lg font-bold">
@@ -68,6 +69,7 @@ export default function RenameModal({ isOpen, initialName, title, onClose, onCon
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

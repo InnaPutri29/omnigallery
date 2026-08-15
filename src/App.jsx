@@ -5,6 +5,7 @@ import BottomNav from './components/layout/BottomNav.jsx';
 import DashboardOverview from './components/features/DashboardOverview.jsx';
 import FileExplorer from './components/features/FileExplorer.jsx';
 import AccountsManagement from './components/features/AccountsManagement.jsx';
+import Settings from './components/features/Settings.jsx';
 import LightboxModal from './components/common/LightboxModal.jsx';
 import AddAccountModal from './components/common/AddAccountModal.jsx';
 import UploadMediaModal from './components/common/UploadMediaModal.jsx';
@@ -17,6 +18,7 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [viewMode, setViewMode] = useState('grid');
   const [activeCategory, setActiveCategory] = useState('all');
   const [activeStorageFilter, setActiveStorageFilter] = useState('all');
@@ -118,13 +120,13 @@ export default function App() {
   };
 
   if (!user) {
-    return <LoginModal onLoginSuccess={(u) => setUser(u)} />;
+    return <LoginModal onLoginSuccess={(u) => setUser(u)} theme={theme} toggleTheme={toggleTheme} />;
   }
 
   const displayedMedia = contentMode === 'gallery' ? allMedia.filter(m => m.type === 'image' || m.type === 'video') : allMedia;
 
   return (
-    <div className="text-slate-800 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
+    <div className="text-slate-800 dark:text-slate-100 font-sans antialiased h-screen h-[100dvh] overflow-hidden flex flex-col selection:bg-blue-600 selection:text-white">
       {/* Top Navbar */}
       <Navbar
         theme={theme}
@@ -140,15 +142,18 @@ export default function App() {
         onOpenAddModal={() => setIsAddModalOpen(true)}
         user={user}
         onLogout={handleLogout}
+        onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
       />
 
       {/* Main Layout */}
-      <div className="flex-1 flex overflow-hidden">
-        {/* Desktop Sidebar — hidden on mobile */}
+      <div className="flex-1 flex overflow-hidden relative">
+        {/* Responsive Sidebar */}
         <Sidebar
           activeTab={activeTab}
           onSwitchTab={(t) => setActiveTab(t)}
           stats={stats}
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
         />
 
         {/* Content Area — add bottom padding on mobile for bottom nav */}
@@ -205,6 +210,15 @@ export default function App() {
               allMedia={displayedMedia}
               onOpenAddModal={() => setIsAddModalOpen(true)}
               onRefreshData={fetchData}
+            />
+          )}
+
+          {activeTab === 'settings' && (
+            <Settings 
+              theme={theme}
+              toggleTheme={toggleTheme}
+              contentMode={contentMode}
+              onToggleContentMode={handleToggleContentMode}
             />
           )}
         </main>
