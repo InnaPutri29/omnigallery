@@ -424,18 +424,19 @@ export default function FileExplorer({
         </div>
       ) : (
         /* List View Table */
-        <div className="rounded-3xl border border-white/60 dark:border-slate-800 overflow-hidden glass-panel dark:bg-slate-900/90 shadow-xl">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-white/50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 uppercase tracking-wider font-extrabold border-b border-white/60 dark:border-slate-800">
-              <tr>
-                <th className="py-3.5 px-4">Nama File Media</th>
-                <th className="py-3.5 px-4">Tipe</th>
-                <th className="py-3.5 px-4">Sumber Storage</th>
-                <th className="py-3.5 px-4">Ukuran</th>
-                <th className="py-3.5 px-4 text-right">Aksi</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/40 dark:divide-slate-800/80">
+        <div className="rounded-3xl border border-white/60 dark:border-slate-800 glass-panel dark:bg-slate-900/90 shadow-xl overflow-hidden">
+          <div className="overflow-x-auto w-full">
+            <table className="w-full text-left text-xs whitespace-nowrap min-w-[600px]">
+              <thead className="bg-white/50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 uppercase tracking-wider font-extrabold border-b border-white/60 dark:border-slate-800">
+                <tr>
+                  <th className="py-3.5 px-4">Nama File Media</th>
+                  <th className="py-3.5 px-4">Tipe</th>
+                  <th className="py-3.5 px-4">Sumber Storage</th>
+                  <th className="py-3.5 px-4">Ukuran</th>
+                  <th className="py-3.5 px-4 text-right">Aksi</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/40 dark:divide-slate-800/80">
               {displayedItems.map(item => {
                 const handleRowClick = () => {
                   onOpenLightbox(item, filteredMedia);
@@ -468,8 +469,14 @@ export default function FileExplorer({
                 </tr>
                 );
               })}
-            </tbody>
-          </table>
+              {displayedItems.length === 0 && (
+                <tr>
+                  <td colSpan="5" className="py-8 text-center text-slate-400 font-medium">Tidak ada media yang ditemukan.</td>
+                </tr>
+              )}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

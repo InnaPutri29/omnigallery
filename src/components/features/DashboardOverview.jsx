@@ -28,7 +28,7 @@ export default function DashboardOverview({ accounts, allMedia, stats, onOpenLig
       </div>
 
       {/* Ringkasan Statistik Media */}
-      <div className={`grid grid-cols-2 gap-4 ${contentMode === 'gallery' ? 'md:grid-cols-3' : 'md:grid-cols-4'}`}>
+      <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 ${contentMode === 'gallery' ? 'md:grid-cols-3' : 'md:grid-cols-4'}`}>
         <div className="p-4 rounded-3xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-blue-600/15 border border-blue-500/30 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl font-bold">
             <i className="fa-solid fa-photo-film"></i>
