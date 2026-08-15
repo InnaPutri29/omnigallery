@@ -1081,6 +1081,16 @@ app.post('/api/upload', upload.array('files', 10), async (req, res) => {
                         supportsAllDrives: true
                     });
 
+                    // Set file permission to public so thumbnails can be viewed by anyone
+                    await driveClient.permissions.create({
+                        fileId: response.data.id,
+                        requestBody: {
+                            role: 'reader',
+                            type: 'anyone',
+                        },
+                        supportsAllDrives: true
+                    });
+
                     console.log('[Upload GDrive Success]', response.data.name, response.data.id);
                     uploadedResults.push({ id: response.data.id, name: response.data.name, source: 'gdrive' });
                 } catch (gErr) {
