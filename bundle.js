@@ -21458,7 +21458,7 @@
 
   // src/components/layout/Navbar.jsx
   var import_react = __toESM(require_react());
-  function Navbar({ theme, toggleTheme, searchQuery, onSearchChange, onOpenAddModal, onOpenUploadModal, user, onLogout }) {
+  function Navbar({ theme, toggleTheme, contentMode, onToggleContentMode, searchQuery, onSearchChange, onOpenAddModal, onOpenUploadModal, user, onLogout }) {
     return /* @__PURE__ */ import_react.default.createElement("header", { className: "h-14 md:h-16 border-b border-white/40 dark:border-slate-800 glass-panel dark:glass-panel sticky top-0 z-40 px-3 md:px-6 flex items-center justify-between gap-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "flex items-center gap-2 md:gap-3 flex-shrink-0" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/30" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "fa-solid fa-photo-film text-base md:text-xl" })), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("span", { className: "font-extrabold text-base md:text-lg tracking-tight text-slate-800 dark:text-white" }, "Omni", /* @__PURE__ */ import_react.default.createElement("span", { className: "text-blue-500" }, "Gallery")), /* @__PURE__ */ import_react.default.createElement("p", { className: "text-[10px] text-slate-500 dark:text-slate-400 hidden lg:block" }, "Multi-Account Cloud & Local Photos Hub"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "hidden md:flex items-center flex-1 max-w-md mx-6" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "relative w-full" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm" }), /* @__PURE__ */ import_react.default.createElement(
       "input",
       {
@@ -21486,6 +21486,15 @@
         title: "Toggle Light/Dark Mode"
       },
       theme === "light" ? /* @__PURE__ */ import_react.default.createElement("i", { className: "fa-solid fa-moon text-sm" }) : /* @__PURE__ */ import_react.default.createElement("i", { className: "fa-solid fa-sun text-sm" })
+    ), /* @__PURE__ */ import_react.default.createElement(
+      "button",
+      {
+        onClick: onToggleContentMode,
+        className: "px-2.5 md:px-3 py-1.5 md:py-2 rounded-xl glass-button dark:glass-button text-slate-600 dark:text-slate-300 flex items-center justify-center gap-1.5 cursor-pointer text-xs font-bold transition-all hover:bg-white/60 dark:hover:bg-slate-700/60",
+        title: contentMode === "gallery" ? "Mode Galeri Aktif (Hanya Foto & Video)" : "Mode Lengkap Aktif (+ Dokumen)"
+      },
+      /* @__PURE__ */ import_react.default.createElement("i", { className: `fa-solid ${contentMode === "gallery" ? "fa-image text-blue-500" : "fa-folder-open text-emerald-500"}` }),
+      /* @__PURE__ */ import_react.default.createElement("span", { className: "hidden sm:inline" }, contentMode === "gallery" ? "Mode Galeri" : "Mode Lengkap")
     ), /* @__PURE__ */ import_react.default.createElement(
       "button",
       {
@@ -21653,12 +21662,12 @@
   }
 
   // src/components/features/DashboardOverview.jsx
-  function DashboardOverview({ accounts, allMedia, stats, onOpenLightbox, onNavigateToExplorer }) {
+  function DashboardOverview({ accounts, allMedia, stats, onOpenLightbox, onNavigateToExplorer, contentMode }) {
     const recentItems = allMedia.slice(0, 4);
     const imageCount = allMedia.filter((m) => m.type === "image").length;
     const videoCount = allMedia.filter((m) => m.type === "video").length;
     const docCount = allMedia.filter((m) => m.type === "doc").length;
-    return /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-6 md:p-8 space-y-8 max-w-7xl mx-auto" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "relative overflow-hidden rounded-3xl glass-panel dark:bg-gradient-to-r dark:from-blue-900/40 dark:via-indigo-900/40 dark:to-slate-900 border border-white/60 dark:border-slate-800 p-6 md:p-8 shadow-xl" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "absolute -right-10 -bottom-10 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" }), /* @__PURE__ */ import_react5.default.createElement("div", { className: "relative z-10 space-y-3 max-w-2xl" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-cloud-bolt" }), " Multi-Cloud Storage Aggregator"), /* @__PURE__ */ import_react5.default.createElement("h2", { className: "text-2xl md:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight" }, "Kelola Seluruh File & Media Cloud Anda dalam Satu Dashboard"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm text-slate-700 dark:text-slate-300" }, "OmniGallery menghubungkan ruang penyimpanan lokal komputer Anda dengan beberapa akun Google Drive secara aman & cepat."))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "grid grid-cols-2 md:grid-cols-4 gap-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 rounded-2xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-blue-600/15 border border-blue-500/30 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl font-bold" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-photo-film" })), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-xs text-slate-600 dark:text-slate-400 font-semibold" }, "Total Media"), /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-xl font-extrabold text-slate-800 dark:text-white" }, allMedia.length))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 rounded-2xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-purple-600/15 border border-purple-500/30 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xl font-bold" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-image" })), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-xs text-slate-600 dark:text-slate-400 font-semibold" }, "Foto & Gambar"), /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-xl font-extrabold text-slate-800 dark:text-white" }, imageCount))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 rounded-2xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-rose-600/15 border border-rose-500/30 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl font-bold" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-film" })), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-xs text-slate-600 dark:text-slate-400 font-semibold" }, "Video"), /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-xl font-extrabold text-slate-800 dark:text-white" }, videoCount))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 rounded-2xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-emerald-600/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl font-bold" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-file-lines" })), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-xs text-slate-600 dark:text-slate-400 font-semibold" }, "Dokumen"), /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-xl font-extrabold text-slate-800 dark:text-white" }, docCount)))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ import_react5.default.createElement("h3", { className: "text-base font-extrabold text-slate-800 dark:text-white flex items-center gap-2" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-hard-drive text-blue-600 dark:text-blue-400" }), " Kapasitas Penyimpanan Akun Terhubung"), /* @__PURE__ */ import_react5.default.createElement("span", { className: "text-xs text-slate-400 font-medium" }, accounts.length, " Akun Aktif")), /* @__PURE__ */ import_react5.default.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" }, accounts.map((acc) => {
+    return /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-6 md:p-8 space-y-8 max-w-7xl mx-auto" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "relative overflow-hidden rounded-3xl glass-panel dark:bg-gradient-to-r dark:from-blue-900/40 dark:via-indigo-900/40 dark:to-slate-900 border border-white/60 dark:border-slate-800 p-6 md:p-8 shadow-xl" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "absolute -right-10 -bottom-10 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" }), /* @__PURE__ */ import_react5.default.createElement("div", { className: "relative z-10 space-y-3 max-w-2xl" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-cloud-bolt" }), " Multi-Cloud Storage Aggregator"), /* @__PURE__ */ import_react5.default.createElement("h2", { className: "text-2xl md:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight" }, "Kelola Seluruh File & Media Cloud Anda dalam Satu Dashboard"), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-sm text-slate-700 dark:text-slate-300" }, "OmniGallery menghubungkan ruang penyimpanan lokal komputer Anda dengan beberapa akun Google Drive secara aman & cepat."))), /* @__PURE__ */ import_react5.default.createElement("div", { className: `grid grid-cols-2 gap-4 ${contentMode === "gallery" ? "md:grid-cols-3" : "md:grid-cols-4"}` }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 rounded-2xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-blue-600/15 border border-blue-500/30 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl font-bold" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-photo-film" })), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-xs text-slate-600 dark:text-slate-400 font-semibold" }, "Total Media"), /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-xl font-extrabold text-slate-800 dark:text-white" }, allMedia.length))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 rounded-2xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-purple-600/15 border border-purple-500/30 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xl font-bold" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-image" })), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-xs text-slate-600 dark:text-slate-400 font-semibold" }, "Foto & Gambar"), /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-xl font-extrabold text-slate-800 dark:text-white" }, imageCount))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 rounded-2xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-rose-600/15 border border-rose-500/30 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl font-bold" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-film" })), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-xs text-slate-600 dark:text-slate-400 font-semibold" }, "Video"), /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-xl font-extrabold text-slate-800 dark:text-white" }, videoCount))), contentMode !== "gallery" && /* @__PURE__ */ import_react5.default.createElement("div", { className: "p-4 rounded-2xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-12 h-12 rounded-2xl bg-emerald-600/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl font-bold" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-file-lines" })), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-xs text-slate-600 dark:text-slate-400 font-semibold" }, "Dokumen"), /* @__PURE__ */ import_react5.default.createElement("h4", { className: "text-xl font-extrabold text-slate-800 dark:text-white" }, docCount)))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ import_react5.default.createElement("h3", { className: "text-base font-extrabold text-slate-800 dark:text-white flex items-center gap-2" }, /* @__PURE__ */ import_react5.default.createElement("i", { className: "fa-solid fa-hard-drive text-blue-600 dark:text-blue-400" }), " Kapasitas Penyimpanan Akun Terhubung"), /* @__PURE__ */ import_react5.default.createElement("span", { className: "text-xs text-slate-400 font-medium" }, accounts.length, " Akun Aktif")), /* @__PURE__ */ import_react5.default.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" }, accounts.map((acc) => {
       const percent = Math.min(100, Math.round(acc.usedBytes / (acc.totalBytes || 1) * 100));
       const isDrive = acc.type === "gdrive";
       return /* @__PURE__ */ import_react5.default.createElement("div", { key: acc.id, className: "p-5 rounded-2xl glass-panel dark:bg-slate-900/90 border border-white/60 dark:border-slate-800 space-y-4 hover:border-blue-400 dark:hover:border-blue-500/40 transition-all" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: `w-10 h-10 rounded-xl bg-gradient-to-br ${acc.color || "from-blue-600 to-indigo-600"} text-white flex items-center justify-center font-bold shadow-md` }, /* @__PURE__ */ import_react5.default.createElement("i", { className: isDrive ? "fa-brands fa-google-drive text-lg" : "fa-solid fa-laptop text-lg" })), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h4", { className: "font-extrabold text-sm text-slate-800 dark:text-white" }, acc.name), /* @__PURE__ */ import_react5.default.createElement("p", { className: "text-xs text-slate-600 dark:text-slate-400 font-mono" }, acc.email))), /* @__PURE__ */ import_react5.default.createElement("span", { className: "px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30" }, "Aktif")), /* @__PURE__ */ import_react5.default.createElement("div", { className: "space-y-1.5" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex justify-between text-xs font-semibold" }, /* @__PURE__ */ import_react5.default.createElement("span", { className: "text-slate-600 dark:text-slate-400" }, "Terpakai"), /* @__PURE__ */ import_react5.default.createElement("span", { className: "text-slate-800 dark:text-white font-mono" }, percent, "%")), /* @__PURE__ */ import_react5.default.createElement("div", { className: "w-full bg-white/50 dark:bg-slate-950 rounded-full h-2 overflow-hidden border border-white/60 dark:border-slate-800 p-0.5" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full transition-all duration-500", style: { width: `${percent}%` } })), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex justify-between text-[11px] text-slate-600 dark:text-slate-400 font-mono" }, /* @__PURE__ */ import_react5.default.createElement("span", null, formatBytes(acc.usedBytes)), /* @__PURE__ */ import_react5.default.createElement("span", null, formatBytes(acc.totalBytes)))));
@@ -21807,7 +21816,8 @@
     onLoadMore,
     onShowAll,
     onOpenLightbox,
-    onRefreshData
+    onRefreshData,
+    contentMode
   }) {
     const [draggedAcc, setDraggedAcc] = (0, import_react6.useState)(null);
     const [showAllStorageBtn, setShowAllStorageBtn] = (0, import_react6.useState)(() => {
@@ -22722,6 +22732,7 @@
     const [activeSubfolderFilter, setActiveSubfolderFilter] = (0, import_react13.useState)("all");
     const [searchQuery, setSearchQuery] = (0, import_react13.useState)("");
     const [displayLimit, setDisplayLimit] = (0, import_react13.useState)(36);
+    const [contentMode, setContentMode] = (0, import_react13.useState)(() => localStorage.getItem("gallery_content_mode") || "gallery");
     const [allMedia, setAllMedia] = (0, import_react13.useState)([]);
     const [accounts, setAccounts] = (0, import_react13.useState)([]);
     const [stats, setStats] = (0, import_react13.useState)(null);
@@ -22748,6 +22759,13 @@
       }
     }, [theme]);
     const toggleTheme = () => setTheme((prev) => prev === "light" ? "dark" : "light");
+    const handleToggleContentMode = () => {
+      setContentMode((prev) => {
+        const next = prev === "gallery" ? "complete" : "gallery";
+        localStorage.setItem("gallery_content_mode", next);
+        return next;
+      });
+    };
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -22800,11 +22818,14 @@
     if (!user) {
       return /* @__PURE__ */ import_react12.default.createElement(LoginModal, { onLoginSuccess: (u) => setUser(u) });
     }
+    const displayedMedia = contentMode === "gallery" ? allMedia.filter((m) => m.type === "image" || m.type === "video") : allMedia;
     return /* @__PURE__ */ import_react12.default.createElement("div", { className: "text-slate-800 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white" }, /* @__PURE__ */ import_react12.default.createElement(
       Navbar,
       {
         theme,
         toggleTheme,
+        contentMode,
+        onToggleContentMode: handleToggleContentMode,
         searchQuery,
         onSearchChange: (q) => {
           setSearchQuery(q);
@@ -22826,19 +22847,21 @@
       DashboardOverview,
       {
         accounts,
-        allMedia,
+        allMedia: displayedMedia,
+        contentMode,
         stats,
         onOpenLightbox: (item, context) => {
           setSelectedMedia(item);
-          setLightboxContext(context || allMedia);
+          setLightboxContext(context || displayedMedia);
         },
         onNavigateToExplorer: () => setActiveTab("explorer")
       }
     ), !loading && activeTab === "explorer" && /* @__PURE__ */ import_react12.default.createElement(
       FileExplorer,
       {
-        allMedia,
+        allMedia: displayedMedia,
         accounts,
+        contentMode,
         activeCategory,
         onSelectCategory: (c) => {
           setActiveCategory(c);
@@ -22864,7 +22887,7 @@
         onShowAll: () => setDisplayLimit(999999),
         onOpenLightbox: (item, context) => {
           setSelectedMedia(item);
-          setLightboxContext(context || allMedia);
+          setLightboxContext(context || displayedMedia);
         },
         onRefreshData: fetchData
       }
@@ -22872,7 +22895,7 @@
       AccountsManagement,
       {
         accounts,
-        allMedia,
+        allMedia: displayedMedia,
         onOpenAddModal: () => setIsAddModalOpen(true),
         onRefreshData: fetchData
       }
@@ -22880,7 +22903,7 @@
       LightboxModal,
       {
         item: selectedMedia,
-        allMedia: lightboxContext.length > 0 ? lightboxContext : allMedia,
+        allMedia: lightboxContext.length > 0 ? lightboxContext : displayedMedia,
         onNavigate: (item) => setSelectedMedia(item),
         onClose: () => setSelectedMedia(null),
         onDelete: handleDeleteMedia

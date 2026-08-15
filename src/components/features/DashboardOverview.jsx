@@ -2,7 +2,7 @@ import React from 'react';
 import MediaCard from '../common/MediaCard.jsx';
 import { formatBytes } from '../../utils/formatters.js';
 
-export default function DashboardOverview({ accounts, allMedia, stats, onOpenLightbox, onNavigateToExplorer }) {
+export default function DashboardOverview({ accounts, allMedia, stats, onOpenLightbox, onNavigateToExplorer, contentMode }) {
   const recentItems = allMedia.slice(0, 4);
 
   const imageCount = allMedia.filter(m => m.type === 'image').length;
@@ -28,7 +28,7 @@ export default function DashboardOverview({ accounts, allMedia, stats, onOpenLig
       </div>
 
       {/* Ringkasan Statistik Media */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className={`grid grid-cols-2 gap-4 ${contentMode === 'gallery' ? 'md:grid-cols-3' : 'md:grid-cols-4'}`}>
         <div className="p-4 rounded-2xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-blue-600/15 border border-blue-500/30 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl font-bold">
             <i className="fa-solid fa-photo-film"></i>
@@ -59,15 +59,17 @@ export default function DashboardOverview({ accounts, allMedia, stats, onOpenLig
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-600/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl font-bold">
-            <i className="fa-solid fa-file-lines"></i>
+        {contentMode !== 'gallery' && (
+          <div className="p-4 rounded-2xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-600/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl font-bold">
+              <i className="fa-solid fa-file-lines"></i>
+            </div>
+            <div>
+              <p className="text-xs text-slate-600 dark:text-slate-400 font-semibold">Dokumen</p>
+              <h4 className="text-xl font-extrabold text-slate-800 dark:text-white">{docCount}</h4>
+            </div>
           </div>
-          <div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 font-semibold">Dokumen</p>
-            <h4 className="text-xl font-extrabold text-slate-800 dark:text-white">{docCount}</h4>
-          </div>
-        </div>
+        )}
       </div>
 
       {/* Grid Akun Kuota */}

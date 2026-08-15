@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Navbar({ theme, toggleTheme, searchQuery, onSearchChange, onOpenAddModal, onOpenUploadModal, user, onLogout }) {
+export default function Navbar({ theme, toggleTheme, contentMode, onToggleContentMode, searchQuery, onSearchChange, onOpenAddModal, onOpenUploadModal, user, onLogout }) {
   return (
     <header className="h-14 md:h-16 border-b border-white/40 dark:border-slate-800 glass-panel dark:glass-panel sticky top-0 z-40 px-3 md:px-6 flex items-center justify-between gap-3">
       {/* Left Brand Logo */}
@@ -50,6 +50,16 @@ export default function Navbar({ theme, toggleTheme, searchQuery, onSearchChange
           title="Toggle Light/Dark Mode"
         >
           {theme === 'light' ? <i className="fa-solid fa-moon text-sm"></i> : <i className="fa-solid fa-sun text-sm"></i>}
+        </button>
+
+        {/* Content Mode Toggle Button */}
+        <button
+          onClick={onToggleContentMode}
+          className="px-2.5 md:px-3 py-1.5 md:py-2 rounded-xl glass-button dark:glass-button text-slate-600 dark:text-slate-300 flex items-center justify-center gap-1.5 cursor-pointer text-xs font-bold transition-all hover:bg-white/60 dark:hover:bg-slate-700/60"
+          title={contentMode === 'gallery' ? 'Mode Galeri Aktif (Hanya Foto & Video)' : 'Mode Lengkap Aktif (+ Dokumen)'}
+        >
+          <i className={`fa-solid ${contentMode === 'gallery' ? 'fa-image text-blue-500' : 'fa-folder-open text-emerald-500'}`}></i>
+          <span className="hidden sm:inline">{contentMode === 'gallery' ? 'Mode Galeri' : 'Mode Lengkap'}</span>
         </button>
 
         {/* Upload Button */}

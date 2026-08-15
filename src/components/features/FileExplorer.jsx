@@ -19,7 +19,8 @@ export default function FileExplorer({
   onLoadMore,
   onShowAll,
   onOpenLightbox,
-  onRefreshData
+  onRefreshData,
+  contentMode
 }) {
   const [draggedAcc, setDraggedAcc] = useState(null);
   const [showAllStorageBtn, setShowAllStorageBtn] = useState(() => {

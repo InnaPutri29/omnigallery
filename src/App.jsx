@@ -22,6 +22,7 @@ export default function App() {
   const [activeSubfolderFilter, setActiveSubfolderFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [displayLimit, setDisplayLimit] = useState(36);
+  const [contentMode, setContentMode] = useState(() => localStorage.getItem('gallery_content_mode') || 'gallery');
 
   const [allMedia, setAllMedia] = useState([]);
   const [accounts, setAccounts] = useState([]);
@@ -52,6 +53,14 @@ export default function App() {
   }, [theme]);
 
   const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
+
+  const handleToggleContentMode = () => {
+    setContentMode(prev => {
+      const next = prev === 'gallery' ? 'complete' : 'gallery';
+      localStorage.setItem('gallery_content_mode', next);
+      return next;
+    });
+  };
 
   const fetchData = async () => {
     setLoading(true);
@@ -107,12 +116,16 @@ export default function App() {
     return <LoginModal onLoginSuccess={(u) => setUser(u)} />;
   }
 
+  const displayedMedia = contentMode === 'gallery' ? allMedia.filter(m => m.type === 'image' || m.type === 'video') : allMedia;
+
   return (
     <div className="text-slate-800 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
       {/* Top Navbar */}
       <Navbar
         theme={theme}
         toggleTheme={toggleTheme}
+        contentMode={contentMode}
+        onToggleContentMode={handleToggleContentMode}
         searchQuery={searchQuery}
         onSearchChange={(q) => {
           setSearchQuery(q);
@@ -144,11 +157,12 @@ export default function App() {
           {!loading && activeTab === 'dashboard' && (
             <DashboardOverview
               accounts={accounts}
-              allMedia={allMedia}
+              allMedia={displayedMedia}
+              contentMode={contentMode}
               stats={stats}
               onOpenLightbox={(item, context) => {
                 setSelectedMedia(item);
-                setLightboxContext(context || allMedia);
+                setLightboxContext(context || displayedMedia);
               }}
               onNavigateToExplorer={() => setActiveTab('explorer')}
             />
@@ -156,8 +170,9 @@ export default function App() {
 
           {!loading && activeTab === 'explorer' && (
             <FileExplorer
-              allMedia={allMedia}
+              allMedia={displayedMedia}
               accounts={accounts}
+              contentMode={contentMode}
               activeCategory={activeCategory}
               onSelectCategory={(c) => { setActiveCategory(c); setDisplayLimit(36); }}
               activeStorageFilter={activeStorageFilter}
@@ -173,7 +188,7 @@ export default function App() {
               onShowAll={() => setDisplayLimit(999999)}
               onOpenLightbox={(item, context) => {
                 setSelectedMedia(item);
-                setLightboxContext(context || allMedia);
+                setLightboxContext(context || displayedMedia);
               }}
               onRefreshData={fetchData}
             />
@@ -182,7 +197,7 @@ export default function App() {
           {!loading && activeTab === 'accounts' && (
             <AccountsManagement
               accounts={accounts}
-              allMedia={allMedia}
+              allMedia={displayedMedia}
               onOpenAddModal={() => setIsAddModalOpen(true)}
               onRefreshData={fetchData}
             />
@@ -197,7 +212,7 @@ export default function App() {
       {selectedMedia && (
         <LightboxModal
           item={selectedMedia}
-          allMedia={lightboxContext.length > 0 ? lightboxContext : allMedia}
+          allMedia={lightboxContext.length > 0 ? lightboxContext : displayedMedia}
           onNavigate={(item) => setSelectedMedia(item)}
           onClose={() => setSelectedMedia(null)}
           onDelete={handleDeleteMedia}
