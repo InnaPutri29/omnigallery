@@ -901,7 +901,7 @@ app.post('/api/accounts', async (req, res) => {
             usedBytes: 0,
             totalBytes: 500 * 1024 * 1024 * 1024, // 500GB dummy
             status: 'active',
-            color: 'from-amber-500 to-orange-600'
+            color: 'from-teal-500 to-emerald-600'
         };
         accounts.push(newAcc);
         saveAccounts();

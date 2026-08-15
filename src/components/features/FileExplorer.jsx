@@ -134,7 +134,7 @@ export default function FileExplorer({
   return (
     <div className="p-3 md:p-6 lg:p-8 space-y-4 md:space-y-6 max-w-7xl mx-auto">
       {/* Storage Filter Pills Navigation */}
-      <div className="p-3 md:p-4 rounded-2xl glass-panel dark:bg-slate-900/90 border border-white/60 dark:border-slate-800 space-y-2 md:space-y-3">
+      <div className="p-3 md:p-4 rounded-3xl glass-panel dark:bg-slate-900/90 border border-white/60 dark:border-slate-800 space-y-2 md:space-y-3">
         <div className="flex items-center justify-between">
           <p className="text-[11px] md:text-xs font-extrabold text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-2">
             <i className="fa-solid fa-layer-group text-blue-600 dark:text-blue-400"></i> Sumber Penyimpanan:
@@ -217,7 +217,7 @@ export default function FileExplorer({
                   onClick={() => onSelectStorage(acc.name)}
                   className={`whitespace-nowrap flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border ${isDragged ? 'opacity-50 scale-95 border-dashed border-blue-500' : ''} ${isSelected ? 'bg-blue-600 text-white border-blue-500 shadow-md' : 'bg-white/50 dark:bg-slate-950 text-slate-700 dark:text-slate-400 border-white/60 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'}`}
                 >
-                  <i className={isDrive ? 'fa-brands fa-google-drive text-emerald-600 dark:text-emerald-400' : 'fa-solid fa-folder text-amber-500 dark:text-amber-400'}></i>
+                  <i className={isDrive ? 'fa-brands fa-google-drive text-emerald-600 dark:text-emerald-400' : 'fa-solid fa-folder text-teal-600 dark:text-teal-400'}></i>
                   {acc.name} <span className="text-[10px] opacity-75 font-mono">({count})</span>
                 </button>
               );
@@ -228,7 +228,7 @@ export default function FileExplorer({
 
       {/* Dynamic Subfolder Filter Pills */}
       {showSubfolders && (
-        <div className="p-4 rounded-2xl glass-panel dark:bg-gradient-to-r dark:from-slate-900 dark:via-slate-900 dark:to-blue-950/40 border border-amber-400/30 dark:border-blue-500/30 space-y-3 shadow-lg">
+        <div className="p-4 rounded-3xl glass-panel dark:bg-gradient-to-r dark:from-slate-900 dark:via-slate-900 dark:to-blue-950/40 border border-amber-400/30 dark:border-blue-500/30 space-y-3 shadow-lg">
           <div className="flex items-center justify-between">
             <p className="text-xs font-extrabold text-amber-600 dark:text-amber-400 uppercase tracking-wider flex items-center gap-2">
               <i className="fa-solid fa-folder-open text-amber-600 dark:text-amber-400"></i> Pilih Subfolder di dalam Storage ini:
@@ -241,7 +241,7 @@ export default function FileExplorer({
           <div className="flex flex-wrap items-center gap-2 max-h-56 overflow-y-auto pr-1">
             <button
               onClick={() => onSelectSubfolder('all')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-1.5 ${activeSubfolderFilter === 'all' ? 'bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md' : 'bg-white/50 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border-white/60 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white hover:border-white/80 dark:hover:border-slate-700'}`}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-1.5 ${activeSubfolderFilter === 'all' ? 'bg-teal-500 text-white border-teal-400 font-extrabold shadow-md' : 'bg-white/50 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border-white/60 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white hover:border-white/80 dark:hover:border-slate-700'}`}
             >
               <i className="fa-solid fa-folder"></i> Semua Subfolder ({itemsInActiveStorage.length})
             </button>
@@ -254,10 +254,10 @@ export default function FileExplorer({
                 <button
                   key={sf}
                   onClick={() => onSelectSubfolder(sf)}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-1.5 max-w-[260px] ${isSelected ? 'bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md' : 'bg-white/50 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border-white/60 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white hover:border-white/80 dark:hover:border-slate-700'}`}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-1.5 max-w-[260px] ${isSelected ? 'bg-teal-500 text-white border-teal-400 font-extrabold shadow-md' : 'bg-white/50 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border-white/60 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white hover:border-white/80 dark:hover:border-slate-700'}`}
                   title={sf}
                 >
-                  <i className="fa-solid fa-folder text-amber-400 flex-shrink-0"></i>
+                  <i className="fa-solid fa-folder text-teal-400 flex-shrink-0"></i>
                   <span className="truncate">{sf}</span>
                   <span className="ml-0.5 text-[10px] opacity-75 font-mono flex-shrink-0">({count})</span>
                 </button>
@@ -268,7 +268,7 @@ export default function FileExplorer({
       )}
 
       {/* Control Bar: Categories, Search, & View Modes */}
-      <div className="p-4 rounded-2xl glass-panel dark:bg-slate-900/90 border border-white/60 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="p-4 rounded-3xl glass-panel dark:bg-slate-900/90 border border-white/60 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 relative z-30">
         {/* Category Filters */}
         <div className="flex items-center gap-2 w-full md:w-auto">
           <button
@@ -317,7 +317,7 @@ export default function FileExplorer({
               {showSortMenu && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setShowSortMenu(false)}></div>
-                  <div className="absolute right-0 mt-4 w-32 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl z-50 overflow-hidden py-1 animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="absolute right-0 mt-4 w-36 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl z-50 overflow-hidden py-1 animate-in fade-in slide-in-from-top-2 duration-200">
                     {[
                       { val: 'time', label: 'Waktu', icon: 'fa-clock' },
                       { val: 'name', label: 'Nama', icon: 'fa-font' },
@@ -326,7 +326,7 @@ export default function FileExplorer({
                       <button 
                         key={opt.val}
                         onClick={() => { setSortBy(opt.val); setShowSortMenu(false); }}
-                        className={`w-full text-left px-3 py-2.5 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors flex items-center gap-2 ${sortBy === opt.val ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20' : 'text-slate-700 dark:text-slate-300'}`}
+                        className={`w-full text-left px-3 py-2.5 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors flex items-center gap-2 whitespace-nowrap ${sortBy === opt.val ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20' : 'text-slate-700 dark:text-slate-300'}`}
                       >
                         <i className={`fa-solid ${opt.icon} w-3 text-center opacity-70`}></i>
                         {opt.label}
@@ -424,7 +424,7 @@ export default function FileExplorer({
         </div>
       ) : (
         /* List View Table */
-        <div className="rounded-2xl border border-white/60 dark:border-slate-800 overflow-hidden glass-panel dark:bg-slate-900/90 shadow-xl">
+        <div className="rounded-3xl border border-white/60 dark:border-slate-800 overflow-hidden glass-panel dark:bg-slate-900/90 shadow-xl">
           <table className="w-full text-left text-xs">
             <thead className="bg-white/50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 uppercase tracking-wider font-extrabold border-b border-white/60 dark:border-slate-800">
               <tr>

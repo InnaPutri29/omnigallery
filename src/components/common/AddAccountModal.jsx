@@ -20,7 +20,7 @@ export default function AddAccountModal({ onClose, onAddAccount }) {
       email: type === 'local' ? (email || 'local@laptop.storage') : (email || 'account@google.com'),
       folderId: type === 'gdrive' ? folderId : undefined,
       path: type === 'local' ? localPath : undefined,
-      color: type === 'local' ? 'from-amber-500 to-orange-600' : color,
+      color: type === 'local' ? 'from-teal-500 to-emerald-600' : color,
       type
     });
     setSubmitting(false);
@@ -28,12 +28,12 @@ export default function AddAccountModal({ onClose, onAddAccount }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[150] w-screen h-screen min-h-screen glass-overlay flex items-center justify-center p-4">
       <div className="relative w-full max-w-lg max-h-[90vh] flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden">
         <div className="p-6 overflow-y-auto space-y-6 flex-1 w-full custom-scrollbar-container">
           <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
             <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-xl ${type === 'gdrive' ? 'bg-blue-600/20 text-blue-600 dark:text-blue-400' : 'bg-amber-500/20 text-amber-500 dark:text-amber-400'} flex items-center justify-center text-lg font-bold transition-colors`}>
+              <div className={`w-10 h-10 rounded-xl ${type === 'gdrive' ? 'bg-blue-600/20 text-blue-600 dark:text-blue-400' : 'bg-teal-500/20 text-teal-600 dark:text-teal-400'} flex items-center justify-center text-lg font-bold transition-colors`}>
                 <i className={type === 'gdrive' ? 'fa-brands fa-google-drive' : 'fa-solid fa-laptop'}></i>
               </div>
               <div>

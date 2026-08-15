@@ -132,7 +132,7 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
   return (
     <div className="p-6 md:p-8 space-y-6 max-w-7xl mx-auto">
       {/* Header and Controls */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-3xl glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-3xl glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800 relative z-30">
         <div className="flex-1">
           <h2 className="text-xl font-extrabold text-slate-800 dark:text-white">Manajemen Akun Storage</h2>
           <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Kelola koneksi akun Google Drive, ubah nama folder & subfolder, dan pantau direktori penyimpanan Anda.</p>
@@ -154,7 +154,7 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
               {showSortMenu && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setShowSortMenu(false)}></div>
-                  <div className="absolute right-0 mt-4 w-44 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl z-50 overflow-hidden py-1 animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="absolute right-0 mt-4 w-48 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl z-50 overflow-hidden py-1 animate-in fade-in slide-in-from-top-2 duration-200">
                     {[
                       { val: 'time', label: 'Waktu Ditambahkan', icon: 'fa-clock' },
                       { val: 'name', label: 'Nama Akun', icon: 'fa-font' },
@@ -163,7 +163,7 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
                       <button 
                         key={opt.val}
                         onClick={() => { setSortBy(opt.val); setShowSortMenu(false); }}
-                        className={`w-full text-left px-4 py-2.5 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors flex items-center gap-2 ${sortBy === opt.val ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20' : 'text-slate-700 dark:text-slate-300'}`}
+                        className={`w-full text-left px-4 py-2.5 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors flex items-center gap-2 whitespace-nowrap ${sortBy === opt.val ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20' : 'text-slate-700 dark:text-slate-300'}`}
                       >
                         <i className={`fa-solid ${opt.icon} w-4 text-center opacity-70`}></i>
                         {opt.label}
@@ -223,11 +223,11 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
             .filter(Boolean);
 
           return (
-            <div key={acc.id} className="p-6 rounded-2xl glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800 space-y-4 hover:border-blue-400 dark:hover:border-blue-500/40 transition-all shadow-md flex flex-col justify-between">
+            <div key={acc.id} className="p-6 rounded-3xl glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800 space-y-4 hover:border-blue-400 dark:hover:border-blue-500/40 transition-all shadow-md flex flex-col justify-between">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3.5">
-                    <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${acc.color || 'from-blue-600 to-indigo-600'} text-white flex items-center justify-center font-bold text-xl shadow-lg`}>
+                    <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${acc.type === 'local' ? 'from-teal-500 to-emerald-600' : 'from-blue-600 to-indigo-600'} text-white flex items-center justify-center font-bold text-xl shadow-lg`}>
                       <i className={isDrive ? 'fa-brands fa-google-drive' : 'fa-solid fa-laptop'}></i>
                     </div>
                     <div>
@@ -307,7 +307,7 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
 
       {/* Modal Detail & Edit Nama Folder + Subfolders */}
       {selectedAccount && ReactDOM.createPortal(
-        <div className="fixed inset-0 z-[100] bg-slate-900/40 dark:bg-black/60 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+        <div className="fixed inset-0 z-[100] w-screen h-screen min-h-screen glass-overlay flex items-center justify-center p-4 overflow-y-auto">
           <div className="relative w-full max-w-lg max-h-[90vh] flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden">
             <div className="p-5 sm:p-6 overflow-y-auto space-y-5 flex-1 w-full custom-scrollbar-container">
             {/* Modal Header */}
@@ -407,7 +407,7 @@ export default function AccountsManagement({ accounts = [], allMedia = [], onOpe
                       return (
                         <div key={sf} className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs">
                           <div className="flex items-center gap-2 truncate">
-                            <i className="fa-solid fa-folder text-amber-500 dark:text-amber-400"></i>
+                            <i className="fa-solid fa-folder text-teal-600 dark:text-teal-400"></i>
                             <span className="text-slate-800 dark:text-white font-semibold truncate">{sf}</span>
                             <span className="text-[10px] text-slate-600 dark:text-slate-500 font-mono">({count} file)</span>
                           </div>

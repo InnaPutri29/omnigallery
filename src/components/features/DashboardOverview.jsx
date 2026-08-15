@@ -29,7 +29,7 @@ export default function DashboardOverview({ accounts, allMedia, stats, onOpenLig
 
       {/* Ringkasan Statistik Media */}
       <div className={`grid grid-cols-2 gap-4 ${contentMode === 'gallery' ? 'md:grid-cols-3' : 'md:grid-cols-4'}`}>
-        <div className="p-4 rounded-2xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4">
+        <div className="p-4 rounded-3xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-blue-600/15 border border-blue-500/30 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl font-bold">
             <i className="fa-solid fa-photo-film"></i>
           </div>
@@ -39,7 +39,7 @@ export default function DashboardOverview({ accounts, allMedia, stats, onOpenLig
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4">
+        <div className="p-4 rounded-3xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-purple-600/15 border border-purple-500/30 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xl font-bold">
             <i className="fa-solid fa-image"></i>
           </div>
@@ -49,7 +49,7 @@ export default function DashboardOverview({ accounts, allMedia, stats, onOpenLig
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4">
+        <div className="p-4 rounded-3xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-rose-600/15 border border-rose-500/30 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl font-bold">
             <i className="fa-solid fa-film"></i>
           </div>
@@ -60,7 +60,7 @@ export default function DashboardOverview({ accounts, allMedia, stats, onOpenLig
         </div>
 
         {contentMode !== 'gallery' && (
-          <div className="p-4 rounded-2xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4">
+          <div className="p-4 rounded-3xl glass-panel dark:bg-slate-900/80 border border-white/60 dark:border-slate-800 flex items-center gap-4">
             <div className="w-12 h-12 rounded-2xl bg-emerald-600/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl font-bold">
               <i className="fa-solid fa-file-lines"></i>
             </div>
@@ -87,10 +87,10 @@ export default function DashboardOverview({ accounts, allMedia, stats, onOpenLig
             const isDrive = acc.type === 'gdrive';
 
             return (
-              <div key={acc.id} className="p-5 rounded-2xl glass-panel dark:bg-slate-900/90 border border-white/60 dark:border-slate-800 space-y-4 hover:border-blue-400 dark:hover:border-blue-500/40 transition-all">
+              <div key={acc.id} className="p-5 rounded-3xl glass-panel dark:bg-slate-900/90 border border-white/60 dark:border-slate-800 space-y-4 hover:border-blue-400 dark:hover:border-blue-500/40 transition-all">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${acc.color || 'from-blue-600 to-indigo-600'} text-white flex items-center justify-center font-bold shadow-md`}>
+                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${acc.type === 'local' ? 'from-teal-500 to-emerald-600' : 'from-blue-600 to-indigo-600'} text-white flex items-center justify-center font-bold shadow-md`}>
                       <i className={isDrive ? 'fa-brands fa-google-drive text-lg' : 'fa-solid fa-laptop text-lg'}></i>
                     </div>
                     <div>

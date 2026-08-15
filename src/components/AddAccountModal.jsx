@@ -22,11 +22,11 @@ function AddAccountModal({ onClose, onAddAccount }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 glass-overlay flex items-center justify-center p-4">
-      <div className="relative w-full max-w-lg glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800 rounded-3xl p-6 shadow-2xl space-y-6">
-        <div className="flex items-center justify-between border-b border-white/40 dark:border-slate-800 pb-4">
+    <div className="fixed inset-0 z-[150] w-screen h-screen min-h-screen glass-overlay flex items-center justify-center p-4">
+      <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl space-y-6">
+        <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-lg font-bold">
+            <div className="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg font-bold">
               <i className="fa-brands fa-google-drive"></i>
             </div>
             <div>
@@ -48,7 +48,7 @@ function AddAccountModal({ onClose, onAddAccount }) {
               onChange={(e) => setName(e.target.value)} 
               required 
               placeholder="Contoh: Drive Utama / Dokumentasi Acara" 
-              className="w-full px-3.5 py-2 rounded-xl bg-white/50 dark:bg-slate-950 border border-white/60 dark:border-slate-800 text-xs text-slate-800 dark:text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all"
+              className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:border-blue-500 focus:outline-none transition-all"
             />
           </div>
 
@@ -59,7 +59,7 @@ function AddAccountModal({ onClose, onAddAccount }) {
               value={email} 
               onChange={(e) => setEmail(e.target.value)} 
               placeholder="contoh@gmail.com" 
-              className="w-full px-3.5 py-2 rounded-xl bg-white/50 dark:bg-slate-950 border border-white/60 dark:border-slate-800 text-xs text-slate-800 dark:text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all"
+              className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:border-blue-500 focus:outline-none transition-all"
             />
           </div>
 
@@ -71,7 +71,7 @@ function AddAccountModal({ onClose, onAddAccount }) {
               onChange={(e) => setFolderId(e.target.value)} 
               required 
               placeholder="https://drive.google.com/drive/folders/1MHI_3pZLMewn3wcpgQAXrzIuJpE9_GMe" 
-              className="w-full px-3.5 py-2 rounded-xl bg-white/50 dark:bg-slate-950 border border-white/60 dark:border-slate-800 text-xs text-slate-800 dark:text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none transition-all font-mono"
+              className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:border-blue-500 focus:outline-none transition-all font-mono"
             />
             <p className="text-[10px] text-slate-600 dark:text-slate-400 mt-1">
               *Pastikan status akses folder di Google Drive disetel ke <b>"Siapa saja yang memiliki link" (Public View)</b>.
@@ -80,7 +80,7 @@ function AddAccountModal({ onClose, onAddAccount }) {
 
 
 
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/40 dark:border-slate-800">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
             <button 
               type="button" 
               onClick={onClose} 

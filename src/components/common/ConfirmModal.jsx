@@ -5,7 +5,7 @@ export default function ConfirmModal({ isOpen, title, message, confirmText, canc
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 z-[200] bg-slate-900/40 dark:bg-black/60 backdrop-blur-md flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[200] w-screen h-screen min-h-screen glass-overlay flex items-center justify-center p-4">
       <div className="relative w-full max-w-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in duration-200 text-center">
         <div className="flex justify-center mb-2">
           <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg ${confirmColor === 'danger' ? 'bg-rose-500/20 text-rose-500 dark:text-rose-400 shadow-rose-500/30' : 'bg-blue-500/20 text-blue-500 dark:text-blue-400 shadow-blue-500/30'}`}>

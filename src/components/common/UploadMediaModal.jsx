@@ -65,7 +65,7 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
 
   return (
     <div className="fixed inset-0 z-[100] w-screen h-screen min-h-screen glass-overlay flex items-center justify-center p-4 overflow-y-auto">
-      <div className="relative w-full max-w-lg max-h-[90vh] flex flex-col glass-panel dark:bg-slate-900 border border-white/60 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-lg max-h-[90vh] flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden">
         <div className="p-6 sm:p-8 overflow-y-auto space-y-6 flex-1 w-full custom-scrollbar-container">
         
         {/* Modal Header */}
@@ -81,7 +81,7 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
           </div>
           <button 
             onClick={onClose}
-            className="w-8 h-8 rounded-xl bg-white/50 dark:bg-slate-800 hover:bg-white/80 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
+            className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
           >
             <i className="fa-solid fa-xmark"></i>
           </button>
@@ -102,12 +102,12 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
             <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Tujuan Penyimpanan</label>
             <div 
               onClick={() => setShowDropdown(!showDropdown)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-white/50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-800 dark:text-white transition-all cursor-pointer font-medium flex items-center justify-between shadow-sm hover:bg-white dark:hover:bg-slate-900"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-800 dark:text-white transition-all cursor-pointer font-medium flex items-center justify-between shadow-sm hover:bg-slate-100 dark:hover:bg-slate-900"
             >
               <div className="truncate">
                 {selectedAccount ? (
                   <>
-                    <i className={selectedAccount.type === 'gdrive' ? 'fa-brands fa-google-drive text-emerald-500 mr-2' : 'fa-solid fa-laptop text-amber-500 mr-2'}></i>
+                    <i className={selectedAccount.type === 'gdrive' ? 'fa-brands fa-google-drive text-emerald-500 mr-2' : 'fa-solid fa-laptop text-teal-600 mr-2'}></i>
                     {selectedAccount.type === 'gdrive' ? `${selectedAccount.name} (${selectedAccount.email})` : (selectedAccount.name === selectedAccount.path ? selectedAccount.name : `${selectedAccount.name} (${selectedAccount.path})`)}
                   </>
                 ) : 'Pilih Penyimpanan'}
@@ -143,7 +143,7 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
                   {accounts.filter(a => a.type === 'local').length > 0 && (
                     <div>
                       <div className="px-3 py-1.5 text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider flex items-center gap-1.5 border-t border-slate-100 dark:border-slate-800 pt-2">
-                        <i className="fa-solid fa-laptop text-amber-500"></i> Penyimpanan Lokal
+                        <i className="fa-solid fa-laptop text-teal-600"></i> Penyimpanan Lokal
                       </div>
                       {accounts.filter(a => a.type === 'local').map(a => (
                         <button
@@ -169,7 +169,7 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
             <div
               onDragOver={(e) => e.preventDefault()}
               onDrop={handleDrop}
-              className="border-2 border-dashed border-slate-400 dark:border-slate-800 hover:border-blue-500/50 rounded-2xl p-6 text-center bg-white/30 dark:bg-slate-950/50 hover:bg-white/50 dark:hover:bg-slate-950 transition-all cursor-pointer group"
+              className="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-blue-500/50 rounded-2xl p-6 text-center bg-slate-50 dark:bg-slate-950 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all cursor-pointer group"
               onClick={() => document.getElementById('file-input-modal').click()}
             >
               <input 
@@ -193,7 +193,7 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
             <div className="space-y-2 max-h-36 overflow-y-auto pr-1">
               <p className="text-[11px] font-bold text-slate-600 dark:text-slate-400">{files.length} file dipilih:</p>
               {files.map((f, idx) => (
-                <div key={idx} className="flex items-center justify-between p-2 rounded-xl bg-white/50 dark:bg-slate-950 border border-white/60 dark:border-slate-800 text-xs">
+                <div key={idx} className="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs">
                   <div className="flex items-center gap-2 truncate">
                     <i className={f.type.startsWith('video/') ? 'fa-solid fa-film text-purple-600 dark:text-purple-400' : 'fa-solid fa-image text-blue-600 dark:text-blue-400'}></i>
                     <span className="text-slate-800 dark:text-slate-200 font-medium truncate">{f.name}</span>
@@ -205,7 +205,7 @@ export default function UploadMediaModal({ accounts = [], onClose, onUploadSucce
           )}
 
           {/* Buttons */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/40 dark:border-slate-800">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
             <button 
               type="button" 
               onClick={onClose} 
