@@ -81,9 +81,7 @@ export default function LoginModal({ onLoginSuccess, theme, toggleTheme }) {
       <div className="relative w-full max-w-md bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 shadow-2xl space-y-6 transition-colors duration-300">
         {/* Header Brand */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold">
-            <i className="fa-solid fa-shield-halved"></i> Supabase Secure Auth
-          </div>
+
           <h2 className="text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">
             Omni<span className="text-blue-500">Gallery</span>
           </h2>
