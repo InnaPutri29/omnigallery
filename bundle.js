@@ -21703,9 +21703,9 @@
   var import_react6 = __toESM(require_react());
 
   // src/services/api.js
-  var fetchPhotos = async () => {
+  var fetchPhotos = async (force = false) => {
     try {
-      const res = await fetch("/api/photos");
+      const res = await fetch(`/api/photos${force ? "?force=true" : ""}`);
       return await res.json();
     } catch (e) {
       console.log("fetchPhotos Error:", e);
@@ -21933,7 +21933,16 @@
         className: "ml-2 text-slate-400 hover:text-blue-500 transition-colors cursor-pointer"
       },
       /* @__PURE__ */ import_react6.default.createElement("i", { className: `fa-solid ${showAllStorageBtn ? "fa-eye" : "fa-eye-slash"}` })
-    )), /* @__PURE__ */ import_react6.default.createElement("span", { className: "text-[10px] text-slate-500 dark:text-slate-400 font-mono" }, accounts.length + (showAllStorageBtn ? 1 : 0), " Aktif")), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center gap-2 overflow-x-auto pb-1", style: { scrollbarWidth: "none" } }, showAllStorageBtn && /* @__PURE__ */ import_react6.default.createElement(
+    )), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ import_react6.default.createElement("span", { className: "text-[10px] text-slate-500 dark:text-slate-400 font-mono hidden sm:inline" }, accounts.length + (showAllStorageBtn ? 1 : 0), " Aktif"), /* @__PURE__ */ import_react6.default.createElement(
+      "button",
+      {
+        onClick: () => onRefreshData(true),
+        className: "flex items-center justify-center gap-1.5 px-3 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 text-[10px] md:text-xs font-bold rounded-lg transition-all cursor-pointer border border-blue-500/20",
+        title: "Perbarui Data & Pindai Ulang Storage"
+      },
+      /* @__PURE__ */ import_react6.default.createElement("i", { className: "fa-solid fa-arrows-rotate" }),
+      " Perbarui"
+    ))), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center gap-2 overflow-x-auto pb-1", style: { scrollbarWidth: "none" } }, showAllStorageBtn && /* @__PURE__ */ import_react6.default.createElement(
       "button",
       {
         onClick: () => onSelectStorage("all"),
@@ -23105,11 +23114,11 @@
         return next;
       });
     };
-    const fetchData = async () => {
+    const fetchData = async (force = false) => {
       setLoading(true);
       try {
         const [photosRes, accountsRes, statsRes] = await Promise.all([
-          fetchPhotos(),
+          fetchPhotos(force),
           fetchAccounts(),
           fetchStats()
         ]);

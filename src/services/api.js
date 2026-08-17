@@ -1,6 +1,6 @@
-export const fetchPhotos = async () => {
+export const fetchPhotos = async (force = false) => {
   try {
-    const res = await fetch('/api/photos');
+    const res = await fetch(`/api/photos${force ? '?force=true' : ''}`);
     return await res.json();
   } catch (e) {
     console.log("fetchPhotos Error:", e);

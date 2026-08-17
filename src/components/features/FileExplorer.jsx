@@ -146,7 +146,16 @@ export default function FileExplorer({
               <i className={`fa-solid ${showAllStorageBtn ? 'fa-eye' : 'fa-eye-slash'}`}></i>
             </button>
           </p>
-          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">{accounts.length + (showAllStorageBtn ? 1 : 0)} Aktif</span>
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono hidden sm:inline">{accounts.length + (showAllStorageBtn ? 1 : 0)} Aktif</span>
+            <button
+              onClick={() => onRefreshData(true)}
+              className="flex items-center justify-center gap-1.5 px-3 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 text-[10px] md:text-xs font-bold rounded-lg transition-all cursor-pointer border border-blue-500/20"
+              title="Perbarui Data & Pindai Ulang Storage"
+            >
+              <i className="fa-solid fa-arrows-rotate"></i> Perbarui
+            </button>
+          </div>
         </div>
 
         <div className="flex items-center gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>

@@ -777,8 +777,18 @@ async function getOrUpdateCache(force = false) {
         return { mediaList: cachedMediaList, stats: cachedStats };
     }
     
-    // Jika ada cache tetapi kadaluarsa, jalankan refresh di background tapi langsung kembalikan cache basi agar frontend tidak loading lama
-    if (cachedMediaList && (!force || force)) { 
+    // Jika force=true, kita HARUS menunggu refresh selesai (tidak mengembalikan cache lama)
+    if (force) {
+        if (!isRefreshingCache) {
+            isRefreshingCache = refreshCache().finally(() => {
+                isRefreshingCache = null;
+            });
+        }
+        return await isRefreshingCache;
+    }
+
+    // Jika ada cache tetapi kadaluarsa (dan bukan force refresh), jalankan refresh di background tapi langsung kembalikan cache basi agar frontend tidak loading lama
+    if (cachedMediaList) { 
         if (!isRefreshingCache) {
             isRefreshingCache = refreshCache().finally(() => {
                 isRefreshingCache = null;
@@ -1246,7 +1256,8 @@ app.put('/api/rename-folder', async (req, res) => {
 
 // API: Mengambil daftar media
 app.get('/api/photos', async (req, res) => {
-    const { mediaList } = await getOrUpdateCache();
+    const force = req.query.force === 'true';
+    const { mediaList } = await getOrUpdateCache(force);
     res.json(mediaList);
 });
 

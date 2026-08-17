@@ -66,11 +66,11 @@ export default function App() {
     });
   };
 
-  const fetchData = async () => {
+  const fetchData = async (force = false) => {
     setLoading(true);
     try {
       const [photosRes, accountsRes, statsRes] = await Promise.all([
-        fetchPhotos(), fetchAccounts(), fetchStats()
+        fetchPhotos(force), fetchAccounts(), fetchStats()
       ]);
       setAllMedia(photosRes || []);
       setAccounts(accountsRes || []);
