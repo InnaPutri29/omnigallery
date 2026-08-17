@@ -22574,6 +22574,7 @@
   function LightboxModal({ item, allMedia = [], onNavigate, onClose, onDelete }) {
     const videoRef = (0, import_react11.useRef)(null);
     const [isVideoLoading, setIsVideoLoading] = (0, import_react11.useState)(true);
+    const [videoError, setVideoError] = (0, import_react11.useState)(false);
     const [confirmDeleteConfig, setConfirmDeleteConfig] = (0, import_react11.useState)({ isOpen: false, item: null, sourceLabel: "" });
     const currentIndex = (0, import_react11.useMemo)(() => allMedia.findIndex((m) => m.id === item.id), [allMedia, item]);
     const hasPrev = currentIndex > 0;
@@ -22595,6 +22596,7 @@
     }, [currentIndex, allMedia]);
     (0, import_react11.useEffect)(() => {
       setIsVideoLoading(true);
+      setVideoError(false);
       if (videoRef.current) {
         videoRef.current.play().catch(() => {
         });
@@ -22645,7 +22647,32 @@
           referrerPolicy: "no-referrer",
           className: "max-w-full max-h-full object-contain"
         }
-      ), isGDriveVideo && /* @__PURE__ */ import_react11.default.createElement("div", { className: "relative flex items-center justify-center w-full h-full" }, /* @__PURE__ */ import_react11.default.createElement(
+      ), isGDriveVideo && /* @__PURE__ */ import_react11.default.createElement("div", { className: "relative flex items-center justify-center w-full h-full" }, isVideoLoading && !videoError && /* @__PURE__ */ import_react11.default.createElement("div", { className: "absolute z-10 flex flex-col items-center gap-2 pointer-events-none" }, /* @__PURE__ */ import_react11.default.createElement("div", { className: "w-10 h-10 rounded-full border-2 border-blue-500/30 border-t-blue-400 animate-spin" }), /* @__PURE__ */ import_react11.default.createElement("p", { className: "text-white/50 text-[11px] font-medium" }, "Memuat video...")), !videoError ? /* @__PURE__ */ import_react11.default.createElement(
+        "video",
+        {
+          ref: videoRef,
+          src: `https://drive.google.com/uc?export=download&id=${item.id}`,
+          controls: true,
+          autoPlay: true,
+          playsInline: true,
+          preload: "auto",
+          onCanPlay: () => setIsVideoLoading(false),
+          onWaiting: () => setIsVideoLoading(true),
+          onPlaying: () => setIsVideoLoading(false),
+          onError: () => {
+            console.warn("Native player failed for GDrive video. Falling back to iframe...");
+            setVideoError(true);
+            setIsVideoLoading(false);
+          },
+          className: "max-w-full max-h-full",
+          style: {
+            objectFit: "contain",
+            background: "transparent",
+            opacity: isVideoLoading ? 0 : 1,
+            transition: "opacity 0.3s ease"
+          }
+        }
+      ) : /* @__PURE__ */ import_react11.default.createElement(
         "iframe",
         {
           src: `https://drive.google.com/file/d/${item.id}/preview?autoplay=1`,

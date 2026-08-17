@@ -4,6 +4,7 @@ import ConfirmModal from './ConfirmModal.jsx';
 export default function LightboxModal({ item, allMedia = [], onNavigate, onClose, onDelete }) {
   const videoRef = useRef(null);
   const [isVideoLoading, setIsVideoLoading] = useState(true);
+  const [videoError, setVideoError] = useState(false);
   const [confirmDeleteConfig, setConfirmDeleteConfig] = useState({ isOpen: false, item: null, sourceLabel: '' });
 
   const currentIndex = useMemo(() =>
@@ -27,6 +28,7 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
 
   useEffect(() => {
     setIsVideoLoading(true);
+    setVideoError(false);
     if (videoRef.current) {
       videoRef.current.play().catch(() => {});
     }
@@ -101,17 +103,49 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
         {/* Google Drive Video */}
         {isGDriveVideo && (
           <div className="relative flex items-center justify-center w-full h-full">
-            <iframe
-              src={`https://drive.google.com/file/d/${item.id}/preview?autoplay=1`}
-              className="w-full h-full"
-              style={{
-                border: 'none',
-                background: 'transparent',
-              }}
-              allow="autoplay; encrypted-media; fullscreen"
-              allowFullScreen
-              title={item.title}
-            ></iframe>
+            {isVideoLoading && !videoError && (
+              <div className="absolute z-10 flex flex-col items-center gap-2 pointer-events-none">
+                <div className="w-10 h-10 rounded-full border-2 border-blue-500/30 border-t-blue-400 animate-spin"></div>
+                <p className="text-white/50 text-[11px] font-medium">Memuat video...</p>
+              </div>
+            )}
+            {!videoError ? (
+              <video
+                ref={videoRef}
+                src={`https://drive.google.com/uc?export=download&id=${item.id}`}
+                controls
+                autoPlay
+                playsInline
+                preload="auto"
+                onCanPlay={() => setIsVideoLoading(false)}
+                onWaiting={() => setIsVideoLoading(true)}
+                onPlaying={() => setIsVideoLoading(false)}
+                onError={() => {
+                  console.warn("Native player failed for GDrive video. Falling back to iframe...");
+                  setVideoError(true);
+                  setIsVideoLoading(false);
+                }}
+                className="max-w-full max-h-full"
+                style={{
+                  objectFit: 'contain',
+                  background: 'transparent',
+                  opacity: isVideoLoading ? 0 : 1,
+                  transition: 'opacity 0.3s ease',
+                }}
+              ></video>
+            ) : (
+              <iframe
+                src={`https://drive.google.com/file/d/${item.id}/preview?autoplay=1`}
+                className="w-full h-full"
+                style={{
+                  border: 'none',
+                  background: 'transparent',
+                }}
+                allow="autoplay; encrypted-media; fullscreen"
+                allowFullScreen
+                title={item.title}
+              ></iframe>
+            )}
           </div>
         )}
 
