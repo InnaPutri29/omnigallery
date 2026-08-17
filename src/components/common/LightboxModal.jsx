@@ -35,7 +35,8 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
   if (!item) return null;
 
   const isVideo = item.type === 'video';
-
+  const isGDriveVideo = isVideo && item.source === 'gdrive';
+  const isLocalVideo = isVideo && item.source === 'local';
   const isMov = [item?.ext, item?.title, item?.id]
     .filter(Boolean)
     .some(s => s.toLowerCase().endsWith('.mov'));
@@ -97,8 +98,25 @@ export default function LightboxModal({ item, allMedia = [], onNavigate, onClose
           />
         )}
 
-        {/* Video Player */}
-        {isVideo && (
+        {/* Google Drive Video */}
+        {isGDriveVideo && (
+          <div className="relative flex items-center justify-center w-full h-full">
+            <iframe
+              src={`https://drive.google.com/file/d/${item.id}/preview?autoplay=1`}
+              className="w-full h-full"
+              style={{
+                border: 'none',
+                background: 'transparent',
+              }}
+              allow="autoplay; encrypted-media; fullscreen"
+              allowFullScreen
+              title={item.title}
+            ></iframe>
+          </div>
+        )}
+
+        {/* Local Video */}
+        {isLocalVideo && (
           <div className="relative flex items-center justify-center w-full h-full">
             {isVideoLoading && (
               <div className="absolute z-10 flex flex-col items-center gap-2 pointer-events-none">
