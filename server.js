@@ -1263,10 +1263,18 @@ app.get('/api/photos', async (req, res) => {
 
 // API: Statistics Ringkasan Storage Gateway
 app.get('/api/stats', async (req, res) => {
-    const { stats } = await getOrUpdateCache();
+    const { mediaList, stats } = await getOrUpdateCache();
 
-    const totalCapacity = accounts.reduce((acc, a) => acc + a.totalBytes, 0);
-    const totalUsed = accounts.reduce((acc, a) => acc + a.usedBytes, 0);
+    let totalCapacity = 0;
+    let totalUsed = 0;
+
+    accounts.forEach(acc => {
+        const accFiles = mediaList.filter(m => m.accountName === acc.name);
+        const actualUsed = accFiles.reduce((sum, f) => sum + (f.size || 0), 0);
+        
+        totalUsed += actualUsed;
+        totalCapacity += actualUsed; // Set sama seperti di /api/accounts
+    });
 
     res.json({
         totalCapacity,
