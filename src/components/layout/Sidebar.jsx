@@ -75,20 +75,7 @@ export default function Sidebar({ activeTab, onSwitchTab, stats, isOpen, onClose
         </div>
       </div>
 
-      {/* Gateway System Info */}
-      <div className="p-4 border-t border-white/40 dark:border-slate-800/80">
-        <div className="p-3 rounded-xl glass-panel dark:bg-slate-950/60 border border-white/60 dark:border-slate-800 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-xs">
-            <i className="fa-solid fa-server"></i>
-          </div>
-          <div>
-            <h5 className="text-xs font-bold text-slate-800 dark:text-white">OmniGateway v2.0</h5>
-            <p className="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse"></span> Connected
-            </p>
-          </div>
-        </div>
-      </div>
+
     </aside>
     </>
   );
