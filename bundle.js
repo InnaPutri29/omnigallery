@@ -22651,7 +22651,7 @@
         "video",
         {
           ref: videoRef,
-          src: `https://drive.google.com/uc?export=download&id=${item.id}`,
+          src: `https://drive.usercontent.google.com/download?id=${item.id}&export=download&confirm=t`,
           controls: true,
           autoPlay: true,
           playsInline: true,
